@@ -10,19 +10,11 @@ use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
 use Yiisoft\Widget\Widget;
 use Yiisoft\Widget\Exception\InvalidConfigException;
 
-/**
- * WidgetTest.
- */
 class WidgetTest extends TestCase
 {
-    /**
-     * @var Widget $widget
-     */
-    protected $widget;
-
     public function testWidget(): void
     {
-        $output = TestWidget::widget([$this->eventDispatcher])->id('w0')->run();
+        $output = TestWidget::widget()->id('w0')->run();
 
         $this->assertSame('<run-w0>', $output);
     }
@@ -32,7 +24,7 @@ class WidgetTest extends TestCase
         ob_start();
         ob_implicit_flush(0);
 
-        $widget = TestWidgetA::begin([$this->eventDispatcher])->id('test');
+        $widget = TestWidgetA::begin()->id('test');
 
         $this->assertInstanceOf(Widget::class, $widget);
 
@@ -57,8 +49,8 @@ class WidgetTest extends TestCase
     public function testStackTrackingDisorder(): void
     {
         $this->expectException(InvalidConfigException::class);
-        TestWidgetA::begin([$this->eventDispatcher]);
-        TestWidgetB::begin([$this->eventDispatcher]);
+        TestWidgetA::begin();
+        TestWidgetB::begin();
         TestWidgetA::end();
         TestWidgetB::end();
     }

@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Exception;
 
-/**
- * Class InvalidConfigException.
- */
 class InvalidConfigException extends \Exception
 {
     /**

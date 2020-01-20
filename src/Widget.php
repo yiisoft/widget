@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
-use ReflectionClass;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\Widget\Exception\InvalidConfigException;
 use Yiisoft\Widget\Event\AfterRun;
 use Yiisoft\Widget\Event\BeforeRun;
+use Yiisoft\Widget\Factory\WidgetFactory;
 
 /**
  * Widget is the base class for widgets.
  */
-abstract class Widget
+class Widget
 {
     /**
      * @var EventDispatcherInterface $eventDispatcher
@@ -37,10 +37,13 @@ abstract class Widget
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    abstract public function run(): string;
-
     public function init(): void
     {
+    }
+
+    public function run(): string
+    {
+        return '';
     }
 
     /**
@@ -48,9 +51,9 @@ abstract class Widget
      *
      * @return Widget
      */
-    public static function begin(array $constructorArguments = []): Widget
+    public static function begin(): Widget
     {
-        $widget = static::createWidget(\get_called_class(), $constructorArguments);
+        $widget = WidgetFactory::createWidget(get_called_class());
 
         static::$stack[] = $widget;
 
@@ -90,19 +93,11 @@ abstract class Widget
      *
      * @return Widget $widget.
      */
-    public static function widget(array $constructorArguments = []): Widget
+    public static function widget(): Widget
     {
-        $widget = static::createWidget(\get_called_class(), $constructorArguments);
+        $widget = WidgetFactory::createWidget(get_called_class());
 
         static::$widget = $widget;
-
-        return $widget;
-    }
-
-    public static function createWidget(string $class, array $constructorArguments)
-    {
-        $widget = new ReflectionClass($class);
-        $widget = $widget->newInstanceArgs($constructorArguments);
 
         return $widget;
     }

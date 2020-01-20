@@ -5,15 +5,9 @@ namespace Yiisoft\Widget\Tests\Stubs;
 
 use Yiisoft\Widget\Widget;
 
-/**
- * TestWidget
- */
 class TestWidget extends Widget
 {
-    /**
-     * @var string $id
-     */
-    private $id;
+    private string $id;
 
     public function run(): string
     {

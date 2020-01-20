@@ -42,6 +42,7 @@
             "dev-master": "3.0.x-dev"
         },
         "config-plugin": {
+            "common": "config/common.php",
             "tests": "config/tests.php"
         }
     },
