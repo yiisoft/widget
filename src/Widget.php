@@ -41,7 +41,7 @@ class Widget
     {
     }
 
-    public function run(): string
+    protected function run(): string
     {
         return '';
     }
@@ -51,7 +51,7 @@ class Widget
      *
      * @return Widget
      */
-    public static function begin(): Widget
+    final public static function begin(): Widget
     {
         $widget = WidgetFactory::createWidget(get_called_class());
 
@@ -65,7 +65,7 @@ class Widget
      *
      * @return Widget
      */
-    public static function end(): Widget
+    final public static function end(): Widget
     {
         if (empty(self::$stack)) {
             throw new InvalidConfigException(
@@ -93,7 +93,7 @@ class Widget
      *
      * @return Widget $widget.
      */
-    public static function widget(): Widget
+    final public static function widget(): Widget
     {
         $widget = WidgetFactory::createWidget(get_called_class());
 
@@ -107,7 +107,7 @@ class Widget
      *
      * @return string the result of widget execution to be outputted.
      */
-    public function getContent(): string
+    public function render(): string
     {
         $out = '';
         $widget = $this;
@@ -172,11 +172,16 @@ class Widget
      *
      * @return mixed the processed widget result.
      */
-    public function afterRun($result)
+    public function afterRun(string $result)
     {
         $event = new AfterRun($result);
         $event = $this->eventDispatcher->dispatch($event);
 
         return $event->getResult();
+    }
+
+    public function __toString()
+    {
+        return $this->render();
     }
 }

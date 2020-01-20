@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
+use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Yiisoft\EventDispatcher\Dispatcher;
 use Yiisoft\EventDispatcher\Provider\Provider;
-use Yiisoft\Factory\Definitions\Reference;
 use Yiisoft\Widget\Widget;
 use Yiisoft\Widget\Factory\WidgetFactory;
 
@@ -14,12 +14,9 @@ return [
         '__class' => Provider::class,
     ],
 
-    EventDispatcherInterface::class => [
-        '__class' => Dispatcher::class,
-        '__construct()' => [
-           'listenerProvider' => Reference::to(ListenerProviderInterface::class)
-        ],
-    ],
+    EventDispatcherInterface::class => function (ContainerInterface  $container) {
+        return new Dispatcher($container->get(ListenerProviderInterface::class));
+    },
 
     Widget::class => new WidgetFactory(),
 ];
