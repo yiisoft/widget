@@ -21,15 +21,11 @@ class WidgetTest extends TestCase
 
     public function testBeginEnd(): void
     {
-        ob_start();
-        ob_implicit_flush(0);
-
         $widget = TestWidgetA::begin()->id('test');
 
         $this->assertInstanceOf(Widget::class, $widget);
 
-        TestWidgetA::end();
-        $output = ob_get_clean();
+        $output = TestWidgetA::end();
 
         $this->assertSame('<run-test>', $output);
     }

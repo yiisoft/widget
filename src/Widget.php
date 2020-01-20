@@ -37,6 +37,9 @@ class Widget
         $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * Initialiation that should happen
+     */
     public function init(): void
     {
     }
