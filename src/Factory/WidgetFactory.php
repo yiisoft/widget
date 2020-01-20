@@ -9,7 +9,7 @@ use Yiisoft\Widget\Widget;
 
 class WidgetFactory
 {
-    protected static $container;
+    protected static ContainerInterface $container;
 
     public function __invoke(ContainerInterface $container)
     {
