@@ -20,7 +20,7 @@ class WidgetFactory
         return new Widget($eventDispatcher);
     }
 
-    public static function createWidget(string $class)
+    public static function createWidget(string $class): Widget
     {
         return static::$container->get($class);
     }

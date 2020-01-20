@@ -37,13 +37,6 @@ class Widget
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * Initialiation that should happen
-     */
-    public function init(): void
-    {
-    }
-
     protected function run(): string
     {
         return '';
@@ -56,7 +49,7 @@ class Widget
      */
     final public static function begin(): Widget
     {
-        $widget = WidgetFactory::createWidget(get_called_class());
+        $widget = WidgetFactory::createWidget(static::class);
 
         static::$stack[] = $widget;
 
@@ -113,11 +106,10 @@ class Widget
     public function render(): string
     {
         $out = '';
-        $widget = $this;
 
-        if ($widget->beforeRun()) {
-            $result = $widget->run();
-            $out = $widget->afterRun($result);
+        if ($this->beforeRun()) {
+            $result = $this->run();
+            $out = $this->afterRun($result);
         }
 
         return $out;
