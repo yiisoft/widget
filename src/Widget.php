@@ -63,9 +63,9 @@ class Widget
     /**
      * Ends the rendering of content.
      *
-     * @return Widget
+     * @return string
      */
-    final public static function end(): Widget
+    final public static function end(): string
     {
         if (empty(self::$stack)) {
             throw new InvalidConfigException(
@@ -82,10 +82,10 @@ class Widget
         if ($widget->beforeRun()) {
             $result = $widget->run();
             $result = $widget->afterRun($result);
-            echo $result;
+            return $result;
         }
 
-        return $widget;
+        return '';
     }
 
     /**
