@@ -16,7 +16,7 @@ use Yiisoft\Widget\Event\BeforeRun;
  */
 abstract class Widget
 {
-    protected EventDispatcherInterface $eventDispatcher;
+    protected ?EventDispatcherInterface $eventDispatcher = null;
 
     /**
      * The widgets that are currently being rendered (not ended). This property is maintained by {@see begin()} and
@@ -26,10 +26,7 @@ abstract class Widget
      */
     private static array $stack;
 
-    /**
-     * @internal Please use {@see widget()} or {@see begin()}
-     */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher): void
     {
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -143,6 +140,10 @@ abstract class Widget
      */
     public function beforeRun(): bool
     {
+        if ($this->eventDispatcher === null) {
+            return true;
+        }
+
         $event = new BeforeRun($this);
 
         /** @var BeforeRun $event */
@@ -174,6 +175,10 @@ abstract class Widget
      */
     public function afterRun(string $result): string
     {
+        if ($this->eventDispatcher === null) {
+            return $result;
+        }
+
         $event = new AfterRun($this, $result);
 
         /** @var AfterRun $event */

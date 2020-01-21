@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use Psr\Container\ContainerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\Factory\Factory;
 use Yiisoft\Factory\FactoryInterface;
 
@@ -31,10 +32,20 @@ final class WidgetFactory extends Factory
      */
     public static function createWidget($config): Widget
     {
-        if (static::$factory === null) {
-            throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
+        if (self::$factory === null) {
+            self::initialize();
         }
 
-        return static::$factory->create($config);
+        $widget = static::$factory->create($config);
+        assert($widget instanceof Widget);
+
+        /** @var ContainerInterface|null $container */
+        $container = self::$factory->container;
+
+        if ($container && $eventDispatcher = $container->get(EventDispatcherInterface::class)) {
+            $widget->setEventDispatcher($eventDispatcher);
+        }
+
+        return $widget;
     }
 }
