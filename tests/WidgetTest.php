@@ -60,7 +60,7 @@ final class WidgetTest extends TestCase
     }
 
     public function testShouldTriggerBeforeRun(): void
-     {
+    {
         $triggered = false;
 
         $this->listenerProvider->attach(static function (BeforeRun $event) use (&$triggered) {
@@ -80,7 +80,7 @@ final class WidgetTest extends TestCase
 
         $this->listenerProvider->attach(static function (AfterRun $event) use (&$output) {
             $output = $event->getResult();
-         });
+        });
 
         TestWidgetA::begin()->id('test');
         TestWidgetA::end();
