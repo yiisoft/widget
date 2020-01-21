@@ -31,11 +31,6 @@ class Widget
     private static array $stack;
 
     /**
-     * @var Widget $widget
-     */
-    protected static Widget $widget;
-
-    /**
      * @internal Please use {@see widget()} or {@see begin()}
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
@@ -101,11 +96,7 @@ class Widget
      */
     final public static function widget(): Widget
     {
-        $widget = WidgetFactory::createWidget(static::class);
-
-        static::$widget = $widget;
-
-        return $widget;
+        return WidgetFactory::createWidget(static::class);
     }
 
     /**
