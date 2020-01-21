@@ -49,11 +49,11 @@ abstract class Widget
     /**
      * Creates a widget assuming it should be closed with {@see end()}
      *
-     * @return Widget
+     * @param array $parameters parameters for creating a widget
      */
-    final public static function begin(): Widget
+    final public static function begin(array $parameters = []): Widget
     {
-        $widget = WidgetFactory::createWidget(static::class);
+        $widget = WidgetFactory::createWidget(static::class, $parameters);
 
         static::$stack[] = $widget;
 
@@ -88,11 +88,12 @@ abstract class Widget
     /**
      * Creates a widget instance.
      *
+     * @param array $parameters parameters for creating a widget
      * @return Widget $widget.
      */
-    final public static function widget(): Widget
+    final public static function widget(array $parameters = []): Widget
     {
-        return WidgetFactory::createWidget(static::class);
+        return WidgetFactory::createWidget(static::class, $parameters);
     }
 
     /**
