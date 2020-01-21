@@ -22,11 +22,12 @@ final class WidgetFactory extends Factory
         self::$factory = new self($container, $definitions);
     }
 
-    public static function createWidget(string $class, array $params = []): Widget
+    public static function createWidget($config): Widget
     {
         if (static::$factory === null) {
             throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
         }
-        return static::$factory->create($class, $params);
+
+        return static::$factory->create($config);
     }
 }

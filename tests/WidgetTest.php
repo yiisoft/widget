@@ -18,6 +18,13 @@ class WidgetTest extends TestCase
         $this->assertSame('<run-w0>', $output);
     }
 
+    public function testWidgetArrayConfig(): void
+    {
+        $output = TestWidget::widget(['id()' => ['w0']])->run();
+
+        $this->assertSame('<run-w0>', $output);
+    }
+
     public function testBeginEnd(): void
     {
         $widget = TestWidgetA::begin()->id('test');

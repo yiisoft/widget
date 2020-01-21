@@ -49,11 +49,15 @@ abstract class Widget
     /**
      * Creates a widget assuming it should be closed with {@see end()}
      *
-     * @param array $parameters parameters for creating a widget
+     * @param string|array|callable $config parameters for creating a widget
      */
-    final public static function begin(array $parameters = []): Widget
+    final public static function begin($config = []): Widget
     {
-        $widget = WidgetFactory::createWidget(static::class, $parameters);
+        if (\is_array($config) && !array_key_exists('__class', $config)) {
+            $config['__class'] = static::class;
+        }
+
+        $widget = WidgetFactory::createWidget($config);
 
         static::$stack[] = $widget;
 
@@ -88,12 +92,16 @@ abstract class Widget
     /**
      * Creates a widget instance.
      *
-     * @param array $parameters parameters for creating a widget
+     * @param string|array|callable $config parameters for creating a widget
      * @return Widget $widget.
      */
-    final public static function widget(array $parameters = []): Widget
+    final public static function widget($config = []): Widget
     {
-        return WidgetFactory::createWidget(static::class, $parameters);
+        if (\is_array($config) && !array_key_exists('__class', $config)) {
+            $config['__class'] = static::class;
+        }
+
+        return WidgetFactory::createWidget($config);
     }
 
     /**
