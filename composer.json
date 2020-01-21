@@ -19,7 +19,8 @@
     "require": {
         "php": "^7.4",
         "psr/event-dispatcher": "1.0.0",
-        "psr/container": "1.0.0"
+        "psr/container": "1.0.0",
+        "yiisoft/factory": "^3.0@dev"
     },
     "require-dev": {
         "hiqdev/composer-config-plugin": "^1.0@dev",

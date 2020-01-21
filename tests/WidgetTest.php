@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Yiisoft\Widget\Tests;
 
-use Yiisoft\Widget\Tests\TestCase;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetA;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetB;

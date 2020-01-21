@@ -7,7 +7,6 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\Widget\Exception\InvalidConfigException;
 use Yiisoft\Widget\Event\AfterRun;
 use Yiisoft\Widget\Event\BeforeRun;
-use Yiisoft\Widget\Factory\WidgetFactory;
 
 /**
  * Widget generates a string content based on some logic and input data.
@@ -15,11 +14,8 @@ use Yiisoft\Widget\Factory\WidgetFactory;
  *
  * This is the base class that is meant to be inherited when implementing your own widgets.
  */
-class Widget
+abstract class Widget
 {
-    /**
-     * @var EventDispatcherInterface $eventDispatcher
-     */
     protected EventDispatcherInterface $eventDispatcher;
 
     /**

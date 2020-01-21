@@ -7,15 +7,12 @@ use hiqdev\composer\config\Builder;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\Di\Container;
-use Yiisoft\Widget\Widget;
+use Yiisoft\Widget\WidgetFactory;
 
 abstract class TestCase extends BaseTestCase
 {
     private Container $container;
-
     protected EventDispatcherInterface $eventDispatcher;
-
-    protected Widget $widget;
 
     protected function setUp(): void
     {
@@ -26,7 +23,8 @@ abstract class TestCase extends BaseTestCase
         $this->container = new Container($config);
 
         $this->eventDispatcher = $this->container->get(EventDispatcherInterface::class);
-        $this->widget = $this->container->get(Widget::class);
+
+        WidgetFactory::initialize($this->container, []);
     }
 
     protected function tearDown(): void
