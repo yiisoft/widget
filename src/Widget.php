@@ -148,7 +148,7 @@ class Widget
      */
     public function beforeRun(): bool
     {
-        $event = new BeforeRun();
+        $event = new BeforeRun($this);
 
         /** @var BeforeRun $event */
         $event = $this->eventDispatcher->dispatch($event);
@@ -179,7 +179,7 @@ class Widget
      */
     public function afterRun(string $result): string
     {
-        $event = new AfterRun($result);
+        $event = new AfterRun($this, $result);
 
         /** @var AfterRun $event */
         $event = $this->eventDispatcher->dispatch($event);
