@@ -10,7 +10,10 @@ use Yiisoft\Widget\Event\BeforeRun;
 use Yiisoft\Widget\Factory\WidgetFactory;
 
 /**
- * Widget is the base class for widgets.
+ * Widget generates a string content based on some logic and input data.
+ * These are typically used in templates to conceal complex HTML rendering logic.
+ *
+ * This is the base class that is meant to be inherited when implemementing your own widgets.
  */
 class Widget
 {
@@ -25,25 +28,35 @@ class Widget
      *
      * @var array $stack
      */
-    protected static array $stack;
+    private static array $stack;
 
     /**
      * @var Widget $widget
      */
     protected static Widget $widget;
 
+    /**
+     * @internal Please use {@see widget()} or {@see begin()}
+     */
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * Renders widget content.
+     * This method is used by {@see render()} and is meant to be overridden
+     * when implementing concrete widget.
+     *
+     * @return string
+     */
     protected function run(): string
     {
         return '';
     }
 
     /**
-     * Begin the rendering of content.
+     * Creates a widget assuming it should be closed with {@see end()}
      *
      * @return Widget
      */
@@ -57,9 +70,11 @@ class Widget
     }
 
     /**
-     * Ends the rendering of content.
+     * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
      *
      * @return string
+     * @throws InvalidConfigException
+     * @throws \InvalidConfigException
      */
     final public static function end(): string
     {
@@ -69,19 +84,14 @@ class Widget
             );
         }
 
+        /** @var static $widget */
         $widget = array_pop(self::$stack);
 
         if (get_class($widget) !== static::class) {
             throw new InvalidConfigException('Expecting end() of ' . get_class($widget) . ', found ' . static::class);
         }
 
-        if ($widget->beforeRun()) {
-            $result = $widget->run();
-            $result = $widget->afterRun($result);
-            return $result;
-        }
-
-        return '';
+        return $widget->render();
     }
 
     /**
@@ -91,7 +101,7 @@ class Widget
      */
     final public static function widget(): Widget
     {
-        $widget = WidgetFactory::createWidget(get_called_class());
+        $widget = WidgetFactory::createWidget(static::class);
 
         static::$widget = $widget;
 
@@ -105,14 +115,12 @@ class Widget
      */
     public function render(): string
     {
-        $out = '';
-
-        if ($this->beforeRun()) {
-            $result = $this->run();
-            $out = $this->afterRun($result);
+        if (!$this->beforeRun()) {
+            return '';
         }
 
-        return $out;
+        $result = $this->run();
+        return $this->afterRun($result);
     }
 
     /**
@@ -141,6 +149,8 @@ class Widget
     public function beforeRun(): bool
     {
         $event = new BeforeRun();
+
+        /** @var BeforeRun $event */
         $event = $this->eventDispatcher->dispatch($event);
 
         return !$event->isPropagationStopped();
@@ -163,19 +173,31 @@ class Widget
      * }
      * ```
      *
-     * @param mixed $result the widget return result.
+     * @param string $result the widget return result.
      *
-     * @return mixed the processed widget result.
+     * @return string the processed widget result.
      */
-    public function afterRun(string $result)
+    public function afterRun(string $result): string
     {
         $event = new AfterRun($result);
+
+        /** @var AfterRun $event */
         $event = $this->eventDispatcher->dispatch($event);
 
         return $event->getResult();
     }
 
-    public function __toString()
+    /**
+     * Allows not to call `->render()` explicitly:
+     *
+     * ```php
+     * <?= MyWidget::widget()->name('test') ?>
+     * ```
+     *
+     * @return string
+     * @throws \Throwable
+     */
+    public function __toString(): string
     {
         return $this->render();
     }
