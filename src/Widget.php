@@ -13,7 +13,7 @@ use Yiisoft\Widget\Factory\WidgetFactory;
  * Widget generates a string content based on some logic and input data.
  * These are typically used in templates to conceal complex HTML rendering logic.
  *
- * This is the base class that is meant to be inherited when implemementing your own widgets.
+ * This is the base class that is meant to be inherited when implementing your own widgets.
  */
 class Widget
 {
