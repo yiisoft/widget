@@ -5,6 +5,8 @@ namespace Yiisoft\Widget\Tests;
 
 use Yiisoft\Widget\Event\AfterRun;
 use Yiisoft\Widget\Event\BeforeRun;
+use Yiisoft\Widget\Tests\Stubs\Injectable;
+use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetA;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
@@ -86,5 +88,11 @@ final class WidgetTest extends TestCase
         TestWidgetA::end();
 
         $this->assertSame('<run-test>', $output);
+    }
+
+    public function testInjection(): void
+    {
+        $widget = TestInjectionWidget::widget();
+        $this->assertInstanceOf(Injectable::class, $widget->getInjectable());
     }
 }

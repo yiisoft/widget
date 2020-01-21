@@ -47,7 +47,7 @@ abstract class Widget
      * @param string|array|callable $config parameters for creating a widget
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
-    final public static function begin($config = []): Widget
+    final public static function begin($config = []): self
     {
         if (\is_array($config) && !array_key_exists('__class', $config)) {
             $config['__class'] = static::class;
@@ -91,7 +91,7 @@ abstract class Widget
      * @return Widget $widget.
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
-    final public static function widget($config = []): Widget
+    final public static function widget($config = []): self
     {
         if (\is_array($config) && !array_key_exists('__class', $config)) {
             $config['__class'] = static::class;
