@@ -9,10 +9,6 @@ class TestWidgetB extends Widget
 {
     private string $id;
 
-    public function init(): void
-    {
-    }
-
     public function run(): string
     {
         return '<run-' . $this->id . '>';
