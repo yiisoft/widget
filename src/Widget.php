@@ -38,8 +38,6 @@ abstract class Widget
      * Renders widget content.
      * This method is used by {@see render()} and is meant to be overridden
      * when implementing concrete widget.
-     *
-     * @return string
      */
     protected function run(): string
     {
@@ -50,6 +48,7 @@ abstract class Widget
      * Creates a widget assuming it should be closed with {@see end()}
      *
      * @param string|array|callable $config parameters for creating a widget
+     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
     final public static function begin($config = []): Widget
     {
@@ -67,7 +66,6 @@ abstract class Widget
     /**
      * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
      *
-     * @return string
      * @throws InvalidConfigException
      * @throws \InvalidConfigException
      */
@@ -94,6 +92,7 @@ abstract class Widget
      *
      * @param string|array|callable $config parameters for creating a widget
      * @return Widget $widget.
+     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
     final public static function widget($config = []): Widget
     {
@@ -189,9 +188,6 @@ abstract class Widget
      * ```php
      * <?= MyWidget::widget()->name('test') ?>
      * ```
-     *
-     * @return string
-     * @throws \Throwable
      */
     public function __toString(): string
     {
