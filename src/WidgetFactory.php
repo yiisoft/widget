@@ -31,8 +31,8 @@ final class WidgetFactory extends Factory
      */
     public static function createWidget($config): Widget
     {
-        if (self::$factory === null) {
-            self::initialize();
+        if (static::$factory === null) {
+            throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
         }
 
         return static::$factory->create($config);
