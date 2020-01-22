@@ -1,39 +1,51 @@
 {
-    "name": "yiisoft/_____",
+    "name": "yiisoft/widget",
     "type": "library",
-    "description": "_____",
+    "description": "Widget",
     "keywords": [
-        "_____"
+        "yii",
+        "widgets"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/_____/issues?state=open",
+        "issues": "https://github.com/yiisoft/widget/issues?state=open",
         "forum": "https://www.yiiframework.com/forum/",
         "wiki": "https://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/_____"
+        "source": "https://github.com/yiisoft/widget"
     },
+    "minimum-stability": "dev",
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "psr/event-dispatcher": "1.0.0",
+        "psr/container": "1.0.0",
+        "yiisoft/factory": "^3.0@dev"
     },
     "require-dev": {
+        "hiqdev/composer-config-plugin": "^1.0@dev",
         "phpunit/phpunit": "^8.4",
-        "phan/phan": "^2.4"
+        "phan/phan": "^2.4",
+        "yiisoft/di": "^3.0@dev",
+        "yiisoft/event-dispatcher": "^3.0@dev"
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\_____\\": "src"
+            "Yiisoft\\Widget\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\_____\\Tests\\": "tests"
+            "Yiisoft\\Widget\\Tests\\": "tests"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
+        },
+        "config-plugin": {
+            "common": "config/common.php",
+            "tests": "config/tests.php"
         }
     },
     "scripts": {
