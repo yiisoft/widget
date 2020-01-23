@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
@@ -12,7 +13,7 @@ return [
         '__class' => Provider::class,
     ],
 
-    EventDispatcherInterface::class => function (ContainerInterface  $container) {
+    EventDispatcherInterface::class => function (ContainerInterface $container) {
         return new Dispatcher($container->get(ListenerProviderInterface::class));
     },
 ];
