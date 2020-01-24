@@ -139,7 +139,7 @@ abstract class Widget
      *
      * @return bool whether the widget should continue to be executed.
      */
-    public function beforeRun(): bool
+    protected function beforeRun(): bool
     {
         $event = new BeforeRun($this);
 
@@ -170,7 +170,7 @@ abstract class Widget
      *
      * @return string the processed widget result.
      */
-    public function afterRun(string $result): string
+    protected function afterRun(string $result): string
     {
         $event = new AfterRun($this, $result);
 
