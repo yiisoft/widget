@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\Widget\Exception\InvalidConfigException;
-use Yiisoft\Widget\Event\AfterRun;
-use Yiisoft\Widget\Event\BeforeRun;
 
 /**
  * Widget generates a string content based on some logic and input data.
@@ -17,8 +14,6 @@ use Yiisoft\Widget\Event\BeforeRun;
  */
 abstract class Widget
 {
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * The widgets that are currently being rendered (not ended). This property is maintained by {@see begin()} and
      * {@see end} methods.
@@ -26,11 +21,6 @@ abstract class Widget
      * @var array $stack
      */
     private static array $stack;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
 
     /**
      * Renders widget content.
@@ -119,7 +109,7 @@ abstract class Widget
     /**
      * This method is invoked right before the widget is executed.
      *
-     * The method will trigger the {@see BeforeRun()} event. The return value of the method will determine whether the
+     * The return value of the method will determine whether the
      * widget should continue to run.
      *
      * When overriding this method, make sure you call the parent implementation like the following:
@@ -141,18 +131,13 @@ abstract class Widget
      */
     protected function beforeRun(): bool
     {
-        $event = new BeforeRun($this);
-
-        /** @var BeforeRun $event */
-        $event = $this->eventDispatcher->dispatch($event);
-
-        return !$event->isPropagationStopped();
+        return true;
     }
 
     /**
      * This method is invoked right after a widget is executed.
      *
-     * The method will trigger the {@see AfterRun()} event. The return value of the method will be used as the widget
+     * The return value of the method will be used as the widget
      * return value.
      *
      * If you override this method, your code should look like the following:
@@ -172,12 +157,7 @@ abstract class Widget
      */
     protected function afterRun(string $result): string
     {
-        $event = new AfterRun($this, $result);
-
-        /** @var AfterRun $event */
-        $event = $this->eventDispatcher->dispatch($event);
-
-        return $event->getResult();
+        return $result;
     }
 
     /**
