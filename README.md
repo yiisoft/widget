@@ -24,5 +24,5 @@ composer require yiisoft/widget
 
 The package is tested with PHPUnit. Tests could be run with
 
-`./vendor/bin/phpunit`
+`composer test`
 
