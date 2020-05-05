@@ -79,7 +79,7 @@ abstract class Widget
      * Creates a widget instance.
      *
      * @param string|array|callable $config parameters for creating a widget
-     * @return Widget $widget.
+     * @return static widget instance
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
     final public static function widget($config = []): self
