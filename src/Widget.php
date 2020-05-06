@@ -37,6 +37,7 @@ abstract class Widget
      *
      * @param string|array|callable $config parameters for creating a widget
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     * @return static
      */
     final public static function begin($config = []): self
     {
