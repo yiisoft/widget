@@ -365,7 +365,6 @@ return [
     'directory_list' => [
         'src',
         'vendor/phpunit/phpunit/src',
-        'vendor/psr/simple-cache/src',
     ],
 
     // A list of individual files to include in analysis
