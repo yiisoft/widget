@@ -19,12 +19,12 @@
     "require": {
         "php": "^7.4",
         "psr/container": "1.0.0",
+        "yiisoft/di": "^3.0@dev",
         "yiisoft/factory": "^3.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
-        "phan/phan": "^3.0",
-        "yiisoft/di": "^3.0@dev"
+        "phan/phan": "^3.0"
     },
     "autoload": {
         "psr-4": {
