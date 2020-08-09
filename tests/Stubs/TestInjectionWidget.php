@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Yiisoft\Widget\Tests\Stubs;
 
 use Yiisoft\Widget\Widget;
