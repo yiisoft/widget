@@ -18,11 +18,19 @@ Widgets are reusable building blocks used to create complex and configurable use
 
 The package could be installed via composer:
 
-composer require yiisoft/widget
+`composer require yiisoft/widget`
 
 ## Tests
 
 The package is tested with PHPUnit. Tests could be run with
 
 `composer test`
+
+## Static analysis
+
+The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
+
+```php
+./vendor/bin/psalm
+```
 
