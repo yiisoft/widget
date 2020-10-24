@@ -56,7 +56,7 @@ abstract class Widget
      * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
      *
      * @throws InvalidConfigException
-     * @throws \InvalidConfigException
+     * @throws \Yiisoft\Widget\Exception\InvalidConfigException
      */
     final public static function end(): string
     {
