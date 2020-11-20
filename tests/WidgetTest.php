@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
+use Yiisoft\Widget\Exception\InvalidConfigException;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetA;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
-use Yiisoft\Widget\Exception\InvalidConfigException;
 
 final class WidgetTest extends TestCase
 {

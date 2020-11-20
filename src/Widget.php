@@ -18,7 +18,7 @@ abstract class Widget
      * The widgets that are currently being rendered (not ended). This property is maintained by {@see begin()} and
      * {@see end} methods.
      *
-     * @var array $stack
+     * @var array
      */
     private static array $stack;
 
@@ -35,8 +35,10 @@ abstract class Widget
     /**
      * Creates a widget assuming it should be closed with {@see end()}
      *
-     * @param string|array|callable $config parameters for creating a widget
+     * @param array|callable|string $config parameters for creating a widget
+     *
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     *
      * @return static
      */
     final public static function begin($config = []): self
@@ -79,9 +81,11 @@ abstract class Widget
     /**
      * Creates a widget instance.
      *
-     * @param string|array|callable $config parameters for creating a widget
-     * @return static widget instance
+     * @param array|callable|string $config parameters for creating a widget
+     *
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     *
+     * @return static widget instance
      */
     final public static function widget($config = []): self
     {
