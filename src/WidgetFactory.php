@@ -25,17 +25,19 @@ final class WidgetFactory extends Factory
     /**
      * Creates a widget defined by config passed
      *
-     * @param string|array|callable $config parameters for creating a widget
-     * @return Widget
+     * @param array|callable|string $config parameters for creating a widget
+     *
      * @throws \RuntimeException if factory was not initialized
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     *
+     * @return Widget
      */
     public static function createWidget($config): Widget
     {
-        if (static::$factory === null) {
+        if (self::$factory === null) {
             throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
         }
 
-        return static::$factory->create($config);
+        return self::$factory->create($config);
     }
 }
