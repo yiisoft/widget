@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Widget\Tests;
 
 use Yiisoft\Widget\Exception\InvalidConfigException;
+use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
@@ -33,6 +34,14 @@ final class WidgetTest extends TestCase
         $output = TestWidgetA::end();
 
         $this->assertSame('<run-test>', $output);
+    }
+
+    public function testBeginEndWithImmutableWidget(): void
+    {
+        ImmutableWidget::begin()->id('new');
+        $output = ImmutableWidget::end();
+
+        $this->assertSame('<run-new>', $output);
     }
 
     /**
