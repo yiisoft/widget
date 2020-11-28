@@ -49,7 +49,7 @@ abstract class Widget
 
         $widget = WidgetFactory::createWidget($config);
 
-        static::$stack[] = $widget;
+        static::$stack[] = get_class($widget);
 
         return $widget;
     }
@@ -60,7 +60,7 @@ abstract class Widget
      * @throws InvalidConfigException
      * @throws \Yiisoft\Widget\Exception\InvalidConfigException
      */
-    final public static function end(): string
+    final public function end(): string
     {
         if (empty(self::$stack)) {
             throw new InvalidConfigException(
@@ -68,14 +68,14 @@ abstract class Widget
             );
         }
 
-        /** @var static $widget */
-        $widget = array_pop(self::$stack);
+        /** @var static $widgetClass */
+        $widgetClass = array_pop(self::$stack);
 
-        if (get_class($widget) !== static::class) {
-            throw new InvalidConfigException('Expecting end() of ' . get_class($widget) . ', found ' . static::class);
+        if ($widgetClass !== static::class) {
+            throw new InvalidConfigException('Expecting end() of ' . $widgetClass . ', found ' . static::class);
         }
 
-        return $widget->render();
+        return $this->render();
     }
 
     /**
