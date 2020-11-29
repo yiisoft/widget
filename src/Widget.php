@@ -22,7 +22,7 @@ abstract class Widget
      */
     private static array $stack;
 
-    public function start()
+    public function begin()
     {
         static::$stack[] = $this;
     }
@@ -35,26 +35,6 @@ abstract class Widget
     protected function run(): string
     {
         return '';
-    }
-
-    /**
-     * Creates a widget assuming it should be closed with {@see end()}
-     *
-     * @param array|callable|string $config parameters for creating a widget
-     *
-     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
-     *
-     * @return static
-     */
-    final public static function begin($config = []): self
-    {
-        if (\is_array($config) && !array_key_exists('__class', $config)) {
-            $config['__class'] = static::class;
-        }
-
-        $widget = WidgetFactory::createWidget($config);
-
-        return $widget;
     }
 
     /**

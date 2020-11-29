@@ -30,7 +30,7 @@ final class WidgetTest extends TestCase
 
     public function testBeginEnd(): void
     {
-        $widget = TestWidgetA::begin()->id('test')->start();
+        $widget = TestWidgetA::widget()->id('test')->begin();
         $output = TestWidgetA::end();
 
         $this->assertSame('<run-test>', $output);
@@ -46,8 +46,8 @@ final class WidgetTest extends TestCase
 
     public function testBeginEndWithImmutableWidget(): void
     {
-        $widget = ImmutableWidget::begin()->id('new');
-        $widget->start();
+        $widget = ImmutableWidget::widget()->id('new');
+        $widget->begin();
         $output = $widget->end();
 
         $this->assertSame('<run-new>', $output);
@@ -69,8 +69,8 @@ final class WidgetTest extends TestCase
     public function testStackTrackingDisorder(): void
     {
         $this->expectException(InvalidConfigException::class);
-        $a = TestWidgetA::begin();
-        $b = TestWidgetB::begin();
+        $a = TestWidgetA::widget();
+        $b = TestWidgetB::widget();
         $a->end();
         $b->end();
     }
