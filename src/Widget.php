@@ -22,6 +22,11 @@ abstract class Widget
      */
     private static array $stack;
 
+    public function start()
+    {
+        static::$stack[] = $this;
+    }
+
     /**
      * Renders widget content.
      * This method is used by {@see render()} and is meant to be overridden
@@ -48,8 +53,6 @@ abstract class Widget
         }
 
         $widget = WidgetFactory::createWidget($config);
-
-        static::$stack[] = $widget;
 
         return $widget;
     }

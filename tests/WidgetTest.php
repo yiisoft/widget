@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Widget\Tests;
 
 use Yiisoft\Widget\Exception\InvalidConfigException;
+use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
@@ -29,10 +30,27 @@ final class WidgetTest extends TestCase
 
     public function testBeginEnd(): void
     {
-        TestWidgetA::begin()->id('test');
+        $widget = TestWidgetA::begin()->id('test')->start();
         $output = TestWidgetA::end();
 
         $this->assertSame('<run-test>', $output);
+    }
+
+    public function testBeginEndWithImmutableWidget(): void
+    {
+        $widget = ImmutableWidget::begin()->id('new');
+        $output = $widget->render();
+
+        $this->assertSame('<run-new>', $output);
+    }
+
+    public function testBeginEndWithImmutableWidgetBeginEnd(): void
+    {
+        $widget = ImmutableWidget::begin()->id('new');
+        $widget->start();
+        $output = $widget->end();
+
+        $this->assertSame('<run-new>', $output);
     }
 
     /**
@@ -40,8 +58,9 @@ final class WidgetTest extends TestCase
      */
     public function testStackTracking(): void
     {
+        $widget = TestWidget::widget();
         $this->expectException(InvalidConfigException::class);
-        TestWidget::end();
+        $widget->end();
     }
 
     /**
@@ -50,10 +69,10 @@ final class WidgetTest extends TestCase
     public function testStackTrackingDisorder(): void
     {
         $this->expectException(InvalidConfigException::class);
-        TestWidgetA::begin();
-        TestWidgetB::begin();
-        TestWidgetA::end();
-        TestWidgetB::end();
+        $a = TestWidgetA::begin();
+        $b = TestWidgetB::begin();
+        $a->end();
+        $b->end();
     }
 
     public function testInjection(): void
