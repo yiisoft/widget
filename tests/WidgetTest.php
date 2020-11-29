@@ -61,6 +61,13 @@ final class WidgetTest extends TestCase
         $this->assertSame('<run-new>', $output);
     }
 
+    public function testStackTrackingWithImmutableWidget(): void
+    {
+        $widget = ImmutableWidget::widget();
+        $this->expectException(InvalidConfigException::class);
+        $widget->end();
+    }
+
     /**
      * @depends testBeginEnd
      */
