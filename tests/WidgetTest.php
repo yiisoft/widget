@@ -38,7 +38,7 @@ final class WidgetTest extends TestCase
 
     public function testWidgetWithImmutableWidget(): void
     {
-        $widget = ImmutableWidget::begin()->id('new');
+        $widget = ImmutableWidget::widget()->id('new');
         $output = $widget->render();
 
         $this->assertSame('<run-new>', $output);
