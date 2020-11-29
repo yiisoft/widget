@@ -53,6 +53,14 @@ final class WidgetTest extends TestCase
         $this->assertSame('<run-new>', $output);
     }
 
+    public function testBeginEndStaticWithImmutableWidget(): void
+    {
+        $widget = ImmutableWidget::widget()->id('new')->begin();
+        $output = ImmutableWidget::end();
+
+        $this->assertSame('<run-new>', $output);
+    }
+
     /**
      * @depends testBeginEnd
      */
