@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
+use ReflectionClass;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use ReflectionException;
 use Yiisoft\Di\Container;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -26,5 +28,34 @@ abstract class TestCase extends BaseTestCase
         unset($this->container);
 
         parent::tearDown();
+    }
+
+    /**
+     * Sets an inaccessible object property to a designated value.
+     *
+     * @param object $object
+     * @param string $propertyName
+     * @param $value
+     * @param bool $revoke whether to make property inaccessible after setting
+     *
+     * @throws ReflectionException
+     */
+    protected function setInaccessibleProperty(object $object, string $propertyName, $value, bool $revoke = true): void
+    {
+        $class = new ReflectionClass($object);
+
+        while (!$class->hasProperty($propertyName)) {
+            $class = $class->getParentClass();
+        }
+
+        $property = $class->getProperty($propertyName);
+
+        $property->setAccessible(true);
+
+        $property->setValue($object, $value);
+
+        if ($revoke) {
+            $property->setAccessible(false);
+        }
     }
 }

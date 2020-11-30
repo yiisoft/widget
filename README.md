@@ -17,13 +17,42 @@ Widgets are reusable building blocks used to create complex and configurable use
 [![static analysis](https://github.com/yiisoft/widget/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/widget/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yiisoft/widget/coverage.svg)](https://shepherd.dev/github/yiisoft/widget)
 
-## Instalation
+## Installation
 
 The package could be installed via composer:
 
-`composer require yiisoft/widget`
+```shell
+composer require yiisoft/widget
+```
 
 ## General usage
+
+Regular widgets are used like the following:
+
+```php
+<?= MyWidget::widget()->options(['class' => 'testMe']) ?>
+```
+
+`options()` is an example method. There could be many methods that configure a widget.
+Note that these configuration methods are returning a clone of the widget instance. 
+
+A special type of widgets, wrapping widgets, mimic HTML opening and closing tags wrapping some content.
+They are used a bit differently:
+
+```php
+<?= MyWidget::widget()->options(['class' => 'testMe'])->begin() ?>
+    Content
+<?= MyWidget::end() ?>
+```
+
+The package ensures that all these are properly opened, closed and nested.
+
+## Implementing your own widgets
+
+In order to implement your own widget, extend from `\Yiisoft\Widget\Widget`. If it is a regular widget, it is enough
+to implement `run()` method.
+
+If it is a wrapping widget, you need to additionally implement `begin()`. Do not forget to call `parent::begin()`.
 
 ### Unit testing
 
