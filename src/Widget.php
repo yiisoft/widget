@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
-use Yiisoft\Widget\Exception\InvalidConfigException;
+use RuntimeException;
 
 /**
  * Widget generates a string content based on some logic and input data.
@@ -15,23 +15,29 @@ use Yiisoft\Widget\Exception\InvalidConfigException;
 abstract class Widget
 {
     /**
-     * The widgets that are currently being rendered (not ended). This property is maintained by {@see begin()} and
-     * {@see end} methods.
+     * The widgets that are currently opened and not yet closed.
+     * This property is maintained by {@see begin()} and {@see end()} methods.
      *
      * @var array
      */
     private static array $stack;
 
     /**
-     * @psalm-suppress MissingReturnType
+     * Used to open a wrapping widget (the one with begin/end).
+     *
+     * When implementing this method, don't forget to call parent::begin().
+     *
+     * @return string|null Opening part of widget markup.
      */
-    public function begin()
+    public function begin(): ?string
     {
         self::$stack[] = $this;
+        return null;
     }
 
     /**
      * Renders widget content.
+     *
      * This method is used by {@see render()} and is meant to be overridden
      * when implementing concrete widget.
      */
@@ -40,13 +46,12 @@ abstract class Widget
     /**
      * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
      *
-     * @throws InvalidConfigException
-     * @throws \Yiisoft\Widget\Exception\InvalidConfigException
+     * @throws RuntimeException
      */
     final public static function end(): string
     {
         if (empty(self::$stack)) {
-            throw new InvalidConfigException(
+            throw new RuntimeException(
                 'Unexpected ' . static::class . '::end() call. A matching begin() is not found.'
             );
         }
@@ -55,7 +60,7 @@ abstract class Widget
         $widget = array_pop(self::$stack);
 
         if (get_class($widget) !== static::class) {
-            throw new InvalidConfigException('Expecting end() of ' . get_class($widget) . ', found ' . static::class);
+            throw new RuntimeException('Expecting end() of ' . get_class($widget) . ', found ' . static::class . '.');
         }
 
         return $widget->render();
@@ -84,7 +89,7 @@ abstract class Widget
      *
      * @return string the result of widget execution to be outputted.
      */
-    public function render(): string
+    final public function render(): string
     {
         if (!$this->beforeRun()) {
             return '';
@@ -155,7 +160,7 @@ abstract class Widget
      * <?= MyWidget::widget()->name('test') ?>
      * ```
      */
-    public function __toString(): string
+    final public function __toString(): string
     {
         return $this->render();
     }

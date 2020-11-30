@@ -7,7 +7,6 @@ namespace Yiisoft\Widget\Tests;
 use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Widget\WidgetFactory;
-use Yiisoft\Widget\Exception\InvalidConfigException;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
@@ -74,7 +73,7 @@ final class WidgetTest extends TestCase
     public function testStackTrackingWithImmutableWidget(): void
     {
         $widget = ImmutableWidget::widget();
-        $this->expectException(InvalidConfigException::class);
+        $this->expectException(RuntimeException::class);
         $widget::end();
     }
 
@@ -84,7 +83,7 @@ final class WidgetTest extends TestCase
     public function testStackTracking(): void
     {
         $widget = TestWidget::widget();
-        $this->expectException(InvalidConfigException::class);
+        $this->expectException(RuntimeException::class);
         $widget::end();
     }
 
@@ -93,7 +92,7 @@ final class WidgetTest extends TestCase
      */
     public function testStackTrackingDisorder(): void
     {
-        $this->expectException(InvalidConfigException::class);
+        $this->expectException(RuntimeException::class);
         $a = TestWidgetA::widget();
         $b = TestWidgetB::widget();
         $a::end();
@@ -105,7 +104,7 @@ final class WidgetTest extends TestCase
      */
     public function testStackTrackingDiferentClass(): void
     {
-        $this->expectException(InvalidConfigException::class);
+        $this->expectException(RuntimeException::class);
         TestWidgetA::widget()->begin();
         TestWidgetB::end();
     }
@@ -123,6 +122,6 @@ final class WidgetTest extends TestCase
         $widgetFactory = $reflection->newInstanceWithoutConstructor();
         $this->setInaccessibleProperty($widgetFactory, 'factory', null);
         $this->expectException(RuntimeException::class);
-        $widget = TestWidget::widget()->id('w0')->render();
+        TestWidget::widget()->id('w0')->render();
     }
 }

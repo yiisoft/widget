@@ -6,6 +6,7 @@ namespace Yiisoft\Widget\Tests;
 
 use ReflectionClass;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use ReflectionException;
 use Yiisoft\Di\Container;
 use Yiisoft\Widget\WidgetFactory;
 
