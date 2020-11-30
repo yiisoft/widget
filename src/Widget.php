@@ -22,9 +22,12 @@ abstract class Widget
      */
     private static array $stack;
 
+    /**
+     * @psalm-suppress MissingReturnType
+     */
     public function begin()
     {
-        static::$stack[] = $this;
+        self::$stack[] = $this;
     }
 
     /**

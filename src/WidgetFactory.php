@@ -30,6 +30,7 @@ final class WidgetFactory extends Factory
      * @throws \RuntimeException if factory was not initialized
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      *
+     * @psalm-suppress MoreSpecificReturnType
      * @return Widget
      */
     public static function createWidget($config): Widget
@@ -38,6 +39,7 @@ final class WidgetFactory extends Factory
             throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
         }
 
+        /** @psalm-suppress LessSpecificReturnStatement */
         return self::$factory->create($config);
     }
 }
