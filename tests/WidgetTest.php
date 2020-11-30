@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
+use ReflectionClass;
+use RuntimeException;
+use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Widget\Exception\InvalidConfigException;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
@@ -19,6 +22,13 @@ final class WidgetTest extends TestCase
         $output = TestWidget::widget()->id('w0')->render();
 
         $this->assertSame('<run-w0>', $output);
+    }
+
+    public function testToStringWidget(): void
+    {
+        $output = TestWidget::widget()->id('w0');
+
+        $this->assertSame('<run-w0>', (string) $output);
     }
 
     public function testWidgetArrayConfig(): void
@@ -90,9 +100,29 @@ final class WidgetTest extends TestCase
         $b::end();
     }
 
+    /**
+     * @depends testBeginEnd
+     */
+    public function testStackTrackingDiferentClass(): void
+    {
+        $this->expectException(InvalidConfigException::class);
+        TestWidgetA::widget()->begin();
+        TestWidgetB::end();
+    }
+
     public function testInjection(): void
     {
         $widget = TestInjectionWidget::widget();
         $this->assertInstanceOf(Injectable::class, $widget->getInjectable());
+    }
+
+    public function testFactoryExceptionWidget(): void
+    {
+        $reflection = new ReflectionClass(WidgetFactory::class);
+
+        $widgetFactory = $reflection->newInstanceWithoutConstructor();
+        $this->setInaccessibleProperty($widgetFactory, 'factory', null);
+        $this->expectException(RuntimeException::class);
+        $widget = TestWidget::widget()->id('w0')->render();
     }
 }

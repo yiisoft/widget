@@ -35,10 +35,7 @@ abstract class Widget
      * This method is used by {@see render()} and is meant to be overridden
      * when implementing concrete widget.
      */
-    protected function run(): string
-    {
-        return '';
-    }
+    abstract protected function run(): string;
 
     /**
      * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
