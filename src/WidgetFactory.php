@@ -31,6 +31,7 @@ final class WidgetFactory extends Factory
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      *
      * @psalm-suppress MoreSpecificReturnType
+     *
      * @return Widget
      */
     public static function createWidget($config): Widget
