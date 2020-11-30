@@ -25,6 +25,39 @@ The package could be installed via composer:
 
 ## General usage
 
+Widget without begin/end:
+
+```php
+$widget = MyWidget::widget()->options(['class' => 'testMe']);
+$widget->render();
+```
+
+Widget with begin/end:
+
+```php
+$widget = MyWidget::widget()->options(['class' => 'testMe']);
+$widget->begin();
+    // content
+$widget::end();
+```
+
+```php
+MyWidget::widget()->options(['class' => 'testMe'])->begin();
+    // content
+MyWidget::end();
+```
+
+You must define the `begin()` method of your widget like this:
+
+```php
+public function begin()
+{
+    parent::begin();
+
+    // your content
+}
+```
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
