@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use RuntimeException;
+use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use function array_key_exists;
+use function get_class;
+use function is_array;
 
 /**
  * Widget generates a string content based on some logic and input data.
@@ -71,13 +75,13 @@ abstract class Widget
      *
      * @param array|callable|string $config parameters for creating a widget
      *
-     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     * @throws InvalidConfigException
      *
      * @return static widget instance
      */
     final public static function widget($config = []): self
     {
-        if (\is_array($config) && !array_key_exists('__class', $config)) {
+        if (is_array($config) && !array_key_exists('__class', $config)) {
             $config['__class'] = static::class;
         }
 
