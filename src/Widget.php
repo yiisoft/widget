@@ -6,6 +6,7 @@ namespace Yiisoft\Widget;
 
 use RuntimeException;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Html\NoEncodeStringableInterface;
 use function array_key_exists;
 use function get_class;
 use function is_array;
@@ -16,7 +17,7 @@ use function is_array;
  *
  * This is the base class that is meant to be inherited when implementing your own widgets.
  */
-abstract class Widget
+abstract class Widget implements NoEncodeStringableInterface
 {
     /**
      * The widgets that are currently opened and not yet closed.
