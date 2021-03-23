@@ -43,8 +43,11 @@
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         },
+        "config-plugin-options": {
+            "source-directory": "config"
+        },
         "config-plugin": {
-            "providers": "config/providers.php"
+            "providers": "providers.php"
         }
     },
     "scripts": {
