@@ -32,7 +32,11 @@ final class WidgetTest extends TestCase
 
     public function testWidgetArrayConfig(): void
     {
-        $output = TestWidget::widget(['id()' => ['w0']])->render();
+        $output = TestWidget::widget([
+            'callMethods' => [
+                'id' => ['w0'],
+            ],
+        ])->render();
 
         $this->assertSame('<run-w0>', $output);
     }

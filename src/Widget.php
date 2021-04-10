@@ -83,7 +83,7 @@ abstract class Widget implements NoEncodeStringableInterface
     final public static function widget($config = []): self
     {
         if (is_array($config) && !array_key_exists('__class', $config)) {
-            $config['__class'] = static::class;
+            $config['class'] = static::class;
         }
 
         return WidgetFactory::createWidget($config);
