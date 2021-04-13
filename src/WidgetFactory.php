@@ -28,7 +28,7 @@ final class WidgetFactory extends Factory
      * @param array|callable|string $config parameters for creating a widget
      *
      * @throws \RuntimeException if factory was not initialized
-     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     * @throws \Yiisoft\Factory\Exception\InvalidConfigException
      *
      * @psalm-suppress MoreSpecificReturnType
      *

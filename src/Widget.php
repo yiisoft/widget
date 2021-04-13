@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use RuntimeException;
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Html\NoEncodeStringableInterface;
 use function array_key_exists;
 use function get_class;
@@ -82,8 +82,8 @@ abstract class Widget implements NoEncodeStringableInterface
      */
     final public static function widget($config = []): self
     {
-        if (is_array($config) && !array_key_exists('__class', $config)) {
-            $config['__class'] = static::class;
+        if (is_array($config) && !array_key_exists('class', $config)) {
+            $config['class'] = static::class;
         }
 
         return WidgetFactory::createWidget($config);
