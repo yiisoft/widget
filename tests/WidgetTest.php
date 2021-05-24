@@ -168,7 +168,7 @@ final class WidgetTest extends TestCase
     {
         $exception = new WidgetFactoryInitializationException();
 
-        $this->assertSame('WidgetFactory is not initialized.', $exception->getName());
+        $this->assertSame('WidgetFactory failed to create widget because it is not initialized.', $exception->getName());
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
     }
 }
