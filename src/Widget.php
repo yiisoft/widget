@@ -24,7 +24,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * The widgets that are currently opened and not yet closed.
      * This property is maintained by {@see begin()} and {@see end()} methods.
      *
-     * @var array
+     * @var static[]
      */
     private static array $stack;
 
@@ -62,7 +62,6 @@ abstract class Widget implements NoEncodeStringableInterface
             );
         }
 
-        /** @var static $widget */
         $widget = array_pop(self::$stack);
 
         if (get_class($widget) !== static::class) {
@@ -75,11 +74,11 @@ abstract class Widget implements NoEncodeStringableInterface
     /**
      * Creates a widget instance.
      *
-     * @param array|callable|string $config parameters for creating a widget
+     * @param array|callable|string $config The parameters for creating a widget.
      *
      * @throws InvalidConfigException
      *
-     * @return static widget instance
+     * @return static The widget instance.
      */
     final public static function widget($config = []): self
     {
@@ -93,7 +92,7 @@ abstract class Widget implements NoEncodeStringableInterface
     /**
      * Executes the widget.
      *
-     * @return string the result of widget execution to be outputted.
+     * @return string The result of widget execution to be outputted.
      */
     final public function render(): string
     {
@@ -101,20 +100,18 @@ abstract class Widget implements NoEncodeStringableInterface
             return '';
         }
 
-        $result = $this->run();
-        return $this->afterRun($result);
+        return $this->afterRun($this->run());
     }
 
     /**
      * This method is invoked right before the widget is executed.
      *
-     * The return value of the method will determine whether the
-     * widget should continue to run.
+     * The return value of the method will determine whether the widget should continue to run.
      *
      * When overriding this method, make sure you call the parent implementation like the following:
      *
      * ```php
-     * public function beforeRun()
+     * public function beforeRun(): bool
      * {
      *     if (!parent::beforeRun()) {
      *         return false;
@@ -126,7 +123,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * }
      * ```
      *
-     * @return bool whether the widget should continue to be executed.
+     * @return bool Whether the widget should continue to be executed.
      */
     protected function beforeRun(): bool
     {
@@ -136,13 +133,12 @@ abstract class Widget implements NoEncodeStringableInterface
     /**
      * This method is invoked right after a widget is executed.
      *
-     * The return value of the method will be used as the widget
-     * return value.
+     * The return value of the method will be used as the widget return value.
      *
      * If you override this method, your code should look like the following:
      *
      * ```php
-     * public function afterRun($result)
+     * public function afterRun(string $result): string
      * {
      *     $result = parent::afterRun($result);
      *     // your custom code here
@@ -150,9 +146,9 @@ abstract class Widget implements NoEncodeStringableInterface
      * }
      * ```
      *
-     * @param string $result the widget return result.
+     * @param string $result The widget return result.
      *
-     * @return string the processed widget result.
+     * @return string The processed widget result.
      */
     protected function afterRun(string $result): string
     {
@@ -163,7 +159,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * Allows not to call `->render()` explicitly:
      *
      * ```php
-     * <?= MyWidget::widget()->name('test') ?>
+     * <?= MyWidget::widget(); ?>
      * ```
      */
     final public function __toString(): string
