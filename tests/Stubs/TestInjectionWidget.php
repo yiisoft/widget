@@ -6,7 +6,7 @@ namespace Yiisoft\Widget\Tests\Stubs;
 
 use Yiisoft\Widget\Widget;
 
-class TestInjectionWidget extends Widget
+final class TestInjectionWidget extends Widget
 {
     private Injectable $injectable;
 

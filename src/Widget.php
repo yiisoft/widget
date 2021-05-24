@@ -7,6 +7,7 @@ namespace Yiisoft\Widget;
 use RuntimeException;
 use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Html\NoEncodeStringableInterface;
+
 use function array_key_exists;
 use function get_class;
 use function is_array;

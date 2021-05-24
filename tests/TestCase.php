@@ -6,19 +6,21 @@ namespace Yiisoft\Widget\Tests;
 
 use ReflectionClass;
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use ReflectionException;
-use Yiisoft\Di\Container;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\WidgetFactory;
 
 abstract class TestCase extends BaseTestCase
 {
-    private Container $container;
+    private SimpleContainer $container;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->container = new Container([]);
+        $this->container = new SimpleContainer([
+            Injectable::class => new Injectable(),
+        ]);
 
         WidgetFactory::initialize($this->container, []);
     }
@@ -37,8 +39,6 @@ abstract class TestCase extends BaseTestCase
      * @param string $propertyName
      * @param $value
      * @param bool $revoke whether to make property inaccessible after setting
-     *
-     * @throws ReflectionException
      */
     protected function setInaccessibleProperty(object $object, string $propertyName, $value, bool $revoke = true): void
     {

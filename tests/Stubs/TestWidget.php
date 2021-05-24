@@ -6,7 +6,7 @@ namespace Yiisoft\Widget\Tests\Stubs;
 
 use Yiisoft\Widget\Widget;
 
-class TestWidget extends Widget
+final class TestWidget extends Widget
 {
     private string $id;
 
