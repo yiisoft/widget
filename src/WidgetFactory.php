@@ -12,8 +12,8 @@ use Yiisoft\Factory\FactoryInterface;
 
 /**
  * WidgetFactory creates an instance of the widget based on the specified configuration
- * {@see WidgetFactory::createWidget()}. Before creating a widget, need to initialize
- * the WidgetFactory {@see WidgetFactory::initialize()}.
+ * {@see WidgetFactory::createWidget()}. Before creating a widget, you need to initialize
+ * the WidgetFactory with {@see WidgetFactory::initialize()}.
  */
 final class WidgetFactory extends Factory
 {
