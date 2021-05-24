@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\Tests\Stubs\TestWidgetBeforeRenderFalse;
 use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
@@ -13,9 +16,30 @@ use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetA;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
+use Yiisoft\Widget\WidgetFactoryInitializationException;
 
 final class WidgetTest extends TestCase
 {
+    private ?SimpleContainer $container;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->container = new SimpleContainer([
+            Injectable::class => new Injectable(),
+        ]);
+
+        WidgetFactory::initialize($this->container, []);
+    }
+
+    protected function tearDown(): void
+    {
+        unset($this->container);
+
+        parent::tearDown();
+    }
+
     public function testWidget(): void
     {
         $output = TestWidget::widget()->id('w0')->render();
@@ -72,6 +96,15 @@ final class WidgetTest extends TestCase
         $this->assertSame('<run-new>', $output);
     }
 
+    public function testBeginEndWithBeforeRenderFalse(): void
+    {
+        $widget = TestWidgetBeforeRenderFalse::widget();
+        $widget->begin();
+        $output = $widget::end();
+
+        $this->assertSame('', $output);
+    }
+
     public function testStackTrackingWithImmutableWidget(): void
     {
         $widget = ImmutableWidget::widget();
@@ -117,13 +150,25 @@ final class WidgetTest extends TestCase
         $this->assertInstanceOf(Injectable::class, $widget->getInjectable());
     }
 
-    public function testFactoryExceptionWidget(): void
+    public function testWidgetThrownExceptionForNotInitializeWidgetFactory(): void
     {
-        $reflection = new ReflectionClass(WidgetFactory::class);
+        $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
+        $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
+        $property = $reflection->getProperty('factory');
+        $property->setAccessible(true);
+        $property->setValue($widgetFactoryReflection, null);
+        $property->setAccessible(false);
 
-        $widgetFactory = $reflection->newInstanceWithoutConstructor();
-        $this->setInaccessibleProperty($widgetFactory, 'factory', null);
-        $this->expectException(RuntimeException::class);
+        $this->expectException(WidgetFactoryInitializationException::class);
+        $this->expectExceptionMessage('Widget factory should be initialized with WidgetFactory::initialize() call.');
         TestWidget::widget()->id('w0')->render();
+    }
+
+    public function testWidgetFactoryInitializationExceptionMessages(): void
+    {
+        $exception = new WidgetFactoryInitializationException();
+
+        $this->assertSame('WidgetFactory is not initialized.', $exception->getName());
+        $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
     }
 }
