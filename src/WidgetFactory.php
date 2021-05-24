@@ -6,17 +6,37 @@ namespace Yiisoft\Widget;
 
 use Psr\Container\ContainerInterface;
 use Yiisoft\Factory\Factory;
+use Yiisoft\Factory\Exception\InvalidConfigException;
+use Yiisoft\Factory\Exception\NotInstantiableException;
 use Yiisoft\Factory\FactoryInterface;
 
 final class WidgetFactory extends Factory
 {
     private static ?FactoryInterface $factory = null;
 
+    /**
+     * @param ContainerInterface|null $container
+     * @param array<string, mixed> $definitions
+     *
+     * @throws InvalidConfigException
+     * @throws NotInstantiableException
+     *
+     * @see Factory::__construct()
+     */
     private function __construct(ContainerInterface $container = null, array $definitions = [])
     {
         parent::__construct($container, $definitions);
     }
 
+    /**
+     * @param ContainerInterface|null $container
+     * @param array<string, mixed> $definitions
+     *
+     * @throws InvalidConfigException
+     * @throws NotInstantiableException
+     *
+     * @see Factory::__construct()
+     */
     public static function initialize(ContainerInterface $container = null, array $definitions = []): void
     {
         self::$factory = new self($container, $definitions);
@@ -28,11 +48,14 @@ final class WidgetFactory extends Factory
      * @param array|callable|string $config parameters for creating a widget
      *
      * @throws \RuntimeException if factory was not initialized
-     * @throws \Yiisoft\Factory\Exception\InvalidConfigException
+     * @throws InvalidConfigException
      *
-     * @psalm-suppress MoreSpecificReturnType
+     * @see Factory::create()
      *
      * @return Widget
+     *
+     * @psalm-suppress MixedInferredReturnType
+     * @psalm-suppress MixedReturnStatement
      */
     public static function createWidget($config): Widget
     {
@@ -40,7 +63,6 @@ final class WidgetFactory extends Factory
             throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
         }
 
-        /** @psalm-suppress LessSpecificReturnStatement */
         return self::$factory->create($config);
     }
 }
