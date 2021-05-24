@@ -11,13 +11,13 @@ final class WidgetFactoryInitializationException extends RuntimeException implem
 {
     public function getName(): string
     {
-        return 'WidgetFactory failed to create widget because it is not initialized.';
+        return 'Failed to create a widget because WidgetFactory is not initialized.';
     }
 
     public function getSolution(): ?string
     {
         return <<<SOLUTION
-            To initialie widget factory call `WidgetFactory::initialize()` before using the widget.
+            To initialize the widget factory call `WidgetFactory::initialize()` before using the widget.
             It is a good idea to do that for the whole application.
             See Yii example in the configuration file of this package `config/providers.php`.
         SOLUTION;
