@@ -6,7 +6,7 @@ namespace Yiisoft\Widget\Tests\Stubs;
 
 use Yiisoft\Widget\Widget;
 
-class ImmutableWidget extends Widget
+final class ImmutableWidget extends Widget
 {
     private string $id = 'original';
 
