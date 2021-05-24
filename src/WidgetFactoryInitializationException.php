@@ -11,15 +11,15 @@ final class WidgetFactoryInitializationException extends RuntimeException implem
 {
     public function getName(): string
     {
-        return 'WidgetFactory is not initialized.';
+        return 'WidgetFactory failed to create widget because it is not initialized.';
     }
 
     public function getSolution(): ?string
     {
         return <<<SOLUTION
-            The `WidgetFactory::initialize()` method must be called when the application is initialized.
-            Yii application templates use service providers that are implementations of `Yiisoft\Di\Contracts\ServiceProviderInterface`.
-            See the example in the configuration file of this package `config/providers.php`.
+            To initialie widget factory call `WidgetFactory::initialize()` before using the widget.
+            It is a good idea to do that for the whole application.
+            See Yii example in the configuration file of this package `config/providers.php`.
         SOLUTION;
     }
 }
