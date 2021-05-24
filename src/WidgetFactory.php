@@ -10,6 +10,11 @@ use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Factory\Exception\NotInstantiableException;
 use Yiisoft\Factory\FactoryInterface;
 
+/**
+ * WidgetFactory creates an instance of the widget based on the specified configuration
+ * {@see WidgetFactory::createWidget()}. Before creating a widget, you need to initialize
+ * the WidgetFactory with {@see WidgetFactory::initialize()}.
+ */
 final class WidgetFactory extends Factory
 {
     private static ?FactoryInterface $factory = null;
@@ -43,11 +48,11 @@ final class WidgetFactory extends Factory
     }
 
     /**
-     * Creates a widget defined by config passed
+     * Creates a widget defined by config passed.
      *
-     * @param array|callable|string $config parameters for creating a widget
+     * @param array|callable|string $config The parameters for creating a widget.
      *
-     * @throws \RuntimeException if factory was not initialized
+     * @throws WidgetFactoryInitializationException If factory was not initialized.
      * @throws InvalidConfigException
      *
      * @see Factory::create()
@@ -60,7 +65,9 @@ final class WidgetFactory extends Factory
     public static function createWidget($config): Widget
     {
         if (self::$factory === null) {
-            throw new \RuntimeException('Widget factory should be initialized with WidgetFactory::initialize() call.');
+            throw new WidgetFactoryInitializationException(
+                'Widget factory should be initialized with WidgetFactory::initialize() call.',
+            );
         }
 
         return self::$factory->create($config);
