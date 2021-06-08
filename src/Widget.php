@@ -44,14 +44,6 @@ abstract class Widget implements NoEncodeStringableInterface
     }
 
     /**
-     * Renders widget content.
-     *
-     * This method is used by {@see render()} and is meant to be overridden
-     * when implementing concrete widget.
-     */
-    abstract protected function run(): string;
-
-    /**
      * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
      *
      * @throws RuntimeException
@@ -113,6 +105,26 @@ abstract class Widget implements NoEncodeStringableInterface
     }
 
     /**
+     * Allows not to call `->render()` explicitly:
+     *
+     * ```php
+     * <?= MyWidget::widget(); ?>
+     * ```
+     */
+    final public function __toString(): string
+    {
+        return $this->render();
+    }
+
+    /**
+     * Renders widget content.
+     *
+     * This method is used by {@see render()} and is meant to be overridden
+     * when implementing concrete widget.
+     */
+    abstract protected function run(): string;
+
+    /**
      * This method is invoked right before the widget is executed.
      *
      * The return value of the method will determine whether the widget should continue to run.
@@ -162,17 +174,5 @@ abstract class Widget implements NoEncodeStringableInterface
     protected function afterRun(string $result): string
     {
         return $result;
-    }
-
-    /**
-     * Allows not to call `->render()` explicitly:
-     *
-     * ```php
-     * <?= MyWidget::widget(); ?>
-     * ```
-     */
-    final public function __toString(): string
-    {
-        return $this->render();
     }
 }
