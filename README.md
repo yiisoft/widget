@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="126px">
+        <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="100px">
     </a>
     <h1 align="center">Yii Widget</h1>
     <br>
@@ -64,8 +64,9 @@ the widget factory call `WidgetFactory::initialize()` before using the widget.
 \Yiisoft\Widget\WidgetFactory::initialize($container);
 ```
 
-It is a good idea to do that for the whole application. See Yii example in the configuration file of this
-package [`config/providers.php`](https://github.com/yiisoft/widget/blob/master/config/providers.php).
+The factory initialization must be performed only once. It is a good idea to do that for the whole application.
+See Yii example in the configuration file of this package
+[`config/providers.php`](https://github.com/yiisoft/widget/blob/master/config/providers.php).
 
 ### Configuring the widget
 
@@ -104,7 +105,7 @@ package documentation.
 
 ### Widget for capturing content
 
-Some widgets can take a block of content which should be enclosed between the invocation of `begin()` and `and()`
+Some widgets can take a block of content which should be enclosed between the invocation of `begin()` and `end()`
 methods. These are wrapping widgets that mimic opening and closing HTML tags that wrap some content.
 They are used a bit differently:
 
