@@ -9,8 +9,10 @@ use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Html\NoEncodeStringableInterface;
 
 use function array_key_exists;
+use function array_pop;
 use function get_class;
 use function is_array;
+use function sprintf;
 
 /**
  * Widget generates a string content based on some logic and input data.
@@ -57,15 +59,22 @@ abstract class Widget implements NoEncodeStringableInterface
     final public static function end(): string
     {
         if (empty(self::$stack)) {
-            throw new RuntimeException(
-                'Unexpected ' . static::class . '::end() call. A matching begin() is not found.'
-            );
+            throw new RuntimeException(sprintf(
+                'Unexpected "%s::end()" call. A matching "%s::begin()" is not found.',
+                static::class,
+                static::class,
+            ));
         }
 
         $widget = array_pop(self::$stack);
+        $widgetClass = get_class($widget);
 
-        if (get_class($widget) !== static::class) {
-            throw new RuntimeException('Expecting end() of ' . get_class($widget) . ', found ' . static::class . '.');
+        if ($widgetClass !== static::class) {
+            throw new RuntimeException(sprintf(
+                'Expecting "%s::end()" call, found "%s::end()".',
+                $widgetClass,
+                static::class,
+            ));
         }
 
         return $widget->render();
