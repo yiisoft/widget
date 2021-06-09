@@ -132,7 +132,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * When overriding this method, make sure you call the parent implementation like the following:
      *
      * ```php
-     * public function beforeRun(): bool
+     * protected function beforeRun(): bool
      * {
      *     if (!parent::beforeRun()) {
      *         return false;
@@ -159,7 +159,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * If you override this method, your code should look like the following:
      *
      * ```php
-     * public function afterRun(string $result): string
+     * protected function afterRun(string $result): string
      * {
      *     $result = parent::afterRun($result);
      *     // your custom code here

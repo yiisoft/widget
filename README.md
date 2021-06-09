@@ -32,7 +32,7 @@ composer require yiisoft/widget --prefer-dist
 ## General usage
 
 In order to implement your own widget, you need to create a class that extends the abstract class
-`Yiisoft\Widget\Widget`. If it is a regular widget, it is enough to implement `run()` method.
+`Yiisoft\Widget\Widget`. In most cases it is enough to implement `run()` method.
 
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
@@ -44,7 +44,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 }
 ```
 
-To get the string "My first widget." in the view, just call the `widget()` method, inside which the
+To get the string "My first widget." in the view, call the `widget()` method. Inside which the
 `Yiisoft\Widget\WidgetFactory` will create an instance of the `MyWidget`, and when converting the object
 to a string, the declared `run()` method will be called.
 
@@ -53,8 +53,8 @@ to a string, the declared `run()` method will be called.
 ```
 
 The `Yiisoft\Widget\WidgetFactory` factory uses a [PSR-11 Container](https://github.com/php-fig/container)
-instance to create widget objects, so you can accept dependencies in your widget's constructor. To initialize
-the widget factory call `WidgetFactory::initialize()` before using the widget.
+instance to create widget objects, so you can require dependencies by listing them in your widget's constructor.
+To initialize the widget factory call `WidgetFactory::initialize()` once before using widgets.
 
 ```php
 /**
@@ -64,8 +64,7 @@ the widget factory call `WidgetFactory::initialize()` before using the widget.
 \Yiisoft\Widget\WidgetFactory::initialize($container);
 ```
 
-The factory initialization must be performed only once. It is a good idea to do that for the whole application.
-See Yii example in the configuration file of this package
+It is a good idea to do that for the whole application. See Yii example in the configuration file of this package
 [`config/providers.php`](https://github.com/yiisoft/widget/blob/master/config/providers.php).
 
 ### Configuring the widget
@@ -115,8 +114,7 @@ They are used a bit differently:
 <?= MyWidget::end() ?>
 ```
 
-For your widget to do this, you need override the parent `begin()` method and don't forget to call `parent::begin()`.
-For example like this:
+For your widget to do this, you need override the parent `begin()` method and don't forget to call `parent::begin()`:
 
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
@@ -136,8 +134,40 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 }
 ```
 
-The package ensures that all widgets are properly opened, closed and nested. For a description of all the methods that
-can be overridden, see the [`Yiisoft\Widget\Widget`](https://github.com/yiisoft/widget/blob/master/src/Widget.php) class.
+The package ensures that all widgets are properly opened, closed and nested.
+
+### Additional methods for customizing the run
+
+In addition to the `run()` method, you can override two other methods, `beforeRun()` and `afterRun()`.
+
+The `beforeRun()` method is called right before running the widget. The return value of the method
+will determine whether the widget should continue to run. When overriding this method, make sure you
+call the parent implementation like the following:
+
+```php
+protected function beforeRun(): bool
+{
+    if (!parent::beforeRun()) {
+       return false;
+    }
+
+    // your custom code here
+
+    return true; // or false to not run the widget
+}
+```
+
+The `afterRun()` method is called right after running the widget. The return value of the method will be used
+as the widget return value. If you override this method, your code should look like the following:
+
+```php
+protected function afterRun(string $result): string
+{
+    $result = parent::afterRun($result);
+    // your custom code here
+    return $result;
+}
+```
 
 ## Testing
 
