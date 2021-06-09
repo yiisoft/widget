@@ -9,8 +9,10 @@ use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Html\NoEncodeStringableInterface;
 
 use function array_key_exists;
+use function array_pop;
 use function get_class;
 use function is_array;
+use function sprintf;
 
 /**
  * Widget generates a string content based on some logic and input data.
@@ -42,14 +44,6 @@ abstract class Widget implements NoEncodeStringableInterface
     }
 
     /**
-     * Renders widget content.
-     *
-     * This method is used by {@see render()} and is meant to be overridden
-     * when implementing concrete widget.
-     */
-    abstract protected function run(): string;
-
-    /**
      * Checks that the widget was opened with {@see begin()}. If so, runs it and returns content generated.
      *
      * @throws RuntimeException
@@ -57,15 +51,22 @@ abstract class Widget implements NoEncodeStringableInterface
     final public static function end(): string
     {
         if (empty(self::$stack)) {
-            throw new RuntimeException(
-                'Unexpected ' . static::class . '::end() call. A matching begin() is not found.'
-            );
+            throw new RuntimeException(sprintf(
+                'Unexpected "%s::end()" call. A matching "%s::begin()" is not found.',
+                static::class,
+                static::class,
+            ));
         }
 
         $widget = array_pop(self::$stack);
+        $widgetClass = get_class($widget);
 
-        if (get_class($widget) !== static::class) {
-            throw new RuntimeException('Expecting end() of ' . get_class($widget) . ', found ' . static::class . '.');
+        if ($widgetClass !== static::class) {
+            throw new RuntimeException(sprintf(
+                'Expecting "%s::end()" call, found "%s::end()".',
+                $widgetClass,
+                static::class,
+            ));
         }
 
         return $widget->render();
@@ -104,6 +105,26 @@ abstract class Widget implements NoEncodeStringableInterface
     }
 
     /**
+     * Allows not to call `->render()` explicitly:
+     *
+     * ```php
+     * <?= MyWidget::widget(); ?>
+     * ```
+     */
+    final public function __toString(): string
+    {
+        return $this->render();
+    }
+
+    /**
+     * Renders widget content.
+     *
+     * This method is used by {@see render()} and is meant to be overridden
+     * when implementing concrete widget.
+     */
+    abstract protected function run(): string;
+
+    /**
      * This method is invoked right before the widget is executed.
      *
      * The return value of the method will determine whether the widget should continue to run.
@@ -111,7 +132,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * When overriding this method, make sure you call the parent implementation like the following:
      *
      * ```php
-     * public function beforeRun(): bool
+     * protected function beforeRun(): bool
      * {
      *     if (!parent::beforeRun()) {
      *         return false;
@@ -138,7 +159,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * If you override this method, your code should look like the following:
      *
      * ```php
-     * public function afterRun(string $result): string
+     * protected function afterRun(string $result): string
      * {
      *     $result = parent::afterRun($result);
      *     // your custom code here
@@ -153,17 +174,5 @@ abstract class Widget implements NoEncodeStringableInterface
     protected function afterRun(string $result): string
     {
         return $result;
-    }
-
-    /**
-     * Allows not to call `->render()` explicitly:
-     *
-     * ```php
-     * <?= MyWidget::widget(); ?>
-     * ```
-     */
-    final public function __toString(): string
-    {
-        return $this->render();
     }
 }
