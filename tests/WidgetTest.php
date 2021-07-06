@@ -8,14 +8,15 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\Tests\Stubs\TestWidgetAfterRender;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetBeforeRenderFalse;
-use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetA;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
+use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Widget\WidgetFactoryInitializationException;
 
 final class WidgetTest extends TestCase
@@ -103,6 +104,15 @@ final class WidgetTest extends TestCase
         $output = $widget::end();
 
         $this->assertSame('', $output);
+    }
+
+    public function testBeginEndWithAfterRender(): void
+    {
+        $widget = TestWidgetAfterRender::widget();
+        $widget->begin();
+        $output = $widget::end();
+
+        $this->assertSame('<run-' . TestWidgetAfterRender::class . '><after-run>', $output);
     }
 
     public function testStackTrackingWithImmutableWidget(): void
