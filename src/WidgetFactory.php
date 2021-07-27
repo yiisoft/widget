@@ -27,7 +27,7 @@ final class WidgetFactory
      * @param ContainerInterface|null $container
      * @param array $definitions
      *
-     * @psalm-param array<string, mixed>
+     * @psalm-param array<string, mixed> $definitions
      *
      * @throws InvalidConfigException
      *
