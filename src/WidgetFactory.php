@@ -8,7 +8,6 @@ use Psr\Container\ContainerInterface;
 use Yiisoft\Factory\Factory;
 use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Factory\Exception\NotInstantiableException;
-use Yiisoft\Factory\FactoryInterface;
 
 /**
  * WidgetFactory creates an instance of the widget based on the specified configuration
@@ -17,7 +16,7 @@ use Yiisoft\Factory\FactoryInterface;
  */
 final class WidgetFactory extends Factory
 {
-    private static ?FactoryInterface $factory = null;
+    private static ?self $factory = null;
 
     /**
      * @param ContainerInterface|null $container
