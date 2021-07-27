@@ -5,45 +5,40 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use Psr\Container\ContainerInterface;
+use Yiisoft\Factory\Exception\NotFoundException;
+use Yiisoft\Factory\Exception\NotInstantiableException;
 use Yiisoft\Factory\Factory;
 use Yiisoft\Factory\Exception\InvalidConfigException;
-use Yiisoft\Factory\Exception\NotInstantiableException;
 
 /**
  * WidgetFactory creates an instance of the widget based on the specified configuration
  * {@see WidgetFactory::createWidget()}. Before creating a widget, you need to initialize
  * the WidgetFactory with {@see WidgetFactory::initialize()}.
  */
-final class WidgetFactory extends Factory
+final class WidgetFactory
 {
-    private static ?self $factory = null;
+    private static ?Factory $factory = null;
 
-    /**
-     * @param ContainerInterface|null $container
-     * @param array<string, mixed> $definitions
-     *
-     * @throws InvalidConfigException
-     * @throws NotInstantiableException
-     *
-     * @see Factory::__construct()
-     */
-    private function __construct(ContainerInterface $container = null, array $definitions = [])
+    private function __construct()
     {
-        parent::__construct($container, $definitions);
     }
 
     /**
      * @param ContainerInterface|null $container
-     * @param array<string, mixed> $definitions
+     * @param array $definitions
+     *
+     * @psalm-param array<string, mixed> $definitions
      *
      * @throws InvalidConfigException
-     * @throws NotInstantiableException
      *
      * @see Factory::__construct()
      */
-    public static function initialize(ContainerInterface $container = null, array $definitions = []): void
-    {
-        self::$factory = new self($container, $definitions);
+    public static function initialize(
+        ContainerInterface $container = null,
+        array $definitions = [],
+        bool $validate = true
+    ): void {
+        self::$factory = new Factory($container, $definitions, $validate);
     }
 
     /**
@@ -53,6 +48,8 @@ final class WidgetFactory extends Factory
      *
      * @throws WidgetFactoryInitializationException If factory was not initialized.
      * @throws InvalidConfigException
+     * @throws NotFoundException
+     * @throws NotInstantiableException
      *
      * @see Factory::create()
      *
