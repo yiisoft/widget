@@ -48,7 +48,7 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "providers": "providers.php"
+            "bootstrap": "bootstrap.php"
         }
     },
     "scripts": {
