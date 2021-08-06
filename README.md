@@ -65,7 +65,7 @@ To initialize the widget factory call `WidgetFactory::initialize()` once before 
 ```
 
 It is a good idea to do that for the whole application. See Yii example in the configuration file of this package
-[`config/providers.php`](https://github.com/yiisoft/widget/blob/master/config/providers.php).
+[`config/bootstrap.php`](https://github.com/yiisoft/widget/blob/master/config/bootstrap.php).
 
 ### Configuring the widget
 
