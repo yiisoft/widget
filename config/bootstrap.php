@@ -8,5 +8,5 @@ use Yiisoft\Widget\WidgetFactory;
 return [
     static function (ContainerInterface $container) {
         WidgetFactory::initialize($container);
-    }
+    },
 ];
