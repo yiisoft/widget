@@ -30,7 +30,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "psr/container": "^1.0",
-        "yiisoft/html": "^1.2",
+        "yiisoft/html": "^2.0",
         "yiisoft/factory": "^3.0@dev",
         "yiisoft/friendly-exception": "^1.0"
     },
