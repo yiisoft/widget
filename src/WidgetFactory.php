@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use Psr\Container\ContainerInterface;
-use Yiisoft\Factory\Exception\NotFoundException;
-use Yiisoft\Factory\Exception\NotInstantiableException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotFoundException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\Factory;
-use Yiisoft\Factory\Exception\InvalidConfigException;
 
 /**
  * WidgetFactory creates an instance of the widget based on the specified configuration

@@ -30,9 +30,10 @@
     "require": {
         "php": "^7.4|^8.0",
         "psr/container": "^1.0",
-        "yiisoft/html": "^2.0",
+        "yiisoft/definitions": "3.0.x-dev",
         "yiisoft/factory": "^3.0@dev",
-        "yiisoft/friendly-exception": "^1.0"
+        "yiisoft/friendly-exception": "^1.0",
+        "yiisoft/html": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
