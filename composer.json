@@ -60,7 +60,8 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "bootstrap": "bootstrap.php"
+            "bootstrap": "bootstrap.php",
+            "widgets": "widgets.php"
         }
     },
     "scripts": {

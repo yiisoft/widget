@@ -52,16 +52,23 @@ to a string, the declared `run()` method will be called.
 <?= MyWidget::widget() ?>
 ```
 
-The `Yiisoft\Widget\WidgetFactory` factory uses a [PSR-11 Container](https://github.com/php-fig/container)
-instance to create widget objects, so you can require dependencies by listing them in your widget's constructor.
-To initialize the widget factory call `WidgetFactory::initialize()` once before using widgets.
+The `Yiisoft\Widget\WidgetFactory` factory uses a [Factory](https://github.com/yiisoft/factory)
+instance to create widget objects, so you can require dependencies by listing them in your widget's constructor
+and set default values when initializing the factory. To initialize the widget factory call
+`WidgetFactory::initialize()` once before using widgets:
 
 ```php
 /**
  * @var \Psr\Container\ContainerInterface $container
  */
+ 
+$widgetDefaults = [
+    MyWidget::class => [
+        'withNumber()' => [42],
+    ],
+];
 
-\Yiisoft\Widget\WidgetFactory::initialize($container);
+\Yiisoft\Widget\WidgetFactory::initialize($container, $widgetDefaults);
 ```
 
 It is a good idea to do that for the whole application. See Yii example in the configuration file of this package
