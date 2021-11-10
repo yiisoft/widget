@@ -6,10 +6,17 @@ use Psr\Container\ContainerInterface;
 use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Config\Config;
 
-/** @var $config Config */
+/**
+ * @var Config $config
+ * @var array $params
+ */
 
 return [
-    function (ContainerInterface $container) use ($config) {
-        WidgetFactory::initialize($container, $config->get('widgets'));
+    static function (ContainerInterface $container) use ($config, $params) {
+        WidgetFactory::initialize(
+            $container,
+            $config->get($params['yiisoft/widget']['widgetsGroup']),
+            $params['yiisoft/widget']['validateConfig']
+        );
     },
 ];
