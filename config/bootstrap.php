@@ -15,7 +15,7 @@ return [
     static function (ContainerInterface $container) use ($config, $params) {
         WidgetFactory::initialize(
             $container,
-            $config->get($params['yiisoft/widget']['widgetsGroup']),
+            $config->get($params['yiisoft/widget']['configGroup']),
             $params['yiisoft/widget']['validateConfig']
         );
     },

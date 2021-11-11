@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'yiisoft/widget' => [
-        'widgetsGroup' => 'widgets',
+        'configGroup' => 'widgets',
         'validateConfig' => true,
     ],
 ];
