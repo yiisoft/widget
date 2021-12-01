@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use Psr\Container\ContainerInterface;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
-use Yiisoft\Definitions\Exception\NotFoundException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Factory\Factory;
 
 /**
@@ -26,6 +27,7 @@ final class WidgetFactory
     /**
      * @param ContainerInterface|null $container
      * @param array $definitions
+     * @param bool $validate
      *
      * @psalm-param array<string, mixed> $definitions
      *
@@ -47,6 +49,7 @@ final class WidgetFactory
      * @param array|callable|string $config The parameters for creating a widget.
      *
      * @throws WidgetFactoryInitializationException If factory was not initialized.
+     * @throws CircularReferenceException
      * @throws InvalidConfigException
      * @throws NotFoundException
      * @throws NotInstantiableException
