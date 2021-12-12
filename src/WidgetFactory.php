@@ -25,7 +25,7 @@ final class WidgetFactory
     }
 
     /**
-     * @param ContainerInterface|null $container
+     * @param ContainerInterface $container
      * @param array $definitions
      * @param bool $validate
      *
@@ -36,7 +36,7 @@ final class WidgetFactory
      * @see Factory::__construct()
      */
     public static function initialize(
-        ContainerInterface $container = null,
+        ContainerInterface $container,
         array $definitions = [],
         bool $validate = true
     ): void {
