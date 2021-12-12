@@ -8,7 +8,7 @@ use Yiisoft\Widget\Widget;
 
 final class TestWidgetBeforeRenderFalse extends Widget
 {
-    public function run(): string
+    protected function run(): string
     {
         return '<run-' . self::class . '>';
     }

@@ -10,7 +10,7 @@ final class TestWidgetB extends Widget
 {
     private string $id;
 
-    public function run(): string
+    protected function run(): string
     {
         return '<run-' . $this->id . '>';
     }

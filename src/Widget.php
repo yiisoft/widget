@@ -31,7 +31,7 @@ abstract class Widget implements NoEncodeStringableInterface
      *
      * @var static[]
      */
-    private static array $stack;
+    private static array $stack = [];
 
     /**
      * Used to open a wrapping widget (the one with begin/end).
@@ -53,7 +53,7 @@ abstract class Widget implements NoEncodeStringableInterface
      */
     final public static function end(): string
     {
-        if (empty(self::$stack)) {
+        if (self::$stack === []) {
             throw new RuntimeException(sprintf(
                 'Unexpected "%s::end()" call. A matching "%s::begin()" is not found.',
                 static::class,
