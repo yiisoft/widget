@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use RuntimeException;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Html\NoEncodeStringableInterface;
 
 use function array_key_exists;
@@ -78,6 +81,9 @@ abstract class Widget implements NoEncodeStringableInterface
      * @param array|callable|string $config The parameters for creating a widget.
      *
      * @throws InvalidConfigException
+     * @throws CircularReferenceException
+     * @throws NotInstantiableException
+     * @throws NotFoundException
      *
      * @return static The widget instance.
      */
