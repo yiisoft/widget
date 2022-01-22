@@ -19,7 +19,7 @@ final class WidgetFactoryInitializationException extends RuntimeException implem
         return <<<SOLUTION
             To initialize the widget factory call `WidgetFactory::initialize()` before using the widget.
             It is a good idea to do that for the whole application.
-            See Yii example in the configuration file of this package `config/providers.php`.
+            See Yii example in the configuration file of this package `config/bootstrap.php`.
         SOLUTION;
     }
 }
