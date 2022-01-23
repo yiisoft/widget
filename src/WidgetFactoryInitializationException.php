@@ -16,10 +16,25 @@ final class WidgetFactoryInitializationException extends RuntimeException implem
 
     public function getSolution(): ?string
     {
-        return <<<SOLUTION
-            To initialize the widget factory call `WidgetFactory::initialize()` before using the widget.
-            It is a good idea to do that for the whole application.
-            See Yii example in the configuration file of this package `config/providers.php`.
-        SOLUTION;
+        return <<<'SOLUTION'
+To initialize the widget factory call `WidgetFactory::initialize()` before using the widget.
+It is a good idea to do that for the whole application.
+
+Example:
+
+```php
+/**
+ * @var Psr\Container\ContainerInterface $container
+ */
+
+Yiisoft\Widget\WidgetFactory::initialize(
+    $container,
+    [MyWidget::class, => new MyWidget(/*...*/)],
+    true, // Whether definitions need to be validated.
+);
+```
+
+See Yii example in the configuration file of this package `config/bootstrap.php`.
+SOLUTION;
     }
 }
