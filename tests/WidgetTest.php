@@ -43,7 +43,9 @@ final class WidgetTest extends TestCase
 
     public function testWidget(): void
     {
-        $output = TestWidget::widget()->id('w0')->render();
+        $output = TestWidget::widget()
+            ->id('w0')
+            ->render();
 
         $this->assertSame('<run-w0>', $output);
     }
@@ -66,7 +68,9 @@ final class WidgetTest extends TestCase
 
     public function testBeginEnd(): void
     {
-        TestWidgetA::widget()->id('test')->begin();
+        TestWidgetA::widget()
+            ->id('test')
+            ->begin();
         $output = TestWidgetA::end();
 
         $this->assertSame('<run-test>', $output);
@@ -91,7 +95,9 @@ final class WidgetTest extends TestCase
 
     public function testBeginEndStaticWithImmutableWidget(): void
     {
-        ImmutableWidget::widget()->id('new')->begin();
+        ImmutableWidget::widget()
+            ->id('new')
+            ->begin();
         $output = ImmutableWidget::end();
 
         $this->assertSame('<run-new>', $output);
@@ -171,7 +177,9 @@ final class WidgetTest extends TestCase
 
         $this->expectException(WidgetFactoryInitializationException::class);
         $this->expectExceptionMessage('Widget factory should be initialized with WidgetFactory::initialize() call.');
-        TestWidget::widget()->id('w0')->render();
+        TestWidget::widget()
+            ->id('w0')
+            ->render();
     }
 
     public function testWidgetFactoryInitializationExceptionMessages(): void
