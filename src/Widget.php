@@ -13,7 +13,6 @@ use Yiisoft\Html\NoEncodeStringableInterface;
 
 use function array_key_exists;
 use function array_pop;
-use function get_class;
 use function is_array;
 use function sprintf;
 
@@ -23,7 +22,7 @@ use function sprintf;
  *
  * This is the base class that is meant to be inherited when implementing your own widgets.
  */
-abstract class Widget implements NoEncodeStringableInterface
+abstract class Widget implements NoEncodeStringableInterface, \Stringable
 {
     /**
      * The widgets that are currently opened and not yet closed.
@@ -62,7 +61,7 @@ abstract class Widget implements NoEncodeStringableInterface
         }
 
         $widget = array_pop(self::$stack);
-        $widgetClass = get_class($widget);
+        $widgetClass = $widget::class;
 
         if ($widgetClass !== static::class) {
             throw new RuntimeException(sprintf(
@@ -87,7 +86,7 @@ abstract class Widget implements NoEncodeStringableInterface
      *
      * @return static The widget instance.
      */
-    final public static function widget($config = []): self
+    final public static function widget(array|callable|string $config = []): self
     {
         if (is_array($config) && !array_key_exists('class', $config)) {
             $config['class'] = static::class;
