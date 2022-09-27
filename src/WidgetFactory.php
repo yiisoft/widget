@@ -25,8 +25,8 @@ final class WidgetFactory
     }
 
     /**
-     *
      * @psalm-param array<string, mixed> $definitions
+     *
      * @throws InvalidConfigException
      *
      * @see Factory::__construct()
@@ -51,7 +51,6 @@ final class WidgetFactory
      * @throws NotInstantiableException
      *
      * @see Factory::create()
-     *
      *
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement

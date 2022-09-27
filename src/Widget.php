@@ -13,7 +13,6 @@ use Yiisoft\Html\NoEncodeStringableInterface;
 
 use function array_key_exists;
 use function array_pop;
-use function get_class;
 use function is_array;
 use function sprintf;
 
