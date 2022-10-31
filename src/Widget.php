@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use RuntimeException;
+use Stringable;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
@@ -22,7 +23,7 @@ use function sprintf;
  *
  * This is the base class that is meant to be inherited when implementing your own widgets.
  */
-abstract class Widget implements NoEncodeStringableInterface, \Stringable
+abstract class Widget implements NoEncodeStringableInterface, Stringable
 {
     /**
      * The widgets that are currently opened and not yet closed.
@@ -35,7 +36,7 @@ abstract class Widget implements NoEncodeStringableInterface, \Stringable
     /**
      * Used to open a wrapping widget (the one with begin/end).
      *
-     * When implementing this method, don't forget to call parent::begin().
+     * When implementing this method, don't forget to call `parent::begin()`.
      *
      * @return string|null Opening part of widget markup.
      */
