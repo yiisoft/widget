@@ -25,10 +25,6 @@ final class WidgetFactory
     }
 
     /**
-     * @param ContainerInterface $container
-     * @param array $definitions
-     * @param bool $validate
-     *
      * @psalm-param array<string, mixed> $definitions
      *
      * @throws InvalidConfigException
@@ -56,12 +52,10 @@ final class WidgetFactory
      *
      * @see Factory::create()
      *
-     * @return Widget
-     *
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
      */
-    public static function createWidget($config): Widget
+    public static function createWidget(array|callable|string $config): Widget
     {
         if (self::$factory === null) {
             throw new WidgetFactoryInitializationException(
