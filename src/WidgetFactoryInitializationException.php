@@ -29,7 +29,7 @@ Example:
 
 Yiisoft\Widget\WidgetFactory::initialize(
     $container,
-    [MyWidget::class, => new MyWidget(/*...*/)],
+    [MyWidget::class => new MyWidget(/*...*/)],
     true, // Whether definitions need to be validated.
 );
 ```
