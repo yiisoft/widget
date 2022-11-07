@@ -2,7 +2,8 @@
 
 ## 1.0.2 under development
 
-- Enh #58: Raise minimum PHP version to 8.0 and minor refactor code (@xepozz, @vjik)
+- Enh #58: Raise minimum PHP version to `^8.0` and minor refactor code (@xepozz, @vjik)
+- Enh #26: Add support for `yiisoft/definitions` version `^3.0` (@vjik)
 
 ## 1.0.1 June 17, 2022
 
