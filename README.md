@@ -21,12 +21,16 @@ user interface elements in an object-oriented fashion.
 This package provides an abstract class and a factory for creating widgets,
 ready-made widgets are provided in the [yiisoft/yii-widgets](https://github.com/yiisoft/yii-widgets) package.
 
+## Requirements
+
+- PHP 8.0 or higher.
+ 
 ## Installation
 
 The package could be installed via composer:
 
 ```shell
-composer require yiisoft/widget --prefer-dist
+composer require yiisoft/widget
 ```
 
 ## General usage
