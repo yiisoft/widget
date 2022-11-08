@@ -5,6 +5,7 @@
 - Enh #58: Raise minimum PHP version to `^8.0` and minor refactor code (@xepozz, @vjik)
 - Enh #26: Add support for `yiisoft/definitions` version `^3.0` (@vjik)
 - Bug #62: Fix typo in `WidgetFactoryInitializationException` solution (@vjik)
+- Enh #61: Add support for `yiisoft/html` version `^3.0` (@vjik)
 
 ## 1.0.1 June 17, 2022
 
