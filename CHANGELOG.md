@@ -1,5 +1,9 @@
 # Yii Widget Change Log
 
+## 1.1.1 under development
+
+- no changes in this release.
+
 ## 1.1.0 November 08, 2022
 
 - Enh #26: Add support for `yiisoft/definitions` version `^3.0` (@vjik)
