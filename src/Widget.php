@@ -87,13 +87,32 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      *
      * @return static The widget instance.
      */
-    final public static function widget(array|callable|string $config = []): self
+    final public static function widget(array|callable|string $config = []): static
     {
         if (is_array($config) && !array_key_exists('class', $config)) {
             $config['class'] = static::class;
         }
 
         return WidgetFactory::createWidget($config);
+    }
+
+    /**
+     * Shortcut for {@see self::widget()} with array definition that contain constructor arguments only.
+     *
+     * @param array $arguments Array of constructor arguments.
+     *
+     * @return static The widget instance.
+     *
+     * @throws InvalidConfigException
+     * @throws CircularReferenceException
+     * @throws NotInstantiableException
+     * @throws NotFoundException
+     */
+    final public static function construct(array $arguments): static
+    {
+        return self::widget([
+            '__construct()' => $arguments,
+        ]);
     }
 
     /**

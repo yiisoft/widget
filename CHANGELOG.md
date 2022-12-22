@@ -1,8 +1,10 @@
 # Yii Widget Change Log
 
-## 1.1.1 under development
+## 2.0.0 under development
 
-- no changes in this release.
+- Chg #72: Change `Widget::widget()` result type to `static` (@vjik)
+- New #72: Add shortcut `Widget::construct()` for create widget by array definition that contain constructor
+  arguments only (@vjik)
 
 ## 1.1.0 November 08, 2022
 
