@@ -109,9 +109,16 @@ To set a value for the ID, you can pass it in the configuration array to the `wi
     ],
 ]) ?>
 ```
+Also, you can use shortcut `construct()` with constructor arguments only:
 
-For a description of the configuration syntax, see the [yiisoft/factory](https://github.com/yiisoft/factory)
-package documentation.
+```php
+<?= MyWidget::construct([
+    'id' => 'value'
+]) ?>
+```
+
+For a description of the configuration syntax, see the
+[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
 
 ### Widget for capturing content
 
