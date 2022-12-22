@@ -101,12 +101,12 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      *
      * @param array $arguments Array of constructor arguments.
      *
-     * @return static The widget instance.
-     *
      * @throws InvalidConfigException
      * @throws CircularReferenceException
      * @throws NotInstantiableException
      * @throws NotFoundException
+     *
+     * @return static The widget instance.
      */
     final public static function construct(array $arguments): static
     {
