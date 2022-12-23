@@ -9,8 +9,6 @@ use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\StringableWidget;
-use Yiisoft\Widget\Tests\Stubs\TestWidgetAfterRender;
-use Yiisoft\Widget\Tests\Stubs\TestWidgetBeforeRenderFalse;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
@@ -104,24 +102,6 @@ final class WidgetTest extends TestCase
         $this->assertSame('<run-new>', $output);
     }
 
-    public function testBeginEndWithBeforeRenderFalse(): void
-    {
-        $widget = TestWidgetBeforeRenderFalse::widget();
-        $widget->begin();
-        $output = $widget::end();
-
-        $this->assertSame('', $output);
-    }
-
-    public function testBeginEndWithAfterRender(): void
-    {
-        $widget = TestWidgetAfterRender::widget();
-        $widget->begin();
-        $output = $widget::end();
-
-        $this->assertSame('<run-' . TestWidgetAfterRender::class . '><after-run>', $output);
-    }
-
     public function testStackTrackingWithImmutableWidget(): void
     {
         $widget = ImmutableWidget::widget();
@@ -195,6 +175,6 @@ final class WidgetTest extends TestCase
     {
         $widget = StringableWidget::widget();
 
-        $this->assertSame('after-run', $widget->render());
+        $this->assertSame('run', $widget->render());
     }
 }

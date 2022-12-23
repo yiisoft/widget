@@ -13,9 +13,4 @@ final class StringableWidget extends Widget
     {
         return new StringableObject('run');
     }
-
-    protected function afterRun(string $result): Stringable
-    {
-        return new StringableObject('after-' . parent::afterRun($result));
-    }
 }
