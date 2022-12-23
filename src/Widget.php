@@ -72,7 +72,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
             ));
         }
 
-        return $widget->render();
+        return (string) $widget->render();
     }
 
     /**
@@ -97,16 +97,6 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
     }
 
     /**
-     * Executes the widget.
-     *
-     * @return string The result of widget execution to be outputted.
-     */
-    final public function render(): string
-    {
-        return (string) $this->run();
-    }
-
-    /**
      * Allows not to call `->render()` explicitly:
      *
      * ```php
@@ -115,14 +105,15 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      */
     final public function __toString(): string
     {
-        return $this->render();
+        return (string) $this->render();
     }
 
     /**
      * Renders widget content.
      *
-     * This method is used by {@see render()} and is meant to be overridden
-     * when implementing concrete widget.
+     * This method must be overridden when implementing concrete widget.
+     *
+     * @return string|Stringable The result of widget execution to be outputted.
      */
-    abstract protected function run(): string|Stringable;
+    abstract public function render(): string|Stringable;
 }

@@ -36,12 +36,12 @@ composer require yiisoft/widget
 ## General usage
 
 In order to implement your own widget, you need to create a class that extends the abstract class
-`Yiisoft\Widget\Widget`. In most cases it is enough to implement `run()` method.
+`Yiisoft\Widget\Widget`. In most cases it is enough to implement `render()` method.
 
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
 {
-    protected function run(): string|\Stringable
+    public function render(): string|\Stringable
     {
         return 'My first widget.'.
     }
@@ -50,7 +50,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 
 To get the string "My first widget." in the view, call the `widget()` method. Inside which the
 `Yiisoft\Widget\WidgetFactory` will create an instance of the `MyWidget`, and when converting the object
-to a string, the declared `run()` method will be called.
+to a string, the declared `render()` method will be called.
 
 ```php
 <?= MyWidget::widget() ?>
@@ -93,7 +93,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
         $this->id = $id;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         return $this->id;
     }
@@ -138,7 +138,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
         return null;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         return (string) ob_get_clean();
     }

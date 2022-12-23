@@ -175,6 +175,6 @@ final class WidgetTest extends TestCase
     {
         $widget = StringableWidget::widget();
 
-        $this->assertSame('run', $widget->render());
+        $this->assertSame('run', (string) $widget->render());
     }
 }

@@ -17,7 +17,7 @@ final class TestInjectionWidget extends Widget
         return $this->injectable;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         return 'test';
     }

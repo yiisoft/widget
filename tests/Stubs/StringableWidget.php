@@ -9,7 +9,7 @@ use Yiisoft\Widget\Widget;
 
 final class StringableWidget extends Widget
 {
-    protected function run(): Stringable
+    public function render(): Stringable
     {
         return new StringableObject('run');
     }
