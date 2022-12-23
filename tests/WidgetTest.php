@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\Tests\Stubs\StringableWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetAfterRender;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetBeforeRenderFalse;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
@@ -188,5 +189,12 @@ final class WidgetTest extends TestCase
 
         $this->assertSame('Failed to create a widget because WidgetFactory is not initialized.', $exception->getName());
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
+    }
+
+    public function testStringable(): void
+    {
+        $widget = StringableWidget::widget();
+
+        $this->assertSame('after-run', $widget->render());
     }
 }

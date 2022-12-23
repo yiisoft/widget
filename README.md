@@ -41,7 +41,7 @@ In order to implement your own widget, you need to create a class that extends t
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
 {
-    protected function run(): string
+    protected function run(): string|\Stringable
     {
         return 'My first widget.'.
     }
@@ -172,7 +172,7 @@ The `afterRun()` method is called right after running the widget. The return val
 as the widget return value. If you override this method, your code should look like the following:
 
 ```php
-protected function afterRun(string $result): string
+protected function afterRun(string $result): string|\Stringable
 {
     $result = parent::afterRun($result);
     // your custom code here
