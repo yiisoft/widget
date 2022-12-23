@@ -103,7 +103,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 To set a value for the ID, you can pass it to the `widget()` method:
 
 ```php
-<?= MyWidget::construct([
+<?= MyWidget::widget([
     'id' => 'value',
 ]) ?>
 ```
