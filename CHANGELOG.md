@@ -2,7 +2,7 @@
 
 ## 2.0.0 under development
 
-- Chg #72: Change widget static factory method to using constructor arguments only or whole array definition (@vjik)
+- Chg #72: Change `Widget::widget()` method to using constructor arguments only or whole array definition (@vjik)
 
 ## 1.1.0 November 08, 2022
 
