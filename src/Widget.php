@@ -94,7 +94,9 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
                 '__construct()' => $constructorArguments,
             ];
         } elseif ($constructorArguments !== []) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException(
+                'Disallowed pass a constructor arguments and an array definition at the same time.'
+            );
         }
 
         $config['class'] = static::class;
