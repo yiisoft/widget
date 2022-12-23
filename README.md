@@ -104,7 +104,7 @@ To set a value for the ID, you can pass it to the `widget()` method:
 
 ```php
 <?= MyWidget::construct([
-    'id' => 'value'
+    'id' => 'value',
 ]) ?>
 ```
 
