@@ -2,7 +2,7 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- Enh #73: Allow to return `\Stringable` object in methods `Widget::run()` and `Widget::afterRun()` (@vjik) 
 
 ## 1.1.0 November 08, 2022
 

@@ -107,7 +107,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
             return '';
         }
 
-        return $this->afterRun($this->run());
+        return (string) $this->afterRun((string) $this->run());
     }
 
     /**
@@ -128,7 +128,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      * This method is used by {@see render()} and is meant to be overridden
      * when implementing concrete widget.
      */
-    abstract protected function run(): string;
+    abstract protected function run(): string|Stringable;
 
     /**
      * This method is invoked right before the widget is executed.
@@ -175,9 +175,9 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      *
      * @param string $result The widget return result.
      *
-     * @return string The processed widget result.
+     * @return string|Stringable The processed widget result.
      */
-    protected function afterRun(string $result): string
+    protected function afterRun(string $result): string|Stringable
     {
         return $result;
     }
