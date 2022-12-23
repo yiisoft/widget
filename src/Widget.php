@@ -165,7 +165,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      * If you override this method, your code should look like the following:
      *
      * ```php
-     * protected function afterRun(string $result): string
+     * protected function afterRun(string $result): string|\Stringable
      * {
      *     $result = parent::afterRun($result);
      *     // your custom code here
