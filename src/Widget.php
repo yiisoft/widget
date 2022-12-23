@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
+use InvalidArgumentException;
 use RuntimeException;
 use Stringable;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
@@ -12,9 +13,7 @@ use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Html\NoEncodeStringableInterface;
 
-use function array_key_exists;
 use function array_pop;
-use function is_array;
 use function sprintf;
 
 /**
@@ -78,7 +77,8 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
     /**
      * Creates a widget instance.
      *
-     * @param array|callable|string $config The parameters for creating a widget.
+     * @param array $constructorArguments The constructor arguments.
+     * @param array $config The parameters for creating a widget.
      *
      * @throws InvalidConfigException
      * @throws CircularReferenceException
@@ -87,32 +87,19 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      *
      * @return static The widget instance.
      */
-    final public static function widget(array|callable|string $config = []): static
+    final public static function widget(array $constructorArguments = [], array $config = []): static
     {
-        if (is_array($config) && !array_key_exists('class', $config)) {
-            $config['class'] = static::class;
+        if ($config === []) {
+            $config = [
+                '__construct()' => $constructorArguments,
+            ];
+        } elseif ($constructorArguments !== []) {
+            throw new InvalidArgumentException();
         }
 
-        return WidgetFactory::createWidget($config);
-    }
+        $config['class'] = static::class;
 
-    /**
-     * Shortcut for {@see self::widget()} with array definition that contain constructor arguments only.
-     *
-     * @param array $arguments Array of constructor arguments.
-     *
-     * @throws InvalidConfigException
-     * @throws CircularReferenceException
-     * @throws NotInstantiableException
-     * @throws NotFoundException
-     *
-     * @return static The widget instance.
-     */
-    final public static function construct(array $arguments): static
-    {
-        return self::widget([
-            '__construct()' => $arguments,
-        ]);
+        return WidgetFactory::createWidget($config);
     }
 
     /**

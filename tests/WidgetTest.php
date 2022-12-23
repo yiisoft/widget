@@ -60,7 +60,7 @@ final class WidgetTest extends TestCase
 
     public function testWidgetArrayConfig(): void
     {
-        $output = TestWidget::widget([
+        $output = TestWidget::widget(config: [
             'id()' => ['w0'],
         ])->render();
 
@@ -189,12 +189,5 @@ final class WidgetTest extends TestCase
 
         $this->assertSame('Failed to create a widget because WidgetFactory is not initialized.', $exception->getName());
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
-    }
-
-    public function testConstruct(): void
-    {
-        $result = Car::construct(['name' => 'X'])->render();
-
-        $this->assertSame('Car "X"', $result);
     }
 }

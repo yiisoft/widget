@@ -42,7 +42,7 @@ final class WidgetFactory
     /**
      * Creates a widget defined by config passed.
      *
-     * @param array|callable|string $config The parameters for creating a widget.
+     * @param array $config The parameters for creating a widget.
      *
      * @throws WidgetFactoryInitializationException If factory was not initialized.
      * @throws CircularReferenceException
@@ -55,7 +55,7 @@ final class WidgetFactory
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
      */
-    public static function createWidget(array|callable|string $config): Widget
+    public static function createWidget(array $config): Widget
     {
         if (self::$factory === null) {
             throw new WidgetFactoryInitializationException(
