@@ -2,9 +2,7 @@
 
 ## 2.0.0 under development
 
-- Chg #72: Change `Widget::widget()` result type to `static` (@vjik)
-- New #72: Add shortcut `Widget::construct()` for create widget by array definition that contain constructor
-  arguments only (@vjik)
+- Chg #72: Change widget static factory method to using constructor arguments only or whole array definition (@vjik)
 
 ## 1.1.0 November 08, 2022
 
