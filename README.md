@@ -36,12 +36,12 @@ composer require yiisoft/widget
 ## General usage
 
 In order to implement your own widget, you need to create a class that extends the abstract class
-`Yiisoft\Widget\Widget`. In most cases it is enough to implement `run()` method.
+`Yiisoft\Widget\Widget`. In most cases it is enough to implement `render()` method.
 
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
 {
-    protected function run(): string|\Stringable
+    public function render(): string|\Stringable
     {
         return 'My first widget.'.
     }
@@ -50,7 +50,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 
 To get the string "My first widget." in the view, call the `widget()` method. Inside which the
 `Yiisoft\Widget\WidgetFactory` will create an instance of the `MyWidget`, and when converting the object
-to a string, the declared `run()` method will be called.
+to a string, the declared `render()` method will be called.
 
 ```php
 <?= MyWidget::widget() ?>
@@ -93,7 +93,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
         $this->id = $id;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         return $this->id;
     }
@@ -138,7 +138,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
         return null;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         return (string) ob_get_clean();
     }
@@ -146,39 +146,6 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 ```
 
 The package ensures that all widgets are properly opened, closed and nested.
-
-### Additional methods for customizing the run
-
-In addition to the `run()` method, you can override two other methods, `beforeRun()` and `afterRun()`.
-
-The `beforeRun()` method is called right before running the widget. The return value of the method
-will determine whether the widget should continue to run. When overriding this method, make sure you
-call the parent implementation like the following:
-
-```php
-protected function beforeRun(): bool
-{
-    if (!parent::beforeRun()) {
-       return false;
-    }
-
-    // your custom code here
-
-    return true; // or false to not run the widget
-}
-```
-
-The `afterRun()` method is called right after running the widget. The return value of the method will be used
-as the widget return value. If you override this method, your code should look like the following:
-
-```php
-protected function afterRun(string $result): string|\Stringable
-{
-    $result = parent::afterRun($result);
-    // your custom code here
-    return $result;
-}
-```
 
 ## Testing
 

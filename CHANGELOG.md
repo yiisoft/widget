@@ -1,8 +1,10 @@
 # Yii Widget Change Log
 
-## 1.1.1 under development
+## 2.0.0 under development
 
-- Enh #73: Allow to return `\Stringable` object in methods `Widget::run()` and `Widget::afterRun()` (@vjik) 
+- Chg #74: Remove from abstract `Widget` class methods `beforeRun()`, `afterRun()` and `run()`, use `render()` only
+  instead it (@vjik)
+- Enh #73: Allow to return `\Stringable` object in `Widget::run()` method (@vjik) 
 
 ## 1.1.0 November 08, 2022
 
