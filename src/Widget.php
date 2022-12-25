@@ -78,7 +78,9 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      * Creates a widget instance.
      *
      * @param array $constructorArguments The constructor arguments.
-     * @param array $config The parameters for creating a widget.
+     * @param array $config The configuration for creating a widget. For a description of the configuration syntax, see
+     * array definitions documentation in the Yii Definitions by link
+     * {@link https://github.com/yiisoft/definitions#arraydefinition).
      *
      * @throws InvalidConfigException
      * @throws CircularReferenceException
