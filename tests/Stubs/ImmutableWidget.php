@@ -10,7 +10,7 @@ final class ImmutableWidget extends Widget
 {
     private string $id = 'original';
 
-    protected function run(): string
+    public function render(): string
     {
         return '<run-' . $this->id . '>';
     }

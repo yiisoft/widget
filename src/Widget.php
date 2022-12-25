@@ -71,7 +71,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
             ));
         }
 
-        return $widget->render();
+        return (string) $widget->render();
     }
 
     /**
@@ -105,20 +105,6 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
     }
 
     /**
-     * Executes the widget.
-     *
-     * @return string The result of widget execution to be outputted.
-     */
-    final public function render(): string
-    {
-        if (!$this->beforeRun()) {
-            return '';
-        }
-
-        return $this->afterRun($this->run());
-    }
-
-    /**
      * Allows not to call `->render()` explicitly:
      *
      * ```php
@@ -127,66 +113,15 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      */
     final public function __toString(): string
     {
-        return $this->render();
+        return (string) $this->render();
     }
 
     /**
      * Renders widget content.
      *
-     * This method is used by {@see render()} and is meant to be overridden
-     * when implementing concrete widget.
+     * This method must be overridden when implementing concrete widget.
+     *
+     * @return string|Stringable The result of widget execution to be outputted.
      */
-    abstract protected function run(): string;
-
-    /**
-     * This method is invoked right before the widget is executed.
-     *
-     * The return value of the method will determine whether the widget should continue to run.
-     *
-     * When overriding this method, make sure you call the parent implementation like the following:
-     *
-     * ```php
-     * protected function beforeRun(): bool
-     * {
-     *     if (!parent::beforeRun()) {
-     *         return false;
-     *     }
-     *
-     *     // your custom code here
-     *
-     *     return true; // or false to not run the widget
-     * }
-     * ```
-     *
-     * @return bool Whether the widget should continue to be executed.
-     */
-    protected function beforeRun(): bool
-    {
-        return true;
-    }
-
-    /**
-     * This method is invoked right after a widget is executed.
-     *
-     * The return value of the method will be used as the widget return value.
-     *
-     * If you override this method, your code should look like the following:
-     *
-     * ```php
-     * protected function afterRun(string $result): string
-     * {
-     *     $result = parent::afterRun($result);
-     *     // your custom code here
-     *     return $result;
-     * }
-     * ```
-     *
-     * @param string $result The widget return result.
-     *
-     * @return string The processed widget result.
-     */
-    protected function afterRun(string $result): string
-    {
-        return $result;
-    }
+    abstract public function render(): string|Stringable;
 }
