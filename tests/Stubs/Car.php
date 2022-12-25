@@ -13,7 +13,7 @@ final class Car extends Widget
     ) {
     }
 
-    protected function run(): string
+    public function render(): string
     {
         return 'Car "' . $this->name . '"';
     }
