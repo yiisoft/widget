@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
+use InvalidArgumentException;
 use RuntimeException;
 use Stringable;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
@@ -12,9 +13,7 @@ use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Html\NoEncodeStringableInterface;
 
-use function array_key_exists;
 use function array_pop;
-use function is_array;
 use function sprintf;
 
 /**
@@ -78,7 +77,10 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
     /**
      * Creates a widget instance.
      *
-     * @param array|callable|string $config The parameters for creating a widget.
+     * @param array $constructorArguments The constructor arguments.
+     * @param array $config The configuration for creating a widget. For a description of the configuration syntax, see
+     * array definitions documentation in the Yii Definitions by link
+     * {@link https://github.com/yiisoft/definitions#arraydefinition).
      *
      * @throws InvalidConfigException
      * @throws CircularReferenceException
@@ -87,11 +89,19 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      *
      * @return static The widget instance.
      */
-    final public static function widget(array|callable|string $config = []): self
+    final public static function widget(array $constructorArguments = [], array $config = []): static
     {
-        if (is_array($config) && !array_key_exists('class', $config)) {
-            $config['class'] = static::class;
+        if ($config === []) {
+            $config = [
+                '__construct()' => $constructorArguments,
+            ];
+        } elseif ($constructorArguments !== []) {
+            throw new InvalidArgumentException(
+                'Disallowed pass a constructor arguments and an array definition at the same time.'
+            );
         }
+
+        $config['class'] = static::class;
 
         return WidgetFactory::createWidget($config);
     }

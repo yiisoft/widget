@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\Tests\Stubs\Car;
 use Yiisoft\Widget\Tests\Stubs\StringableWidget;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
@@ -58,7 +60,7 @@ final class WidgetTest extends TestCase
 
     public function testWidgetArrayConfig(): void
     {
-        $output = TestWidget::widget([
+        $output = TestWidget::widget(config: [
             'id()' => ['w0'],
         ])->render();
 
@@ -169,6 +171,22 @@ final class WidgetTest extends TestCase
 
         $this->assertSame('Failed to create a widget because WidgetFactory is not initialized.', $exception->getName());
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
+    }
+
+    public function testConstructorArguments(): void
+    {
+        $result = Car::widget(['name' => 'X'])->render();
+
+        $this->assertSame('Car "X"', $result);
+    }
+
+    public function testSameConstructorArgumentsAndArrayDefinition(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Disallowed pass a constructor arguments and an array definition at the same time.'
+        );
+        Car::widget(['name' => 'X'], ['__construct()' => ['Y']]);
     }
 
     public function testStringable(): void
