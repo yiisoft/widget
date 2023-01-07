@@ -10,10 +10,12 @@ use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
-use Yiisoft\Widget\Tests\Stubs\StringableWidget;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
+use Yiisoft\Widget\Tests\Stubs\StringableWidget;
+use Yiisoft\Widget\Tests\Stubs\Tag;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
+use Yiisoft\Widget\Tests\Stubs\TestNestedWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetA;
 use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
@@ -194,5 +196,12 @@ final class WidgetTest extends TestCase
         $widget = StringableWidget::widget();
 
         $this->assertSame('run', (string) $widget->render());
+    }
+
+    public function testPsalm(): void
+    {
+        $widget = TestNestedWidget::widget()->id('w0');
+
+        $this->assertSame('<run-w0>', Tag::create($widget->render()));
     }
 }
