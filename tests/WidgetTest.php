@@ -22,6 +22,8 @@ use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
 use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Widget\WidgetFactoryInitializationException;
 
+use function version_compare;
+
 /**
  * @psalm-suppress PropertyNotSetInConstructor
  */
@@ -159,9 +161,14 @@ final class WidgetTest extends TestCase
         $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
         $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
         $property = $reflection->getProperty('factory');
-        $property->setAccessible(true);
-        $property->setValue($widgetFactoryReflection, null);
-        $property->setAccessible(false);
+
+        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+            $property->setAccessible(true);
+            $property->setValue($widgetFactoryReflection, null);
+            $property->setAccessible(false);
+        } else {
+            $property->setValue($widgetFactoryReflection, null);
+        }
 
         $this->expectException(WidgetFactoryInitializationException::class);
         $this->expectExceptionMessage('Widget factory should be initialized with WidgetFactory::initialize() call.');
