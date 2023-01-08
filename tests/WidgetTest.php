@@ -10,7 +10,6 @@ use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
-use Yiisoft\Widget\Tests\Stubs\StringableWidget;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
