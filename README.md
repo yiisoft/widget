@@ -84,11 +84,12 @@ the widget class must accept some ID when initializing the object.
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
 {
-    private string $id;
-    public function __construct(string $id)
+    public function __construct(
+        private string $id
+    )
     {
-        $this->id = $id;
     }
+
     public function render(): string
     {
         return $this->id;
@@ -99,10 +100,8 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 To set a value for the ID, you can pass it in the configuration array to the `widget()` method:
 
 ```php
-<?= MyWidget::widget([
-    '__construct()' => [
-        'id' => 'value',
-    ],
+<?= MyWidget::widget([    
+    'id' => 'value',
 ]) ?>
 ```
 
