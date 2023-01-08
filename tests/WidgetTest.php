@@ -159,7 +159,9 @@ final class WidgetTest extends TestCase
         $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
         $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
         $property = $reflection->getProperty('factory');
+        $property->setAccessible(true);
         $property->setValue($widgetFactoryReflection, null);
+        $property->setAccessible(false);
 
         $this->expectException(WidgetFactoryInitializationException::class);
         $this->expectExceptionMessage('Widget factory should be initialized with WidgetFactory::initialize() call.');
