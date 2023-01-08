@@ -22,9 +22,12 @@ use Yiisoft\Widget\Tests\Stubs\TestWidgetB;
 use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Widget\WidgetFactoryInitializationException;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 final class WidgetTest extends TestCase
 {
-    private ?SimpleContainer $container;
+    private ?SimpleContainer $container = null;
 
     protected function setUp(): void
     {
@@ -156,9 +159,7 @@ final class WidgetTest extends TestCase
         $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
         $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
         $property = $reflection->getProperty('factory');
-        $property->setAccessible(true);
         $property->setValue($widgetFactoryReflection, null);
-        $property->setAccessible(false);
 
         $this->expectException(WidgetFactoryInitializationException::class);
         $this->expectExceptionMessage('Widget factory should be initialized with WidgetFactory::initialize() call.');
@@ -172,7 +173,7 @@ final class WidgetTest extends TestCase
         $exception = new WidgetFactoryInitializationException();
 
         $this->assertSame('Failed to create a widget because WidgetFactory is not initialized.', $exception->getName());
-        $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
+        $this->assertStringContainsString('`WidgetFactory::initialize()`', (string) $exception->getSolution());
     }
 
     public function testConstructorArguments(): void

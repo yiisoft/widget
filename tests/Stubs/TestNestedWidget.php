@@ -8,7 +8,7 @@ use Yiisoft\Widget\Widget;
 
 final class TestNestedWidget extends Widget
 {
-    private string $id;
+    private string $id = '';
 
     public function id(string $id): self
     {

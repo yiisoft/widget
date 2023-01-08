@@ -8,7 +8,7 @@ use Yiisoft\Widget\Widget;
 
 final class TestWidget extends Widget
 {
-    private string $id;
+    private string $id = '';
 
     public function render(): string
     {
