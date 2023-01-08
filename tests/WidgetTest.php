@@ -162,12 +162,12 @@ final class WidgetTest extends TestCase
         $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
         $property = $reflection->getProperty('factory');
 
-        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+        if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
+            $property->setValue($widgetFactoryReflection, null);
+        } else {
             $property->setAccessible(true);
             $property->setValue($widgetFactoryReflection, null);
             $property->setAccessible(false);
-        } else {
-            $property->setValue($widgetFactoryReflection, null);
         }
 
         $this->expectException(WidgetFactoryInitializationException::class);
