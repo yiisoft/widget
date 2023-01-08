@@ -188,11 +188,4 @@ final class WidgetTest extends TestCase
         );
         Car::widget(['name' => 'X'], ['__construct()' => ['Y']]);
     }
-
-    public function testStringable(): void
-    {
-        $widget = StringableWidget::widget();
-
-        $this->assertSame('run', (string) $widget->render());
-    }
 }

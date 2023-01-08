@@ -6,7 +6,6 @@ namespace Yiisoft\Widget;
 
 use InvalidArgumentException;
 use RuntimeException;
-use Stringable;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
@@ -22,7 +21,7 @@ use function sprintf;
  *
  * This is the base class that is meant to be inherited when implementing your own widgets.
  */
-abstract class Widget implements NoEncodeStringableInterface, Stringable
+abstract class Widget implements NoEncodeStringableInterface
 {
     /**
      * The widgets that are currently opened and not yet closed.
@@ -71,7 +70,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
             ));
         }
 
-        return (string) $widget->render();
+        return $widget->render();
     }
 
     /**
@@ -115,7 +114,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      */
     final public function __toString(): string
     {
-        return (string) $this->render();
+        return $this->render();
     }
 
     /**
@@ -123,7 +122,7 @@ abstract class Widget implements NoEncodeStringableInterface, Stringable
      *
      * This method must be overridden when implementing concrete widget.
      *
-     * @return string|Stringable The result of widget execution to be outputted.
+     * @return string The result of widget execution to be outputted.
      */
-    abstract public function render(): string|Stringable;
+    abstract public function render(): string;
 }
