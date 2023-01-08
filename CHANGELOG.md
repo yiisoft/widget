@@ -2,11 +2,9 @@
 
 ## 2.0.0 under development
 
-- Bug #76: Fix return hint for method `render()` in `Widget` class (@terabytesoftw)
 - Chg #72: Change `Widget::widget()` method to using constructor arguments only or whole array definition (@vjik)
 - Chg #74: Remove from abstract `Widget` class methods `beforeRun()`, `afterRun()` and `run()`, use `render()` only
   instead it (@vjik)
-- Enh #73: Allow to return `\Stringable` object in `Widget::run()` method (@vjik) 
 
 ## 1.1.0 November 08, 2022
 
