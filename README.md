@@ -41,7 +41,7 @@ In order to implement your own widget, you need to create a class that extends t
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
 {
-    public function render(): string|\Stringable
+    public function render(): string
     {
         return 'My first widget.'.
     }
@@ -65,13 +65,11 @@ and set default values when initializing the factory. To initialize the widget f
 /**
  * @var \Psr\Container\ContainerInterface $container
  */
- 
 $widgetDefaults = [
     MyWidget::class => [
         'withNumber()' => [42],
     ],
 ];
-
 \Yiisoft\Widget\WidgetFactory::initialize($container, $widgetDefaults);
 ```
 
@@ -86,43 +84,30 @@ the widget class must accept some ID when initializing the object.
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
 {
-    public string $name;
-    
-    public function __construct(
-        private string $id,
-    ) {
+    private string $id;
+    public function __construct(string $id)
+    {
+        $this->id = $id;
     }
-
     public function render(): string
     {
-        return $this->id . ' / ' . $this->name;
+        return $this->id;
     }
 }
 ```
 
-To set a value for the ID, you can pass it to the `widget()` method:
+To set a value for the ID, you can pass it in the configuration array to the `widget()` method:
 
 ```php
 <?= MyWidget::widget([
-    'id' => 'value',
-]) ?>
-```
-
-When you need extended configuration of widget (set properties or call methods) pass array definition via `config`
-parameter:
-
-```php
-<?= MyWidget::widget(config: [
     '__construct()' => [
         'id' => 'value',
-    ]
-    '$name' => 'Mike',
+    ],
 ]) ?>
 ```
 
-For a description of the configuration syntax, see the
-[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
-
+For a description of the configuration syntax, see the [yiisoft/factory](https://github.com/yiisoft/factory)
+package documentation.
 
 ### Widget for capturing content
 
@@ -148,8 +133,7 @@ final class MyWidget extends \Yiisoft\Widget\Widget
         ob_implicit_flush(false);
         return null;
     }
-
-    public function render(): string
+    protected function run(): string
     {
         return (string) ob_get_clean();
     }
