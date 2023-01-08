@@ -10,7 +10,6 @@ use ReflectionClass;
 use RuntimeException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
-use Yiisoft\Widget\Tests\Stubs\StringableWidget;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
@@ -187,12 +186,5 @@ final class WidgetTest extends TestCase
             'Disallowed pass a constructor arguments and an array definition at the same time.'
         );
         Car::widget(['name' => 'X'], ['__construct()' => ['Y']]);
-    }
-
-    public function testStringable(): void
-    {
-        $widget = StringableWidget::widget();
-
-        $this->assertSame('run', (string) $widget->render());
     }
 }
