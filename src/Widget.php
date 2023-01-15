@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
-use InvalidArgumentException;
 use RuntimeException;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
