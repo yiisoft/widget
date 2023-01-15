@@ -90,14 +90,20 @@ abstract class Widget implements NoEncodeStringableInterface
      */
     final public static function widget(array $constructorArguments = [], array $config = []): static
     {
-        if ($config === []) {
-            $config = [
-                '__construct()' => $constructorArguments,
-            ];
-        } elseif ($constructorArguments !== []) {
-            throw new InvalidArgumentException(
-                'Disallowed pass a constructor arguments and an array definition at the same time.'
-            );
+        if (!empty($constructorArguments)) {
+            if (isset($config['__construct()'])) {
+                if (!is_array($config['__construct()'])) {
+                    throw new InvalidConfigException(
+                        sprintf(
+                            'Invalid definition: incorrect constructor arguments. Expected array, got %s.',
+                            get_debug_type($config['__construct()'])
+                        )
+                    );
+                }
+                $config['__construct()'] = array_merge($config['__construct()'], $constructorArguments);
+            } else {
+                $config['__construct()'] = $constructorArguments;
+            }
         }
 
         $config['class'] = static::class;
