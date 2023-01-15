@@ -157,6 +157,8 @@ final class MyWidget extends \Yiisoft\Widget\Widget
 
 The package ensures that all widgets are properly opened, closed and nested.
 
+** Note: ** If use parameters in constructor, you will not be able to use the widget configuration, to avoid ambiguity with the constructor parameters.
+
 ## Testing
 
 ### Unit testing
