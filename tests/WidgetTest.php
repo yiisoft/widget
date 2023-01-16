@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
@@ -181,10 +181,17 @@ final class WidgetTest extends TestCase
 
     public function testSameConstructorArgumentsAndArrayDefinition(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $result = Car::widget(['name' => 'X'], ['__construct()' => ['color' => 'red']])->render();
+
+        $this->assertSame('Car "X" (red)', $result);
+    }
+
+    public function testInvalidConstructorInConfig(): void
+    {
+        $this->expectException(InvalidConfigException::class);
         $this->expectExceptionMessage(
-            'Disallowed pass a constructor arguments and an array definition at the same time.'
+            'Invalid definition: incorrect constructor arguments. Expected array, got string.'
         );
-        Car::widget(['name' => 'X'], ['__construct()' => ['Y']]);
+        Car::widget(['name' => 'X'], ['__construct()' => 'red']);
     }
 }

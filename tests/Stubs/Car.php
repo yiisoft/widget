@@ -10,11 +10,18 @@ final class Car extends Widget
 {
     public function __construct(
         private string $name,
+        public ?string $color = null
     ) {
     }
 
     public function render(): string
     {
-        return 'Car "' . $this->name . '"';
+        $result = 'Car "' . $this->name . '"';
+
+        if ($this->color !== null) {
+            $result .= ' (' . $this->color . ')';
+        }
+
+        return $result;
     }
 }
