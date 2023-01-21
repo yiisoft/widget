@@ -9,7 +9,7 @@ for both A and B.
 
 ## Upgrade from Yii Widget 1.1.0
 
-* `beforeRun`, `afterRun` and `run` method have been removed from the `Widget` class, and only the `render` method 
+* `beforeRun`, `afterRun` and `run` methods have been removed from the `Widget` class, and only the `render` method 
   can now be used, so you may need to make some changes. For example:
   ```php
   protected function beforeRun(): bool
