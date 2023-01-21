@@ -7,7 +7,7 @@ if you want to upgrade from version A to version C and there is
 version B between A and C, you need to following the instructions
 for both A and B.
 
-## Upgrade from Yii Widget 1.1.0
+## Upgrade from 1.x
 
 * `beforeRun`, `afterRun` and `run` methods have been removed from the `Widget` class, and only the `render` method 
   can now be used, so you may need to make some changes. For example:
