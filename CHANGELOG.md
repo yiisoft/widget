@@ -1,6 +1,6 @@
 # Yii Widget Change Log
 
-## 2.0.0 under development
+## 2.0.0 January 22, 2023
 
 - Chg #72, #80: Change `Widget::widget()` method to using constructor arguments only or whole array definition (@vjik)
 - Chg #74: Remove from abstract `Widget` class methods `beforeRun()`, `afterRun()` and `run()`, use `render()` only
