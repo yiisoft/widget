@@ -179,11 +179,33 @@ final class WidgetTest extends TestCase
         $this->assertSame('Car "X"', $result);
     }
 
-    public function testSameConstructorArgumentsAndArrayDefinition(): void
+    public function dataSameConstructorArgumentsAndArrayDefinition(): array
     {
-        $result = Car::widget(['name' => 'X'], ['__construct()' => ['color' => 'red']])->render();
+        return [
+            [
+                'Car "X" (red)',
+                ['name' => 'X'],
+                ['__construct()' => ['color' => 'red']],
+            ],
+            [
+                'Car "Y" (green)',
+                ['Y'],
+                ['__construct()' => ['Z', 'green']],
+            ],
+        ];
+    }
 
-        $this->assertSame('Car "X" (red)', $result);
+    /**
+     * @dataProvider dataSameConstructorArgumentsAndArrayDefinition
+     */
+    public function testSameConstructorArgumentsAndArrayDefinition(
+        string $expected,
+        array $constructorArguments,
+        array $config,
+    ): void {
+        $result = Car::widget($constructorArguments, $config)->render();
+
+        $this->assertSame($expected, $result);
     }
 
     public function testInvalidConstructorInConfig(): void
