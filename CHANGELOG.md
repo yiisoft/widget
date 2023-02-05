@@ -2,7 +2,7 @@
 
 ## 2.0.1 under development
 
-- no changes in this release.
+- Bug #83: Fix merge constructor arguments with array definition configuration into `Widget::widget()` (@vjik)
 
 ## 2.0.0 January 22, 2023
 
