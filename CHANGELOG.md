@@ -1,8 +1,10 @@
 # Yii Widget Change Log
 
-## 2.0.1 under development
+## 2.1.0 under development
 
 - Bug #83: Fix merge constructor arguments with array definition configuration into `Widget::widget()` (@vjik)
+- Enh #84: Add protected method `Widget::getDefaultConfig()` that allow to create logic with internal default
+- configuration of widget (@vjik) 
 
 ## 2.0.0 January 22, 2023
 
