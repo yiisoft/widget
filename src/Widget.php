@@ -91,16 +91,20 @@ abstract class Widget implements NoEncodeStringableInterface
      */
     final public static function widget(array $constructorArguments = [], array $config = []): static
     {
-        if (!empty($constructorArguments)) {
-            $config = ArrayDefinitionHelper::merge(
-                $config,
-                [ArrayDefinition::CONSTRUCTOR => $constructorArguments],
-            );
-        }
+        $config = ArrayDefinitionHelper::merge(
+            static::getDefaultConfig(),
+            $config,
+            empty($constructorArguments) ? [] : [ArrayDefinition::CONSTRUCTOR => $constructorArguments],
+        );
 
-        $config['class'] = static::class;
+        $config[ArrayDefinition::CLASS_NAME] = static::class;
 
         return WidgetFactory::createWidget($config);
+    }
+
+    protected static function getDefaultConfig(): array
+    {
+        return [];
     }
 
     /**
