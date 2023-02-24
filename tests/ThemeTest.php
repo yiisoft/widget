@@ -11,7 +11,44 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class ThemeTest extends TestCase
 {
-    public function dataBase(): array
+    public function testBase(): void
+    {
+        WidgetFactory::initialize(
+            container: new SimpleContainer(),
+            definitions: [
+                Car::class => [
+                    '__construct()' => [
+                        'name' => 'Base',
+                    ],
+                ],
+            ],
+            themes: [
+                'colorize' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'red',
+                        ],
+                    ],
+                ],
+                'bw' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'black',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $result = Car::widget(
+            ['name' => 'Speed'],
+            theme: 'colorize'
+        )->render();
+
+        $this->assertSame('Car "Speed" (red)', $result);
+    }
+
+    public function dataConfigCombinations(): array
     {
         return [
             [
@@ -60,10 +97,14 @@ final class ThemeTest extends TestCase
     }
 
     /**
-     * @dataProvider dataBase
+     * @dataProvider dataConfigCombinations
      */
-    public function testBase(string $expected, array $constructorArguments, array $config, ?string $theme): void
-    {
+    public function testConfigCombinations(
+        string $expected,
+        array $constructorArguments,
+        array $config,
+        ?string $theme
+    ): void {
         WidgetFactory::initialize(
             container: new SimpleContainer(),
             definitions: [

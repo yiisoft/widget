@@ -11,6 +11,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Definitions\Helpers\ArrayDefinitionHelper;
+use Yiisoft\Definitions\Helpers\DefinitionValidator;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Factory\Factory;
 
@@ -43,10 +44,14 @@ final class WidgetFactory
     public static function initialize(
         ContainerInterface $container,
         array $definitions = [],
+        bool $validate = true,
         array $themes = [],
-        bool $validate = true
     ): void {
         self::$factory = new Factory($container, $definitions, $validate);
+
+        if ($validate) {
+            self::validateThemes($themes);
+        }
         self::$themes = $themes;
     }
 
@@ -94,5 +99,48 @@ final class WidgetFactory
         }
 
         return self::$factory->create($config);
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    private static function validateThemes(array $themes): void
+    {
+        /** @var mixed $definitions */
+        foreach ($themes as $theme => $definitions) {
+            if (!is_string($theme)) {
+                throw new InvalidConfigException(
+                    sprintf('Theme name must be a string. Integer value "%s" given.', $theme)
+                );
+            }
+            if (!is_array($definitions)) {
+                throw new InvalidConfigException(
+                    sprintf(
+                        'Theme configuration must be an array. "%s" given for theme "%s".',
+                        get_debug_type($definitions),
+                        $theme,
+                    )
+                );
+            }
+            /** @var mixed $definition */
+            foreach ($definitions as $id => $definition) {
+                if (!is_string($id)) {
+                    throw new InvalidConfigException(
+                        sprintf('Widget name must be a string. Integer value "%s" given in theme "%s".', $id, $theme)
+                    );
+                }
+                if (!is_array($definition)) {
+                    throw new InvalidConfigException(
+                        sprintf(
+                            'Widget themes supports array definitions only. "%s" given for "%s" definition in "%s" theme.',
+                            get_debug_type($definition),
+                            $id,
+                            $theme,
+                        )
+                    );
+                }
+                DefinitionValidator::validateArrayDefinition($definition, $id);
+            }
+        }
     }
 }
