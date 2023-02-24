@@ -18,43 +18,43 @@ final class ThemeTest extends TestCase
                 'Car "Base"',
                 [],
                 [],
-                null
+                null,
             ],
             [
                 'Car "Test"',
                 ['name' => 'Test'],
                 [],
-                null
+                null,
             ],
             [
                 'Car "Test"',
                 ['name' => 'Test'],
                 ['__construct()' => ['name' => 'MyTest']],
-                null
+                null,
             ],
             [
                 'Car "Test"',
                 ['name' => 'Test'],
                 ['__construct()' => ['name' => 'MyTest']],
-                null
+                null,
             ],
             [
                 'Car "Base" (red)',
                 [],
                 [],
-                'colorize'
+                'colorize',
             ],
             [
                 'Car "Test" (green)',
                 ['name' => 'Test', 'color' => 'green'],
                 [],
-                'colorize'
+                'colorize',
             ],
             [
                 'Car "Test" (white)',
                 ['name' => 'Test', 'color' => 'white'],
                 ['__construct()' => ['color' => 'green']],
-                'bw'
+                'bw',
             ],
         ];
     }
