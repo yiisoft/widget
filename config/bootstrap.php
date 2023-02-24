@@ -14,9 +14,10 @@ use Yiisoft\Config\Config;
 return [
     static function (ContainerInterface $container) use ($config, $params) {
         WidgetFactory::initialize(
-            $container,
-            $config->get($params['yiisoft/widget']['configGroup']),
-            $params['yiisoft/widget']['validateConfig']
+            container: $container,
+            definitions: $config->get($params['yiisoft/widget']['config']['definitionsGroup']),
+            themes: $config->get($params['yiisoft/widget']['config']['themesGroup']),
+            validate: $params['yiisoft/widget']['config']['validate'],
         );
     },
 ];

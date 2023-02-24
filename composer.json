@@ -60,7 +60,8 @@
         "config-plugin": {
             "params": "params.php",
             "bootstrap": "bootstrap.php",
-            "widgets": "widgets.php"
+            "widgets": [],
+            "widgets-themes": []
         }
     },
     "scripts": {

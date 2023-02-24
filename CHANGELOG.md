@@ -1,10 +1,11 @@
 # Yii Widget Change Log
 
-## 2.1.0 under development
+## 3.0.0 under development
 
 - Bug #83: Fix merge constructor arguments with array definition configuration into `Widget::widget()` (@vjik)
-- Enh #84: Add protected method `Widget::getDefaultConfig()` that allow to create logic with internal default
-  configuration of widget (@vjik) 
+- Enh #84, #87: Add protected method `Widget::getThemeConfig()` that allow to create logic with internal theme
+  configuration of widget (@vjik)
+- Enh #87: Add widget themes (@vjik)
 
 ## 2.0.0 January 22, 2023
 
