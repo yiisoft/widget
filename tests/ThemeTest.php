@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;

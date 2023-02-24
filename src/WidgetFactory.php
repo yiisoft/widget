@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget;
 
-use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Yiisoft\Definitions\ArrayDefinition;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
