@@ -50,4 +50,62 @@ final class WidgetFactoryTest extends TestCase
         $this->expectExceptionMessage($expectedMessage);
         WidgetFactory::initialize($container, themes: $themes);
     }
+
+    public function testDefaultTheme(): void
+    {
+        WidgetFactory::initialize(
+            new SimpleContainer(),
+            themes: [
+                'colorize' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'red',
+                        ],
+                    ],
+                ],
+                'bw' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'black',
+                        ],
+                    ],
+                ],
+            ],
+            defaultTheme: 'colorize',
+        );
+
+        $result = Car::widget(['name' => 'Test'])->render();
+
+        $this->assertSame('Car "Test" (red)', $result);
+    }
+
+    public function testSetDefaultTheme(): void
+    {
+        WidgetFactory::initialize(
+            new SimpleContainer(),
+            themes: [
+                'colorize' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'red',
+                        ],
+                    ],
+                ],
+                'bw' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'black',
+                        ],
+                    ],
+                ],
+            ],
+            defaultTheme: 'colorize',
+        );
+
+        WidgetFactory::setDefaultTheme('bw');
+
+        $result = Car::widget(['name' => 'Test'])->render();
+
+        $this->assertSame('Car "Test" (black)', $result);
+    }
 }

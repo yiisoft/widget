@@ -113,6 +113,8 @@ abstract class Widget implements NoEncodeStringableInterface
      *
      * @return array Configuration in the form of array definition (see syntax description in the Yii Definitions
      * documentation by link {@link https://github.com/yiisoft/definitions#arraydefinition}).
+     *
+     * @infection-ignore-all
      */
     protected static function getThemeConfig(?string $theme): array
     {

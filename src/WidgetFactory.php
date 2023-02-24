@@ -29,6 +29,8 @@ final class WidgetFactory
      */
     private static array $themes = [];
 
+    private static ?string $defaultTheme = null;
+
     private function __construct()
     {
     }
@@ -46,6 +48,7 @@ final class WidgetFactory
         array $definitions = [],
         bool $validate = true,
         array $themes = [],
+        ?string $defaultTheme = null,
     ): void {
         self::$factory = new Factory($container, $definitions, $validate);
 
@@ -53,6 +56,12 @@ final class WidgetFactory
             self::validateThemes($themes);
         }
         self::$themes = $themes;
+        self::$defaultTheme = $defaultTheme;
+    }
+
+    public static function setDefaultTheme(?string $theme): void
+    {
+        self::$defaultTheme = $theme;
     }
 
     /**
@@ -80,11 +89,9 @@ final class WidgetFactory
             );
         }
 
-        if ($theme !== null) {
-            if (!isset(self::$themes[$theme])) {
-                throw new InvalidArgumentException(sprintf('Theme "%s" not found.', $theme));
-            }
+        $theme ??= self::$defaultTheme;
 
+        if ($theme !== null && isset(self::$themes[$theme])) {
             if (
                 is_string($config[ArrayDefinition::CLASS_NAME])
                 && isset(

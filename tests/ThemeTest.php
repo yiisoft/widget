@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
+use Yiisoft\Widget\Tests\Stubs\Table;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ThemeTest extends TestCase
@@ -151,8 +152,17 @@ final class ThemeTest extends TestCase
             ],
         );
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Theme "test" not found.');
-        Car::widget(theme: 'test');
+        $result = Car::widget(theme: 'non-exist')->render();
+
+        $this->assertSame('Car "Base"', $result);
+    }
+
+    public function testWidgetInternalThemeConfig(): void
+    {
+        WidgetFactory::initialize(new SimpleContainer());
+
+        $result = Table::widget(theme: 'colorize')->render();
+
+        $this->assertSame('Table (Red)', $result);
     }
 }

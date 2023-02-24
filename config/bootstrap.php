@@ -16,8 +16,9 @@ return [
         WidgetFactory::initialize(
             container: $container,
             definitions: $config->get($params['yiisoft/widget']['config']['definitionsGroup']),
-            themes: $config->get($params['yiisoft/widget']['config']['themesGroup']),
             validate: $params['yiisoft/widget']['config']['validate'],
+            themes: $config->get($params['yiisoft/widget']['config']['themesGroup']),
+            defaultTheme: $params['yiisoft/widget']['defaultTheme'],
         );
     },
 ];

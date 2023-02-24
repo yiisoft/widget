@@ -9,5 +9,6 @@ return [
             'themesGroup' => 'widgets-themes',
             'validate' => true,
         ],
+        'defaultTheme' => null,
     ],
 ];
