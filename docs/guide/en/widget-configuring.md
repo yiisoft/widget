@@ -32,12 +32,14 @@ When you need extended configuration of widget (set properties or call methods) 
 parameter:
 
 ```php
-<?= MyWidget::widget(config: [
-    '__construct()' => [
-        'id' => 'value',
+<?= MyWidget::widget(
+    config: [
+        '__construct()' => [
+            'id' => 'value',
+        ]
+        '$name' => 'Mike',
     ]
-    '$name' => 'Mike',
-]) ?>
+) ?>
 ```
 
 For a description of the configuration syntax, see the
