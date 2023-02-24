@@ -1,6 +1,6 @@
 # Yii Widget Change Log
 
-## 3.0.0 under development
+## 2.1.0 under development
 
 - Bug #83: Fix merge constructor arguments with array definition configuration into `Widget::widget()` (@vjik)
 - Enh #84, #87: Add protected method `Widget::getThemeConfig()` that allow to create logic with internal theme
