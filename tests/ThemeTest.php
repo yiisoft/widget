@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
@@ -135,5 +136,23 @@ final class ThemeTest extends TestCase
         $result = Car::widget($constructorArguments, $config, $theme)->render();
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testNonExistTheme(): void
+    {
+        WidgetFactory::initialize(
+            container: new SimpleContainer(),
+            definitions: [
+                Car::class => [
+                    '__construct()' => [
+                        'name' => 'Base',
+                    ],
+                ],
+            ],
+        );
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Theme "test" not found.');
+        Car::widget(theme: 'test');
     }
 }
