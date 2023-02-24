@@ -78,87 +78,9 @@ $widgetDefaults = [
 It is a good idea to do that for the whole application. See Yii example in the configuration file of this package
 [`config/bootstrap.php`](https://github.com/yiisoft/widget/blob/master/config/bootstrap.php).
 
-### Configuring the widget
-
-You can configure the widget when creating its instance, for example,
-the widget class must accept some ID when initializing the object.
-
-```php
-final class MyWidget extends \Yiisoft\Widget\Widget
-{
-    public string $name;
-    
-    public function __construct(
-        private string $id,
-    ) {
-    }
-
-    public function render(): string
-    {
-        return $this->id . ' / ' . $this->name;
-    }
-}
-```
-
-To set a value for the ID, you can pass it to the `widget()` method:
-
-```php
-<?= MyWidget::widget([
-    'id' => 'value',
-]) ?>
-```
-
-When you need extended configuration of widget (set properties or call methods) pass array definition via `config`
-parameter:
-
-```php
-<?= MyWidget::widget(config: [
-    '__construct()' => [
-        'id' => 'value',
-    ]
-    '$name' => 'Mike',
-]) ?>
-```
-
-For a description of the configuration syntax, see the
-[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
-
-### Widget for capturing content
-
-Some widgets can take a block of content which should be enclosed between the invocation of `begin()` and `end()`
-methods. These are wrapping widgets that mimic opening and closing HTML tags that wrap some content.
-They are used a bit differently:
-
-```php
-<?= MyWidget::widget()->begin() ?>
-    Content
-<?= MyWidget::end() ?>
-```
-
-For your widget to do this, you need override the parent `begin()` method and don't forget to call `parent::begin()`:
-
-```php
-final class MyWidget extends \Yiisoft\Widget\Widget
-{
-    public function begin(): ?string
-    {
-        parent::begin();
-        ob_start();
-        ob_implicit_flush(false);
-        return null;
-    }
-
-    public function render(): string
-    {
-        return (string) ob_get_clean();
-    }
-}
-```
-
-The package ensures that all widgets are properly opened, closed and nested.
-
 ## Documentation
 
+- [Guide](docs/guide/en/README.md)
 - [Internals](docs/internals.md)
 
 ## License
