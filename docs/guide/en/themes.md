@@ -38,5 +38,5 @@ For a description of the configuration syntax, see the
 To apply a theme to the widget call the `widget()` method with `theme` argument:
 
 ```php
-MyWidget::widget(theme: 'colorize');
+MyWidget::widget(theme: 'red-alert');
 ```
