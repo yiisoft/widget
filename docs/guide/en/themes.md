@@ -14,7 +14,7 @@ Theme is a named extra configuration of a widget that is merged with default con
         ],
     ],
     themes: [
-        'colorize' => [
+        'red-alert' => [
             MyWidget::class => [
                 '__construct()' => [
                     'color' => 'red',
