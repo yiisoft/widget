@@ -28,7 +28,7 @@ To set a value for the ID, you can pass it to the `widget()` method:
 ]) ?>
 ```
 
-When you need extended configuration of widget (set properties or call methods) pass array definition via `config`
+When you need extended configuration of a widget (to set properties or call methods) pass array definition via `config`
 parameter:
 
 ```php
