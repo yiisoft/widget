@@ -1,6 +1,6 @@
 # Configuring the widget
 
-You can configure the widget when creating its instance, for example, the widget class must accept some ID when
+You can configure the widget when creating its instance. For example, the widget class must accept some ID when
 initializing the object.
 
 ```php
