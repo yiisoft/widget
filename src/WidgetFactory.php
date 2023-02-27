@@ -91,15 +91,11 @@ final class WidgetFactory
         $theme ??= self::$defaultTheme;
 
         if ($theme !== null && isset(self::$themes[$theme])) {
-            if (
-                is_string($config[ArrayDefinition::CLASS_NAME])
-                && isset(
-                    $config[ArrayDefinition::CLASS_NAME],
-                    self::$themes[$theme][$config[ArrayDefinition::CLASS_NAME]]
-                )
-            ) {
+            /** @var mixed $className */
+            $className = $config[ArrayDefinition::CLASS_NAME] ?? null;
+            if (is_string($className) && isset(self::$themes[$theme][$className])) {
                 $config = ArrayDefinitionHelper::merge(
-                    self::$themes[$theme][$config[ArrayDefinition::CLASS_NAME]],
+                    self::$themes[$theme][$className],
                     $config
                 );
             }
