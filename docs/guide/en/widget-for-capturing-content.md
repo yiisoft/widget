@@ -10,7 +10,7 @@ They are used a bit differently:
 <?= MyWidget::end() ?>
 ```
 
-For your widget to do this, you need override the parent `begin()` method and don't forget to call `parent::begin()`:
+For your widget to do this, you need to override the parent `begin()` method. Don't forget to call `parent::begin()`:
 
 ```php
 final class MyWidget extends \Yiisoft\Widget\Widget
