@@ -35,7 +35,7 @@ Theme is a named extra configuration of a widget that is merged with default con
 For a description of the configuration syntax, see the
 [Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
 
-To apply theme to widget call the `widget()` method with `theme` argument:
+To apply a theme to the widget call the `widget()` method with `theme` argument:
 
 ```php
 MyWidget::widget(theme: 'colorize');
