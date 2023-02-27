@@ -52,7 +52,7 @@ final class WidgetFactory
         self::$factory = new Factory($container, $definitions, $validate);
 
         if ($validate) {
-            self::validateThemes($themes);
+            self::assertThemesStructure($themes);
         }
         self::$themes = $themes;
         self::$defaultTheme = $defaultTheme;
@@ -111,7 +111,7 @@ final class WidgetFactory
     /**
      * @throws InvalidConfigException
      */
-    private static function validateThemes(array $themes): void
+    private static function assertThemesStructure(array $themes): void
     {
         /** @var mixed $definitions */
         foreach ($themes as $theme => $definitions) {
