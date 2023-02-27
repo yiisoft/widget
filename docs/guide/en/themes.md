@@ -1,6 +1,6 @@
 # Themes
 
-Theme is named extra configuration of widget that merged with default configuration. Themes defined in
+Theme is a named extra configuration of a widget that is merged with default configuration. Themes are defined in
 `WidgetFactory::initialize()`:
 
 ```php
