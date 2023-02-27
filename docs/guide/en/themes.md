@@ -6,7 +6,7 @@ Theme is a named extra configuration of a widget that is merged with default con
 ```php
 \Yiisoft\Widget\WidgetFactory::initialize(
     $container,
-     definitions: [
+    definitions: [
         MyWidget::class => [
             '__construct()' => [
                 'name' => 'Base',
