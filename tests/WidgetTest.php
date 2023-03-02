@@ -31,7 +31,7 @@ final class WidgetTest extends TestCase
             Injectable::class => new Injectable(),
         ]);
 
-        WidgetFactory::initialize($this->container, []);
+        WidgetFactory::initialize($this->container);
     }
 
     protected function tearDown(): void

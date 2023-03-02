@@ -81,6 +81,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * @param array $config The configuration for creating a widget. For a description of the configuration syntax, see
      * array definitions documentation in the Yii Definitions by link
      * {@link https://github.com/yiisoft/definitions#arraydefinition).
+     * @param string|null $theme The widget theme.
      *
      * @throws InvalidConfigException
      * @throws CircularReferenceException
@@ -89,20 +90,33 @@ abstract class Widget implements NoEncodeStringableInterface
      *
      * @return static The widget instance.
      */
-    final public static function widget(array $constructorArguments = [], array $config = []): static
-    {
+    final public static function widget(
+        array $constructorArguments = [],
+        array $config = [],
+        ?string $theme = null
+    ): static {
         $config = ArrayDefinitionHelper::merge(
-            static::getDefaultConfig(),
+            static::getThemeConfig($theme),
             $config,
             empty($constructorArguments) ? [] : [ArrayDefinition::CONSTRUCTOR => $constructorArguments],
         );
 
         $config[ArrayDefinition::CLASS_NAME] = static::class;
 
-        return WidgetFactory::createWidget($config);
+        return WidgetFactory::createWidget($config, $theme);
     }
 
-    protected static function getDefaultConfig(): array
+    /**
+     * Returns configuration that will be merged with configuration passed to {@see widget()} method.
+     *
+     * @param string|null $theme The widget theme.
+     *
+     * @return array Configuration in the form of array definition (see syntax description in the Yii Definitions
+     * documentation by link {@link https://github.com/yiisoft/definitions#arraydefinition}).
+     *
+     * @infection-ignore-all
+     */
+    protected static function getThemeConfig(?string $theme): array
     {
         return [];
     }

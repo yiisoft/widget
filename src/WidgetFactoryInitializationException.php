@@ -28,9 +28,16 @@ Example:
  */
 
 Yiisoft\Widget\WidgetFactory::initialize(
-    $container,
-    [MyWidget::class => new MyWidget(/*...*/)],
-    true, // Whether definitions need to be validated.
+    container: $container,
+    definitions: [MyWidget::class => new MyWidget(/*...*/)],
+    themes: [
+        'custom' => [
+            MyWidget::class => [
+                'setValue()' => [42],
+            ],
+        ],
+    ],
+    validate: true, // Whether definitions need to be validated.
 );
 ```
 
