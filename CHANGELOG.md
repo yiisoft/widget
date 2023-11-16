@@ -1,5 +1,9 @@
 # Yii Widget Change Log
 
+## 2.1.1 under development
+
+- no changes in this release.
+
 ## 2.1.0 November 16, 2023
 
 - Enh #84, #87: Add protected method `Widget::getThemeConfig()` that allows to implement a logic of configuring
