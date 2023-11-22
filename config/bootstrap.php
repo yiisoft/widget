@@ -19,6 +19,7 @@ return [
             validate: $params['yiisoft/widget']['config']['validate'],
             themes: $config->get($params['yiisoft/widget']['config']['themesGroup']),
             defaultTheme: $params['yiisoft/widget']['defaultTheme'],
+            widgetDefaultThemes: $params['yiisoft/widget']['widgetDefaultThemes'],
         );
     },
 ];
