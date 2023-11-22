@@ -30,6 +30,11 @@ final class WidgetFactory
 
     private static ?string $defaultTheme = null;
 
+    /**
+     * @psalm-var array<string, string>
+     */
+    private static array $widgetDefaultThemes = [];
+
     private function __construct()
     {
     }
@@ -37,6 +42,7 @@ final class WidgetFactory
     /**
      * @psalm-param array<string, mixed> $definitions
      * @psalm-param array<string, array<string, array>> $themes
+     * @psalm-param array<string, string> $widgetDefaultThemes
      *
      * @throws InvalidConfigException
      *
@@ -48,14 +54,18 @@ final class WidgetFactory
         bool $validate = true,
         array $themes = [],
         ?string $defaultTheme = null,
+        array $widgetDefaultThemes = [],
     ): void {
         self::$factory = new Factory($container, $definitions, $validate);
 
         if ($validate) {
             self::assertThemesStructure($themes);
+            self::assertWidgetDefaultThemesStructure($widgetDefaultThemes);
         }
+
         self::$themes = $themes;
         self::$defaultTheme = $defaultTheme;
+        self::$widgetDefaultThemes = $widgetDefaultThemes;
     }
 
     public static function setDefaultTheme(?string $theme): void
@@ -88,12 +98,10 @@ final class WidgetFactory
             );
         }
 
-        $theme ??= self::$defaultTheme;
-
-        if ($theme !== null && isset(self::$themes[$theme])) {
-            /** @var mixed $className */
-            $className = $config[ArrayDefinition::CLASS_NAME] ?? null;
-            if (is_string($className) && isset(self::$themes[$theme][$className])) {
+        $className = $config[ArrayDefinition::CLASS_NAME] ?? null;
+        if (is_string($className)) {
+            $theme ??= self::$widgetDefaultThemes[$className] ?? self::$defaultTheme;
+            if ($theme !== null && isset(self::$themes[$theme][$className])) {
                 $config = ArrayDefinitionHelper::merge(
                     self::$themes[$theme][$className],
                     $config
@@ -109,7 +117,6 @@ final class WidgetFactory
      */
     private static function assertThemesStructure(array $themes): void
     {
-        /** @var mixed $definitions */
         foreach ($themes as $theme => $definitions) {
             if (!is_string($theme)) {
                 throw new InvalidConfigException(
@@ -125,7 +132,6 @@ final class WidgetFactory
                     )
                 );
             }
-            /** @var mixed $definition */
             foreach ($definitions as $id => $definition) {
                 if (!is_string($id)) {
                     throw new InvalidConfigException(
@@ -143,6 +149,29 @@ final class WidgetFactory
                     );
                 }
                 DefinitionValidator::validateArrayDefinition($definition, $id);
+            }
+        }
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    private static function assertWidgetDefaultThemesStructure(array $value): void
+    {
+        foreach ($value as $widget => $theme) {
+            if (!is_string($widget)) {
+                throw new InvalidConfigException(
+                    sprintf('Widget class must be a string. Integer value "%s" given.', $widget)
+                );
+            }
+            if (!is_string($theme)) {
+                throw new InvalidConfigException(
+                    sprintf(
+                        'Theme name must be a string. "%s" given for widget "%s".',
+                        get_debug_type($theme),
+                        $widget,
+                    )
+                );
             }
         }
     }
