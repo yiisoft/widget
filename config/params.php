@@ -10,5 +10,6 @@ return [
             'validate' => true,
         ],
         'defaultTheme' => null,
+        'widgetDefaultThemes' => [],
     ],
 ];

@@ -9,6 +9,7 @@ use stdClass;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\Tests\Stubs\Car;
+use Yiisoft\Widget\Tests\Stubs\TestWidget;
 use Yiisoft\Widget\WidgetFactory;
 
 final class WidgetFactoryTest extends TestCase
@@ -107,5 +108,31 @@ final class WidgetFactoryTest extends TestCase
         $result = Car::widget(['name' => 'Test'])->render();
 
         $this->assertSame('Car "Test" (black)', $result);
+    }
+
+    public function dataWidgetDefaultThemesValidation(): array
+    {
+        return [
+            [
+                'Widget class must be a string. Integer value "0" given.',
+                ['bootstrap5'],
+            ],
+            [
+                'Theme name must be a string. "stdClass" given for widget "' . TestWidget::class . '".',
+                [TestWidget::class => new stdClass()],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataWidgetDefaultThemesValidation
+     */
+    public function testWidgetDefaultThemesValidation(string $expectedMessage, array $widgetDefaultThemes): void
+    {
+        $container = new SimpleContainer();
+
+        $this->expectException(InvalidConfigException::class);
+        $this->expectExceptionMessage($expectedMessage);
+        WidgetFactory::initialize($container, widgetDefaultThemes: $widgetDefaultThemes);
     }
 }

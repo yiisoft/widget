@@ -1,8 +1,8 @@
 # Yii Widget Change Log
 
-## 2.1.1 under development
+## 2.2.0 under development
 
-- no changes in this release.
+- Enh #98: Add ability to set default theme for concrete widget (@vjik)
 
 ## 2.1.0 November 16, 2023
 

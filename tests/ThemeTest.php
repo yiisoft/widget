@@ -164,4 +164,57 @@ final class ThemeTest extends TestCase
 
         $this->assertSame('Table (Red)', $result);
     }
+
+    public function dataDefaultThemeForSpecifiedWidget(): array
+    {
+        return [
+            ['Car "Speed" (black)', null],
+            ['Car "Speed" (red)', 'colorize'],
+            ['Car "Speed" (black)', 'bw'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataDefaultThemeForSpecifiedWidget
+     */
+    public function testDefaultThemeForSpecifiedWidget(string $expected, ?string $theme): void
+    {
+        WidgetFactory::initialize(
+            container: new SimpleContainer(),
+            definitions: [
+                Car::class => [
+                    '__construct()' => [
+                        'name' => 'Base',
+                    ],
+                ],
+            ],
+            themes: [
+                'colorize' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'red',
+                        ],
+                    ],
+                ],
+                'bw' => [
+                    Car::class => [
+                        '__construct()' => [
+                            'color' => 'black',
+                        ],
+                    ],
+                ],
+            ],
+            defaultTheme: 'colorize',
+            widgetDefaultThemes: [
+                Car::class => 'bw',
+            ],
+        );
+
+        $result = Car::widget(
+            ['name' => 'Speed'],
+            theme: $theme
+        )->render();
+
+        $this->assertSame($expected, $result);
+    }
 }
