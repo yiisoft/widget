@@ -1,6 +1,6 @@
 # Yii Widget Change Log
 
-## 2.1.1 under development
+## 2.2.0 under development
 
 - Enh #98: Add ability to set default theme for concrete widget (@vjik)
 
