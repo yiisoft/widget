@@ -7,9 +7,13 @@ namespace Yiisoft\Widget\Tests;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
+use Throwable;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\NotInstantiableWithoutWidgetFactoryInitializationException;
 use Yiisoft\Widget\Tests\Stubs\Car;
+use Yiisoft\Widget\Tests\Stubs\Garage;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
 use Yiisoft\Widget\Tests\Stubs\Injectable;
 use Yiisoft\Widget\Tests\Stubs\TestInjectionWidget;
@@ -148,14 +152,50 @@ final class WidgetTest extends TestCase
         $this->assertInstanceOf(Injectable::class, $widget->getInjectable());
     }
 
+    public function testInjectionWithoutInitialization(): void
+    {
+        $this->uninitializedWidgetFactory();
+
+        $exception = null;
+        try {
+            TestInjectionWidget::widget();
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(NotInstantiableWithoutWidgetFactoryInitializationException::class, $exception);
+        $this->assertInstanceOf(NotInstantiableException::class, $exception->getPrevious());
+        $this->assertSame(
+            'Can not instantiate ' .
+            Injectable::class .
+            '. Perhaps need initialize "WidgetFactory" with container for resolve dependencies.',
+            $exception->getMessage()
+        );
+        $this->assertSame(
+            'Failed to create a widget. Can not instantiate ' . Injectable::class . '.',
+            $exception->getName()
+        );
+        $this->assertSame(
+            'Failed to create a widget. Can not instantiate ' . Injectable::class . '.',
+            $exception->getName()
+        );
+        $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
+    }
+
+    public function testNotInstantiableWithInitialization(): void
+    {
+        $exception = null;
+        try {
+            Garage::widget();
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(NotInstantiableException::class, $exception);
+        $this->assertSame('Can not instantiate ' . Car::class . '.', $exception->getMessage());
+    }
+
     public function testWithoutInitialization(): void
     {
-        $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
-        $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
-        $property = $reflection->getProperty('factory');
-        $property->setAccessible(true);
-        $property->setValue($widgetFactoryReflection, null);
-        $property->setAccessible(false);
+        $this->uninitializedWidgetFactory();
 
         $html = TestWidget::widget()->id('w0')->render();
 
@@ -215,5 +255,21 @@ final class WidgetTest extends TestCase
             'Invalid definition: incorrect constructor arguments. Expected array, got string.'
         );
         Car::widget(['name' => 'X'], ['__construct()' => 'red']);
+    }
+
+    private function uninitializedWidgetFactory(): void
+    {
+        $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
+        $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
+
+        $property = $reflection->getProperty('factory');
+        $property->setAccessible(true);
+        $property->setValue($widgetFactoryReflection, null);
+        $property->setAccessible(false);
+
+        $property = $reflection->getProperty('initialized');
+        $property->setAccessible(true);
+        $property->setValue($widgetFactoryReflection, false);
+        $property->setAccessible(false);
     }
 }

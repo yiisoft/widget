@@ -21,6 +21,7 @@ use Yiisoft\Factory\Factory;
  */
 final class WidgetFactory
 {
+    private static bool $initialized = false;
     private static ?Factory $factory = null;
 
     /**
@@ -35,6 +36,9 @@ final class WidgetFactory
      */
     private static array $widgetDefaultThemes = [];
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
@@ -66,6 +70,8 @@ final class WidgetFactory
         self::$themes = $themes;
         self::$defaultTheme = $defaultTheme;
         self::$widgetDefaultThemes = $widgetDefaultThemes;
+
+        self::$initialized = true;
     }
 
     public static function setDefaultTheme(?string $theme): void
@@ -106,7 +112,15 @@ final class WidgetFactory
             }
         }
 
-        return self::$factory->create($config);
+        try {
+            return self::$factory->create($config);
+        } catch (NotInstantiableException $exception) {
+            if (self::$initialized) {
+                throw $exception;
+            } else {
+                throw new NotInstantiableWithoutWidgetFactoryInitializationException($exception);
+            }
+        }
     }
 
     /**
