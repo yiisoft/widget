@@ -3,7 +3,7 @@
 ## 2.2.0 under development
 
 - Enh #98: Add ability to set default theme for concrete widget (@vjik)
-- Enh #99: Allow use widgets without widget factory initialization (@vjik)
+- Enh #99: Allow to use widgets without widget factory initialization (@vjik)
 - Chg #99: Mark `WidgetFactoryInitializationException` as deprecated (@vjik)
 
 ## 2.1.0 November 16, 2023
