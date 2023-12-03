@@ -117,9 +117,8 @@ final class WidgetFactory
         } catch (NotInstantiableException $exception) {
             if (self::$initialized) {
                 throw $exception;
-            } else {
-                throw new NotInstantiableWithoutWidgetFactoryInitializationException($exception);
             }
+            throw new NotInstantiableWithoutWidgetFactoryInitializationException($exception);
         }
     }
 

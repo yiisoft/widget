@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Widget\Tests\Stubs;
 
-use Yiisoft\Widget\Tests\Stubs\Car;
 use Yiisoft\Widget\Widget;
 
 final class Garage extends Widget
