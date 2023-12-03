@@ -49,7 +49,7 @@ final class WidgetFactory
      * @see Factory::__construct()
      */
     public static function initialize(
-        ContainerInterface $container,
+        ?ContainerInterface $container = null,
         array $definitions = [],
         bool $validate = true,
         array $themes = [],
@@ -79,7 +79,6 @@ final class WidgetFactory
      * @param array $config The parameters for creating a widget.
      * @param string|null $theme The widget theme.
      *
-     * @throws WidgetFactoryInitializationException If factory was not initialized.
      * @throws CircularReferenceException
      * @throws InvalidConfigException
      * @throws NotFoundException
@@ -93,9 +92,7 @@ final class WidgetFactory
     public static function createWidget(array $config, ?string $theme = null): Widget
     {
         if (self::$factory === null) {
-            throw new WidgetFactoryInitializationException(
-                'Widget factory should be initialized with WidgetFactory::initialize() call.',
-            );
+            self::$factory = new Factory();
         }
 
         $className = $config[ArrayDefinition::CLASS_NAME] ?? null;

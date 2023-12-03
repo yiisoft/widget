@@ -148,7 +148,7 @@ final class WidgetTest extends TestCase
         $this->assertInstanceOf(Injectable::class, $widget->getInjectable());
     }
 
-    public function testWidgetThrownExceptionForNotInitializeWidgetFactory(): void
+    public function testWithoutInitialization(): void
     {
         $widgetFactoryReflection = new ReflectionClass(WidgetFactory::class);
         $reflection = new ReflectionClass($widgetFactoryReflection->newInstanceWithoutConstructor());
@@ -157,11 +157,11 @@ final class WidgetTest extends TestCase
         $property->setValue($widgetFactoryReflection, null);
         $property->setAccessible(false);
 
-        $this->expectException(WidgetFactoryInitializationException::class);
-        $this->expectExceptionMessage('Widget factory should be initialized with WidgetFactory::initialize() call.');
-        TestWidget::widget()
-            ->id('w0')
-            ->render();
+        $html = TestWidget::widget()->id('w0')->render();
+
+        $expected = '<run-w0>';
+
+        $this->assertSame($expected, $html);
     }
 
     public function testWidgetFactoryInitializationExceptionMessages(): void

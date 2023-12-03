@@ -7,6 +7,9 @@ namespace Yiisoft\Widget;
 use RuntimeException;
 use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
+/**
+ * @deprecated Will be removed in version 3.0.
+ */
 final class WidgetFactoryInitializationException extends RuntimeException implements FriendlyExceptionInterface
 {
     public function getName(): string
