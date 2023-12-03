@@ -10,7 +10,7 @@ use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
 final class NotInstantiableWithoutWidgetFactoryInitializationException extends NotInstantiableException implements FriendlyExceptionInterface
 {
-    public function __construct(private ?Throwable $previous)
+    public function __construct(private Throwable $previous)
     {
         parent::__construct(
             $previous->getMessage() .
