@@ -13,10 +13,9 @@ final class NotInstantiableWithoutWidgetFactoryInitializationException extends N
     public function __construct(
         private string $widgetClassName,
         private Throwable $previous,
-    )
-    {
+    ) {
         parent::__construct(
-            'Failed to create a widget "' . $this->widgetClassName . '". '.  $previous->getMessage() .
+            'Failed to create a widget "' . $this->widgetClassName . '". ' . $previous->getMessage() .
             ' Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             previous: $previous,
         );
