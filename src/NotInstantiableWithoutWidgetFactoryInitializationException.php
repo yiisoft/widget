@@ -10,10 +10,13 @@ use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
 final class NotInstantiableWithoutWidgetFactoryInitializationException extends NotInstantiableException implements FriendlyExceptionInterface
 {
-    public function __construct(private Throwable $previous)
+    public function __construct(
+        private string $widgetClassName,
+        private Throwable $previous,
+    )
     {
         parent::__construct(
-            $previous->getMessage() .
+            'Failed to create a widget "' . $this->widgetClassName . '". '.  $previous->getMessage() .
             ' Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             previous: $previous,
         );
@@ -21,13 +24,15 @@ final class NotInstantiableWithoutWidgetFactoryInitializationException extends N
 
     public function getName(): string
     {
-        return 'Failed to create a widget. ' . $this->previous->getMessage();
+        return 'Failed to create a widget "' . $this->widgetClassName . '". ' . $this->previous->getMessage();
     }
 
     public function getSolution(): ?string
     {
-        return <<<'SOLUTION'
-            Perhaps need initialize `WidgetFactory` with container for resolve dependencies.
+        $widgetFactoryClass = WidgetFactory::class;
+
+        return <<<SOLUTION
+            Perhaps you need to initialize "$widgetFactoryClass" with DI container to resolve dependencies.
 
             To initialize the widget factory call `WidgetFactory::initialize()` before using the widget.
             It is a good idea to do that for the whole application.
@@ -36,11 +41,11 @@ final class NotInstantiableWithoutWidgetFactoryInitializationException extends N
 
             ```php
             /**
-             * @var Psr\Container\ContainerInterface $container
+             * @var Psr\Container\ContainerInterface \$container
              */
 
             Yiisoft\Widget\WidgetFactory::initialize(
-                container: $container,
+                container: \$container,
                 definitions: [MyWidget::class => new MyWidget(/*...*/)],
                 themes: [
                     'custom' => [

@@ -165,17 +165,14 @@ final class WidgetTest extends TestCase
         $this->assertInstanceOf(NotInstantiableWithoutWidgetFactoryInitializationException::class, $exception);
         $this->assertInstanceOf(NotInstantiableException::class, $exception->getPrevious());
         $this->assertSame(
+            'Failed to create a widget "' . TestInjectionWidget::class . '". ' .
             'Can not instantiate ' .
             Injectable::class .
             '. Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             $exception->getMessage()
         );
         $this->assertSame(
-            'Failed to create a widget. Can not instantiate ' . Injectable::class . '.',
-            $exception->getName()
-        );
-        $this->assertSame(
-            'Failed to create a widget. Can not instantiate ' . Injectable::class . '.',
+            'Failed to create a widget "' . TestInjectionWidget::class . '". Can not instantiate ' . Injectable::class . '.',
             $exception->getName()
         );
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());

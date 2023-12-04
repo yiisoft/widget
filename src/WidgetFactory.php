@@ -118,7 +118,12 @@ final class WidgetFactory
             if (self::$initialized) {
                 throw $exception;
             }
-            throw new NotInstantiableWithoutWidgetFactoryInitializationException($exception);
+
+            /**
+             * @var string $className When `$className` is not string `$factory->create()`
+             * throws not `NotInstantiableException` exception.
+             */
+            throw new NotInstantiableWithoutWidgetFactoryInitializationException($className, $exception);
         }
     }
 
