@@ -5,20 +5,22 @@ declare(strict_types=1);
 namespace Yiisoft\Widget;
 
 use Throwable;
-use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Definitions\Exception\NotInstantiableException as FactoryNotInstantiableException;
 use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
-final class NotInstantiableWithoutWidgetFactoryInitializationException extends NotInstantiableException implements FriendlyExceptionInterface
+final class NotInstantiableException extends FactoryNotInstantiableException implements FriendlyExceptionInterface
 {
     public function __construct(
         private string $widgetClassName,
+        private bool $widgetFactoryInitialized,
         private Throwable $previous,
     ) {
-        parent::__construct(
-            'Failed to create a widget "' . $this->widgetClassName . '". ' . $previous->getMessage() .
-            ' Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
-            previous: $previous,
-        );
+        $message = 'Failed to create a widget "' . $this->widgetClassName . '". ' . $previous->getMessage();
+        if (!$this->widgetFactoryInitialized) {
+            $message .= ' Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.';
+        }
+
+        parent::__construct($message, previous: $previous);
     }
 
     public function getName(): string
@@ -28,6 +30,10 @@ final class NotInstantiableWithoutWidgetFactoryInitializationException extends N
 
     public function getSolution(): ?string
     {
+        if ($this->widgetFactoryInitialized) {
+            return null;
+        }
+
         $widgetFactoryClass = WidgetFactory::class;
 
         return <<<SOLUTION

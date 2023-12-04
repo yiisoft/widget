@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use Yiisoft\Definitions\ArrayDefinition;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
-use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Definitions\Exception\NotInstantiableException as FactoryNotInstantiableException;
 use Yiisoft\Definitions\Helpers\ArrayDefinitionHelper;
 use Yiisoft\Definitions\Helpers\DefinitionValidator;
 use Yiisoft\Factory\NotFoundException;
@@ -88,7 +88,7 @@ final class WidgetFactory
      * @throws CircularReferenceException
      * @throws InvalidConfigException
      * @throws NotFoundException
-     * @throws NotInstantiableException
+     * @throws FactoryNotInstantiableException
      *
      * @see Factory::create()
      *
@@ -114,16 +114,12 @@ final class WidgetFactory
 
         try {
             return self::$factory->create($config);
-        } catch (NotInstantiableException $exception) {
-            if (self::$initialized) {
-                throw $exception;
-            }
-
+        } catch (FactoryNotInstantiableException $exception) {
             /**
-             * @var string $className When `$className` is not string `$factory->create()`
-             * throws not `NotInstantiableException` exception.
+             * @var string $className When `$className` is not string, `$factory->create()` does not throw
+             * {@see FactoryNotInstantiableException} exception.
              */
-            throw new NotInstantiableWithoutWidgetFactoryInitializationException($className, $exception);
+            throw new NotInstantiableException($className, self::$initialized, $exception);
         }
     }
 

@@ -9,9 +9,9 @@ use ReflectionClass;
 use RuntimeException;
 use Throwable;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
-use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Definitions\Exception\NotInstantiableException as FactoryNotInstantiableException;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\NotInstantiableWithoutWidgetFactoryInitializationException;
+use Yiisoft\Widget\NotInstantiableException;
 use Yiisoft\Widget\Tests\Stubs\Car;
 use Yiisoft\Widget\Tests\Stubs\Garage;
 use Yiisoft\Widget\Tests\Stubs\ImmutableWidget;
@@ -139,7 +139,7 @@ final class WidgetTest extends TestCase
     /**
      * @depends testBeginEnd
      */
-    public function testStackTrackingDiferentClass(): void
+    public function testStackTrackingDifferentClass(): void
     {
         $this->expectException(RuntimeException::class);
         TestWidgetA::widget()->begin();
@@ -158,21 +158,20 @@ final class WidgetTest extends TestCase
 
         $exception = null;
         try {
-            TestInjectionWidget::widget();
+            Garage::widget();
         } catch (Throwable $exception) {
         }
 
-        $this->assertInstanceOf(NotInstantiableWithoutWidgetFactoryInitializationException::class, $exception);
-        $this->assertInstanceOf(NotInstantiableException::class, $exception->getPrevious());
+        $this->assertInstanceOf(NotInstantiableException::class, $exception);
+        $this->assertInstanceOf(FactoryNotInstantiableException::class, $exception->getPrevious());
         $this->assertSame(
-            'Failed to create a widget "' . TestInjectionWidget::class . '". ' .
-            'Can not instantiate ' .
-            Injectable::class .
+            'Failed to create a widget "' . Garage::class . '". ' .
+            'Can not instantiate ' . Car::class .
             '. Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             $exception->getMessage()
         );
         $this->assertSame(
-            'Failed to create a widget "' . TestInjectionWidget::class . '". Can not instantiate ' . Injectable::class . '.',
+            'Failed to create a widget "' . Garage::class . '". Can not instantiate ' . Car::class . '.',
             $exception->getName()
         );
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
@@ -187,7 +186,17 @@ final class WidgetTest extends TestCase
         }
 
         $this->assertInstanceOf(NotInstantiableException::class, $exception);
-        $this->assertSame('Can not instantiate ' . Car::class . '.', $exception->getMessage());
+        $this->assertInstanceOf(FactoryNotInstantiableException::class, $exception->getPrevious());
+        $this->assertSame(
+            'Failed to create a widget "' . Garage::class . '". ' .
+            'Can not instantiate ' . Car::class . '.',
+            $exception->getMessage()
+        );
+        $this->assertSame(
+            'Failed to create a widget "' . Garage::class . '". Can not instantiate ' . Car::class . '.',
+            $exception->getName()
+        );
+        $this->assertNull($exception->getSolution());
     }
 
     public function testWithoutInitialization(): void
