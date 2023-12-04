@@ -167,7 +167,7 @@ final class WidgetTest extends TestCase
         $this->assertSame(
             'Can not instantiate ' .
             Injectable::class .
-            '. Perhaps need initialize "WidgetFactory" with container for resolve dependencies.',
+            '. Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             $exception->getMessage()
         );
         $this->assertSame(

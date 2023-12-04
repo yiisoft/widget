@@ -14,7 +14,7 @@ final class NotInstantiableWithoutWidgetFactoryInitializationException extends N
     {
         parent::__construct(
             $previous->getMessage() .
-            ' Perhaps need initialize "WidgetFactory" with container for resolve dependencies.',
+            ' Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             previous: $previous,
         );
     }
