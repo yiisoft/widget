@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use Yiisoft\Definitions\ArrayDefinition;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
-use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Definitions\Exception\NotInstantiableException as FactoryNotInstantiableException;
 use Yiisoft\Definitions\Helpers\ArrayDefinitionHelper;
 use Yiisoft\Definitions\Helpers\DefinitionValidator;
 use Yiisoft\Factory\NotFoundException;
@@ -21,6 +21,7 @@ use Yiisoft\Factory\Factory;
  */
 final class WidgetFactory
 {
+    private static bool $initialized = false;
     private static ?Factory $factory = null;
 
     /**
@@ -35,6 +36,9 @@ final class WidgetFactory
      */
     private static array $widgetDefaultThemes = [];
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
@@ -49,7 +53,7 @@ final class WidgetFactory
      * @see Factory::__construct()
      */
     public static function initialize(
-        ContainerInterface $container,
+        ?ContainerInterface $container = null,
         array $definitions = [],
         bool $validate = true,
         array $themes = [],
@@ -66,6 +70,8 @@ final class WidgetFactory
         self::$themes = $themes;
         self::$defaultTheme = $defaultTheme;
         self::$widgetDefaultThemes = $widgetDefaultThemes;
+
+        self::$initialized = true;
     }
 
     public static function setDefaultTheme(?string $theme): void
@@ -79,11 +85,10 @@ final class WidgetFactory
      * @param array $config The parameters for creating a widget.
      * @param string|null $theme The widget theme.
      *
-     * @throws WidgetFactoryInitializationException If factory was not initialized.
      * @throws CircularReferenceException
      * @throws InvalidConfigException
      * @throws NotFoundException
-     * @throws NotInstantiableException
+     * @throws FactoryNotInstantiableException
      *
      * @see Factory::create()
      *
@@ -93,9 +98,7 @@ final class WidgetFactory
     public static function createWidget(array $config, ?string $theme = null): Widget
     {
         if (self::$factory === null) {
-            throw new WidgetFactoryInitializationException(
-                'Widget factory should be initialized with WidgetFactory::initialize() call.',
-            );
+            self::$factory = new Factory();
         }
 
         $className = $config[ArrayDefinition::CLASS_NAME] ?? null;
@@ -109,7 +112,15 @@ final class WidgetFactory
             }
         }
 
-        return self::$factory->create($config);
+        try {
+            return self::$factory->create($config);
+        } catch (FactoryNotInstantiableException $exception) {
+            /**
+             * @var string $className When `$className` is not string, `$factory->create()` does not throw
+             * {@see FactoryNotInstantiableException} exception.
+             */
+            throw new NotInstantiableException($className, self::$initialized, $exception);
+        }
     }
 
     /**
