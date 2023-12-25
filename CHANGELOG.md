@@ -1,5 +1,9 @@
 # Yii Widget Change Log
 
+## 2.2.1 under development
+
+- no changes in this release.
+
 ## 2.2.0 December 25, 2023
 
 - Chg #99: Mark `WidgetFactoryInitializationException` as deprecated (@vjik)
