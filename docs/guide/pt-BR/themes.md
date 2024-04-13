@@ -1,7 +1,7 @@
-# Themes
+# Temas
 
-Theme is a named extra configuration of a widget that is merged with default configuration.
-Themes are defined in `WidgetFactory::initialize()`:
+Um tema é uma configuração extra nomeada de um widget que é mesclada com a configuração padrão.
+Os temas são definidos em `WidgetFactory::initialize()`:
 
 ```php
 \Yiisoft\Widget\WidgetFactory::initialize(
@@ -32,10 +32,9 @@ Themes are defined in `WidgetFactory::initialize()`:
 );
 ```
 
-For a description of the configuration syntax, see the
-[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
+Para obter uma descrição da sintaxe de configuração, consulte a documentação do pacote [Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition).
 
-To apply a theme to the widget call the `widget()` method with `theme` argument:
+Para aplicar um tema ao widget, chame o método `widget()` com o argumento `theme`:
 
 ```php
 MyWidget::widget(theme: 'red-alert');
