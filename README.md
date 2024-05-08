@@ -27,7 +27,8 @@ ready-made widgets are provided in the [yiisoft/yii-widgets](https://github.com/
 
 ## Installation
 
-The package could be installed via composer:
+The package could be installed with [Composer](https://getcomposer.org):
+
 
 ```shell
 composer require yiisoft/widget
@@ -80,7 +81,7 @@ It is a good idea to do that for the whole application. See Yii example in the c
 
 ## Documentation
 
-- [Guide](docs/guide/en/README.md)
+- Guide: [English](docs/guide/en/README.md), [Português - Brasil](docs/guide/pt-BR/README.md)
 - [Internals](docs/internals.md)
 
 ## License
@@ -89,7 +90,6 @@ The Yii Widget is free software. It is released under the terms of the BSD Licen
 Please see [`LICENSE`](./LICENSE.md) for more information.
 
 Maintained by [Yii Software](https://www.yiiframework.com/).
-
 
 ## Support the project
 
