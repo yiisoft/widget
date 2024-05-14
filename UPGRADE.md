@@ -1,4 +1,4 @@
-# Upgrading Instructions for Yii Widget 
+# Yii Widget Upgrading Instructions 
 
 ### !!!IMPORTANT!!!
 
