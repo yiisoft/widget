@@ -1,12 +1,11 @@
 # Configuring the widget
 
-Widgets could be configured on multiple levels.
+Widget configuration is combined from multiple parts:
 
-- Configuration passed to the `widget()` method call;
-- Widget factory configuration:
-  - With definitions;
-  - With themes;
-- With a theme specified at the `widget()` method call.
+- configuration passed to the `widget()` method call;
+- extra configuration from the widget itself by specified theme;
+- configuration defined in widget factory themes:
+- configuration defined in widget factory definitions.
 
 More specific configuration has more priority. For example, configuration passed to the `widget()` method call has more priority 
 than configuration through widget factory.
