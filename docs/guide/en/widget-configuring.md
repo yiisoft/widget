@@ -1,14 +1,65 @@
 # Configuring the widget
 
-Widget configuration is combined from multiple parts:
+## Configuration concept
 
-- configuration passed to the `widget()` method call;
-- extra configuration from the widget itself by specified theme;
-- configuration defined in widget factory themes:
-- configuration defined in widget factory definitions.
+Widget configuration is combined from multiple parts.
 
-More specific configuration has more priority. For example, configuration passed to the `widget()` method call has more priority 
-than configuration through widget factory.
+Widget based configuration:
+
+- [extra configuration from the widget itself by specified theme](#extra-configuration-from-the-widget-itself-by-specified-theme);
+- [configuration passed to the `widget()` method call](#configuration-passed-to-the-widget-method-call).
+
+Widget factory based configuration. It is handy to use it to set global defaults.
+
+- [configuration defined in widget factory themes](#configuration-defined-in-widget-factory-themes);
+- [configuration defined in widget factory definitions](#configuration-defined-in-widget-factory-definitions).
+
+Configuration is declared using [Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) syntax. It 
+allows to set properties, call methods. Example of config represented as array definition:
+
+```php
+[
+    '__construct()' => [
+        'id' => 'value',
+    ]
+    '$name' => 'Mike',
+];
+```
+
+More specific configuration has more priority. For example, configuration passed to the `widget()` method call has more 
+priority than configuration through widget factory.
+
+In case you want to have multiple configuration sets and the ability to switch from one to another, themes could be
+used. Theme configuration is named and merged with default configuration.
+
+## Extra configuration from the widget itself by specified theme
+
+Themes can be defined in the custom widget itself, in the class extended from `Yiisoft\Widget\Widget`.
+
+```php
+final class MyWidget extends Yiisoft\Widget\Widget
+{
+    // ..
+
+    final protected static function getThemeConfig(?string $theme): array
+    {
+        return match ($theme) {
+            'red-alert' => [
+                '__construct()' => [
+                    'color' => 'red',
+                ],
+            ],
+            'black' => [
+                '__construct()' => [
+                    'color' => 'black',
+                ],
+            ],
+        };
+    }
+
+    // ...
+}
+```
 
 ## Configuration passed to the `widget()` method call
 
@@ -54,39 +105,16 @@ parameter:
 ) ?>
 ```
 
-For a description of the configuration syntax, see the
-[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
-
-## Widget factory configuration
-
-Widget factory could be used to configure widgets. It is handy to use it to set global defaults.
-
-### With definitions
-
-You can use definitions:
+If you want to use a specific theme for a single widget, it's possible to specify it at the `widget()` method's call as 
+well with `$theme` argument:
 
 ```php
-\Yiisoft\Widget\WidgetFactory::initialize(
-    /** @var \Psr\Container\ContainerInterface $container */
-    $container,
-    definitions: [
-        MyWidget::class => [
-            '__construct()' => [
-                'name' => 'Base',
-            ],
-        ],
-    ],
-);
+MyWidget::widget(theme: 'red-alert');
 ```
 
-For a description of the configuration syntax, see the
-[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
+## Configuration defined in widget factory themes
 
-### With themes
-
-Themes could be used in case you want to have multiple configuration sets and the ability to switch from one to another.
-Theme configuration is named and merged with default configuration. Themes are defined in `WidgetFactory::initialize()`.
-To apply the theme automatically, specify it as default theme.
+Themes are defined in `WidgetFactory::initialize()`. To apply the theme automatically, specify it as default theme.
 
 ```php
 \Yiisoft\Widget\WidgetFactory::initialize(
@@ -112,11 +140,25 @@ To apply the theme automatically, specify it as default theme.
 );
 ```
 
-## With a theme specified at the `widget()` method call.
+## Configuration defined in widget factory definitions
 
-If you want to use a specific theme for a single widget, it's possible to specify it at the `widget()` method's call 
-with `$theme` argument:
+Usage is similar to individual widget configuration but you need to create a mapping instead:  
 
 ```php
-MyWidget::widget(theme: 'red-alert');
+\Yiisoft\Widget\WidgetFactory::initialize(
+    /** @var \Psr\Container\ContainerInterface $container */
+    $container,
+    definitions: [
+        MyWidget::class => [
+            '__construct()' => [
+                'name' => 'Base',
+            ],
+        ],
+        MySecondWidget::class => [
+            '__construct()' => [
+                'id' => 'value',
+            ],
+        ],
+    ],
+);
 ```
