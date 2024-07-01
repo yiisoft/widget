@@ -8,7 +8,7 @@ Widgets could be configured on multiple levels.
   - With themes;
 - With a theme specified at the `widget()` method call.
 
-More specific configuration has more priority. Configuration passed to the `widget()` method call has more priority 
+More specific configuration has more priority. For example, configuration passed to the `widget()` method call has more priority 
 than configuration through widget factory.
 
 ## Configuration passed to the `widget()` method call
