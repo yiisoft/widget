@@ -1,5 +1,64 @@
 # Configuring the widget
 
+## Configuration concept
+
+Widget configuration is combined from multiple parts. More specific configuration has more priority. Here is the list of
+configuration options arranged by priority (from the highest priority to the lowest priority):
+
+- [configuration passed to the `widget()` method call](#configuration-passed-to-the-widget-method-call).
+- [extra configuration from the widget itself by specified theme](#extra-configuration-from-the-widget-itself-by-specified-theme);
+- [configuration defined in widget factory themes](#configuration-defined-in-widget-factory-themes);
+- [configuration defined in widget factory definitions](#configuration-defined-in-widget-factory-definitions).
+
+Configuration via themes and widget factory (the latter 3 ways) is handy to use it to set global defaults, while single 
+widget based configuration (the former way) is suitable for non-reusable options.
+
+Also with themes, you can have multiple configuration sets and switch from one to another. Theme configuration is named
+and merged with default configuration.
+
+Configuration is declared using [Yii Definitions](https://github.com/yiisoft/definitions) syntax. It 
+allows to set properties, call methods. Example of config represented as array definition:
+
+```php
+[
+    '__construct()' => [
+        'id' => 'value',
+    ]
+    '$name' => 'Mike',
+];
+```
+
+## Extra configuration from the widget itself by specified theme
+
+Themes can be defined in the custom widget itself, in the class extended from `Yiisoft\Widget\Widget`.
+
+```php
+final class MyBaseWidget extends Yiisoft\Widget\Widget
+{
+    // ..
+
+    final protected static function getThemeConfig(?string $theme): array
+    {
+        return match ($theme) {
+            'red-alert' => [
+                '__construct()' => [
+                    'color' => 'red',
+                ],
+            ],
+            'black' => [
+                '__construct()' => [
+                    'color' => 'black',
+                ],
+            ],
+        };
+    }
+
+    // ...
+}
+```
+
+## Configuration passed to the `widget()` method call
+
 You can configure the widget when creating its instance. For example, the widget class must accept some ID when
 initializing the object.
 
@@ -42,5 +101,60 @@ parameter:
 ) ?>
 ```
 
-For a description of the configuration syntax, see the
-[Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) package documentation.
+If you want to use a specific theme for a single widget, it's possible to specify it at the `widget()` method's call as 
+well with `$theme` argument:
+
+```php
+MyWidget::widget(theme: 'red-alert');
+```
+
+## Configuration defined in widget factory themes
+
+Themes are defined in `WidgetFactory::initialize()`. To apply the theme automatically, specify it as default theme.
+
+```php
+\Yiisoft\Widget\WidgetFactory::initialize(
+    /** @var \Psr\Container\ContainerInterface $container */
+    $container,
+    themes: [
+        'red-alert' => [
+            MyWidget::class => [
+                '__construct()' => [
+                    'color' => 'red',
+                ],
+            ],
+        ],
+        'black' => [
+            MyWidget::class => [
+                '__construct()' => [
+                    'color' => 'black',
+                ],
+            ],
+        ],
+    ],
+    defaultTheme: 'black',
+);
+```
+
+## Configuration defined in widget factory definitions
+
+Usage is similar to individual widget configuration but you need to create a mapping instead:  
+
+```php
+\Yiisoft\Widget\WidgetFactory::initialize(
+    /** @var \Psr\Container\ContainerInterface $container */
+    $container,
+    definitions: [
+        MyWidget::class => [
+            '__construct()' => [
+                'name' => 'Base',
+            ],
+        ],
+        MySecondWidget::class => [
+            '__construct()' => [
+                'id' => 'value',
+            ],
+        ],
+    ],
+);
+```
