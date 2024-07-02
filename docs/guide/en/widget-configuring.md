@@ -10,8 +10,9 @@ configuration options arranged by priority (from the highest priority to the low
 - [configuration defined in widget factory themes](#configuration-defined-in-widget-factory-themes);
 - [configuration defined in widget factory definitions](#configuration-defined-in-widget-factory-definitions).
 
-Widget factory based configuration (the latter 2 ways) is handy to use it to set global defaults), while widget based 
-configuration (the former 2 ways) is suitable for non-reusable options.
+Configuration via themes (the latter 3 ways) is handy to use it to set global defaults, while single widget based 
+configuration (the former way) is suitable for non-reusable options. Also with themes, you can have multiple 
+configuration sets and switch from one to another. Theme configuration is named and merged with default configuration.
 
 Configuration is declared using [Yii Definitions](https://github.com/yiisoft/definitions) syntax. It 
 allows to set properties, call methods. Example of config represented as array definition:
@@ -25,15 +26,12 @@ allows to set properties, call methods. Example of config represented as array d
 ];
 ```
 
-In case you want to have multiple configuration sets and the ability to switch from one to another, themes could be
-used. Theme configuration is named and merged with default configuration.
-
 ## Extra configuration from the widget itself by specified theme
 
 Themes can be defined in the custom widget itself, in the class extended from `Yiisoft\Widget\Widget`.
 
 ```php
-final class MyWidget extends Yiisoft\Widget\Widget
+final class MyBaseWidget extends Yiisoft\Widget\Widget
 {
     // ..
 
