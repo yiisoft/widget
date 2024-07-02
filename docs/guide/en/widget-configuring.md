@@ -26,11 +26,19 @@ allows to set properties, call methods. Example of config represented as array d
 ];
 ```
 
-More specific configuration has more priority. For example, configuration passed to the `widget()` method call has more 
-priority than configuration through widget factory.
-
 In case you want to have multiple configuration sets and the ability to switch from one to another, themes could be
 used. Theme configuration is named and merged with default configuration.
+
+## Configuration priority
+
+More specific configuration has more priority. For example, configuration passed to the `widget()` method call has more
+priority than configuration through widget factory. Here is the list of configuration options arranged by priority
+(from the highest priority to the lowest priority):
+
+- [configuration passed to the `widget()` method call](#configuration-passed-to-the-widget-method-call).
+- [extra configuration from the widget itself by specified theme](#extra-configuration-from-the-widget-itself-by-specified-theme);
+- [configuration defined in widget factory themes](#configuration-defined-in-widget-factory-themes);
+- [configuration defined in widget factory definitions](#configuration-defined-in-widget-factory-definitions).
 
 ## Extra configuration from the widget itself by specified theme
 
