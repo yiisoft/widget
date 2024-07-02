@@ -10,9 +10,11 @@ configuration options arranged by priority (from the highest priority to the low
 - [configuration defined in widget factory themes](#configuration-defined-in-widget-factory-themes);
 - [configuration defined in widget factory definitions](#configuration-defined-in-widget-factory-definitions).
 
-Configuration via themes (the latter 3 ways) is handy to use it to set global defaults, while single widget based 
-configuration (the former way) is suitable for non-reusable options. Also with themes, you can have multiple 
-configuration sets and switch from one to another. Theme configuration is named and merged with default configuration.
+Configuration via themes and widget factory (the latter 3 ways) is handy to use it to set global defaults, while single 
+widget based configuration (the former way) is suitable for non-reusable options.
+
+Also with themes, you can have multiple configuration sets and switch from one to another. Theme configuration is named
+and merged with default configuration.
 
 Configuration is declared using [Yii Definitions](https://github.com/yiisoft/definitions) syntax. It 
 allows to set properties, call methods. Example of config represented as array definition:
