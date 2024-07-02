@@ -13,7 +13,7 @@ configuration options arranged by priority (from the highest priority to the low
 Widget factory based configuration (the latter 2 ways) is handy to use it to set global defaults), while widget based 
 configuration (the former 2 ways) is suitable for non-reusable options.
 
-Configuration is declared using [Yii Definitions](https://github.com/yiisoft/definitions#arraydefinition) syntax. It 
+Configuration is declared using [Yii Definitions](https://github.com/yiisoft/definitions) syntax. It 
 allows to set properties, call methods. Example of config represented as array definition:
 
 ```php
