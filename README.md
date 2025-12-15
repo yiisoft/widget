@@ -22,7 +22,7 @@ ready-made widgets are provided in the [yiisoft/yii-widgets](https://github.com/
 
 ## Requirements
 
-- PHP 8.0 or higher.
+- PHP 8.0 - 8.5.
 
 ## Installation
 
