@@ -1,6 +1,6 @@
 # Yii Widget Change Log
 
-## 2.2.1 under development
+## 2.2.1 December 16, 2025
 
 - Chg #111, #113: Change PHP constraint in `composer.json` to `8.0 - 8.5` (@vjik)
 
