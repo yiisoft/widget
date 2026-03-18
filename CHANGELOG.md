@@ -1,5 +1,9 @@
 # Yii Widget Change Log
 
+## 2.2.3 under development
+
+- no changes in this release.
+
 ## 2.2.2 March 18, 2026
 
 - Enh #114: Add support for `yiisoft/html` version `^4.0` (@vjik)
