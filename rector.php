@@ -7,9 +7,9 @@ use Yiisoft\CodeStyle\Rector\SetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__.'/config',
-        __DIR__.'/src',
-        __DIR__.'/tests',
+        __DIR__ . '/config',
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
     ])
     ->withPhpSets(php80: true)
     ->withSets([

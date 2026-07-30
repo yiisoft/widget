@@ -12,7 +12,7 @@ final class Table extends Widget
 
     public function render(): string
     {
-        return 'Table ('.$this->color.')';
+        return 'Table (' . $this->color . ')';
     }
 
     protected static function getThemeConfig(?string $theme): array
