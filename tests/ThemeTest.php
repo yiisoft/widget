@@ -43,7 +43,7 @@ final class ThemeTest extends TestCase
 
         $result = Car::widget(
             ['name' => 'Speed'],
-            theme: 'colorize'
+            theme: 'colorize',
         )->render();
 
         $this->assertSame('Car "Speed" (red)', $result);
@@ -104,7 +104,7 @@ final class ThemeTest extends TestCase
         string $expected,
         array $constructorArguments,
         array $config,
-        ?string $theme
+        ?string $theme,
     ): void {
         WidgetFactory::initialize(
             container: new SimpleContainer(),
@@ -212,7 +212,7 @@ final class ThemeTest extends TestCase
 
         $result = Car::widget(
             ['name' => 'Speed'],
-            theme: $theme
+            theme: $theme,
         )->render();
 
         $this->assertSame($expected, $result);

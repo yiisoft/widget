@@ -14,6 +14,10 @@ use Yiisoft\Definitions\Helpers\DefinitionValidator;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Factory\Factory;
 
+use function is_array;
+use function is_string;
+use function sprintf;
+
 /**
  * WidgetFactory creates an instance of the widget based on the specified configuration
  * {@see WidgetFactory::createWidget()}. Before creating a widget, you need to initialize
@@ -39,9 +43,7 @@ final class WidgetFactory
     /**
      * @codeCoverageIgnore
      */
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * @psalm-param array<string, mixed> $definitions
@@ -107,7 +109,7 @@ final class WidgetFactory
             if ($theme !== null && isset(self::$themes[$theme][$className])) {
                 $config = ArrayDefinitionHelper::merge(
                     self::$themes[$theme][$className],
-                    $config
+                    $config,
                 );
             }
         }
@@ -131,7 +133,7 @@ final class WidgetFactory
         foreach ($themes as $theme => $definitions) {
             if (!is_string($theme)) {
                 throw new InvalidConfigException(
-                    sprintf('Theme name must be a string. Integer value "%s" given.', $theme)
+                    sprintf('Theme name must be a string. Integer value "%s" given.', $theme),
                 );
             }
             if (!is_array($definitions)) {
@@ -140,13 +142,13 @@ final class WidgetFactory
                         'Theme configuration must be an array. "%s" given for theme "%s".',
                         get_debug_type($definitions),
                         $theme,
-                    )
+                    ),
                 );
             }
             foreach ($definitions as $id => $definition) {
                 if (!is_string($id)) {
                     throw new InvalidConfigException(
-                        sprintf('Widget name must be a string. Integer value "%s" given in theme "%s".', $id, $theme)
+                        sprintf('Widget name must be a string. Integer value "%s" given in theme "%s".', $id, $theme),
                     );
                 }
                 if (!is_array($definition)) {
@@ -156,7 +158,7 @@ final class WidgetFactory
                             get_debug_type($definition),
                             $id,
                             $theme,
-                        )
+                        ),
                     );
                 }
                 DefinitionValidator::validateArrayDefinition($definition, $id);
@@ -172,7 +174,7 @@ final class WidgetFactory
         foreach ($value as $widget => $theme) {
             if (!is_string($widget)) {
                 throw new InvalidConfigException(
-                    sprintf('Widget class must be a string. Integer value "%s" given.', $widget)
+                    sprintf('Widget class must be a string. Integer value "%s" given.', $widget),
                 );
             }
             if (!is_string($theme)) {
@@ -181,7 +183,7 @@ final class WidgetFactory
                         'Theme name must be a string. "%s" given for widget "%s".',
                         get_debug_type($theme),
                         $widget,
-                    )
+                    ),
                 );
             }
         }
