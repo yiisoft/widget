@@ -12,7 +12,7 @@ final class Table extends Widget
 
     public function render(): string
     {
-        return 'Table (' . $this->color . ')';
+        return 'Table ('.$this->color.')';
     }
 
     protected static function getThemeConfig(?string $theme): array
@@ -20,8 +20,8 @@ final class Table extends Widget
         return [
             '$color' => match ($theme) {
                 'colorize' => 'Red',
-                'bw' => 'white',
-                default => 'transparent',
+                'bw'       => 'white',
+                default    => 'transparent',
             },
         ];
     }

@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Yiisoft\Widget\WidgetFactory;
 use Yiisoft\Config\Config;
+use Yiisoft\Widget\WidgetFactory;
 
 /**
  * @var Config $config
- * @var array $params
+ * @var array  $params
  */
 
 return [

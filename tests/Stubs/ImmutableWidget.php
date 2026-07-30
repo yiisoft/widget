@@ -12,13 +12,14 @@ final class ImmutableWidget extends Widget
 
     public function render(): string
     {
-        return '<run-' . $this->id . '>';
+        return '<run-'.$this->id.'>';
     }
 
     public function id(string $value): self
     {
         $new = clone $this;
         $new->id = $value;
+
         return $new;
     }
 }

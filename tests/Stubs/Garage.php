@@ -8,7 +8,9 @@ use Yiisoft\Widget\Widget;
 
 final class Garage extends Widget
 {
-    public function __construct(Car $car) {}
+    public function __construct(Car $car)
+    {
+    }
 
     public function render(): string
     {

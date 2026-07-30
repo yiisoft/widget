@@ -12,7 +12,7 @@ final class TestWidgetA extends Widget
 
     public function render(): string
     {
-        return '<run-' . $this->id . '>';
+        return '<run-'.$this->id.'>';
     }
 
     public function id(string $value): Widget

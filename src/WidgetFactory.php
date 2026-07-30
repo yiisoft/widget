@@ -11,8 +11,8 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException as FactoryNotInstantiableException;
 use Yiisoft\Definitions\Helpers\ArrayDefinitionHelper;
 use Yiisoft\Definitions\Helpers\DefinitionValidator;
-use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Factory\Factory;
+use Yiisoft\Factory\NotFoundException;
 
 use function is_array;
 use function is_string;
@@ -43,7 +43,9 @@ final class WidgetFactory
     /**
      * @codeCoverageIgnore
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * @psalm-param array<string, mixed> $definitions
@@ -84,8 +86,8 @@ final class WidgetFactory
     /**
      * Creates a widget defined by config passed.
      *
-     * @param array $config The parameters for creating a widget.
-     * @param string|null $theme The widget theme.
+     * @param array       $config The parameters for creating a widget.
+     * @param string|null $theme  The widget theme.
      *
      * @throws CircularReferenceException
      * @throws InvalidConfigException
@@ -119,7 +121,7 @@ final class WidgetFactory
         } catch (FactoryNotInstantiableException $exception) {
             /**
              * @var string $className When `$className` is not string, `$factory->create()` does not throw
-             * {@see FactoryNotInstantiableException} exception.
+             *             {@see FactoryNotInstantiableException} exception.
              */
             throw new NotInstantiableException($className, self::$initialized, $exception);
         }

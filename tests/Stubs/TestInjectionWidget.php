@@ -8,7 +8,9 @@ use Yiisoft\Widget\Widget;
 
 final class TestInjectionWidget extends Widget
 {
-    public function __construct(private Injectable $injectable) {}
+    public function __construct(private Injectable $injectable)
+    {
+    }
 
     public function getInjectable(): Injectable
     {

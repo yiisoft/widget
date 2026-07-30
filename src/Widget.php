@@ -54,6 +54,7 @@ abstract class Widget implements NoEncodeStringableInterface
     public function begin(): ?string
     {
         self::$stack[] = $this;
+
         return null;
     }
 
@@ -89,11 +90,11 @@ abstract class Widget implements NoEncodeStringableInterface
     /**
      * Creates a widget instance.
      *
-     * @param array $constructorArguments The constructor arguments.
-     * @param array $config The configuration for creating a widget. For a description of the configuration syntax, see
-     * array definitions documentation in the Yii Definitions by link
-     * {@link https://github.com/yiisoft/definitions#arraydefinition).
-     * @param string|null $theme The widget theme.
+     * @param array       $constructorArguments The constructor arguments.
+     * @param array       $config               The configuration for creating a widget. For a description of the configuration syntax, see
+     *                                          array definitions documentation in the Yii Definitions by link
+     *                                          {@link https://github.com/yiisoft/definitions#arraydefinition).
+     * @param string|null $theme                The widget theme.
      *
      * @throws InvalidConfigException
      * @throws CircularReferenceException
@@ -133,7 +134,7 @@ abstract class Widget implements NoEncodeStringableInterface
      * @param string|null $theme The widget theme.
      *
      * @return array Configuration in the form of array definition (see syntax description in the Yii Definitions
-     * documentation by link {@link https://github.com/yiisoft/definitions#arraydefinition}).
+     *               documentation by link {@link https://github.com/yiisoft/definitions#arraydefinition}).
      *
      * @infection-ignore-all
      */
