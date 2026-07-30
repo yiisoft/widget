@@ -166,13 +166,13 @@ final class WidgetTest extends TestCase
         $this->assertInstanceOf(NotInstantiableException::class, $exception);
         $this->assertInstanceOf(FactoryNotInstantiableException::class, $exception->getPrevious());
         $this->assertSame(
-            'Failed to create a widget "'.Garage::class.'". '
-            .'Can not instantiate '.Car::class
-            .'. Perhaps you need to initialize "'.WidgetFactory::class.'" with DI container to resolve dependencies.',
+            'Failed to create a widget "' . Garage::class . '". '
+            . 'Can not instantiate ' . Car::class
+            . '. Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.',
             $exception->getMessage(),
         );
         $this->assertSame(
-            'Failed to create a widget "'.Garage::class.'". Can not instantiate '.Car::class.'.',
+            'Failed to create a widget "' . Garage::class . '". Can not instantiate ' . Car::class . '.',
             $exception->getName(),
         );
         $this->assertStringContainsString('`WidgetFactory::initialize()`', $exception->getSolution());
@@ -190,12 +190,12 @@ final class WidgetTest extends TestCase
         $this->assertInstanceOf(NotInstantiableException::class, $exception);
         $this->assertInstanceOf(FactoryNotInstantiableException::class, $exception->getPrevious());
         $this->assertSame(
-            'Failed to create a widget "'.Garage::class.'". '
-            .'Can not instantiate '.Car::class.'.',
+            'Failed to create a widget "' . Garage::class . '". '
+            . 'Can not instantiate ' . Car::class . '.',
             $exception->getMessage(),
         );
         $this->assertSame(
-            'Failed to create a widget "'.Garage::class.'". Can not instantiate '.Car::class.'.',
+            'Failed to create a widget "' . Garage::class . '". Can not instantiate ' . Car::class . '.',
             $exception->getName(),
         );
         $this->assertNull($exception->getSolution());

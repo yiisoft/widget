@@ -43,9 +43,7 @@ final class WidgetFactory
     /**
      * @codeCoverageIgnore
      */
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * @psalm-param array<string, mixed> $definitions

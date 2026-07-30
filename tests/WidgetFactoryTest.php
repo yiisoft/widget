@@ -118,7 +118,7 @@ final class WidgetFactoryTest extends TestCase
                 ['bootstrap5'],
             ],
             [
-                'Theme name must be a string. "stdClass" given for widget "'.TestWidget::class.'".',
+                'Theme name must be a string. "stdClass" given for widget "' . TestWidget::class . '".',
                 [TestWidget::class => new stdClass()],
             ],
         ];

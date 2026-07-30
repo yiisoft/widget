@@ -15,9 +15,9 @@ final class NotInstantiableException extends FactoryNotInstantiableException imp
         private bool $widgetFactoryInitialized,
         private Throwable $previous,
     ) {
-        $message = 'Failed to create a widget "'.$this->widgetClassName.'". '.$previous->getMessage();
+        $message = 'Failed to create a widget "' . $this->widgetClassName . '". ' . $previous->getMessage();
         if (!$this->widgetFactoryInitialized) {
-            $message .= ' Perhaps you need to initialize "'.WidgetFactory::class.'" with DI container to resolve dependencies.';
+            $message .= ' Perhaps you need to initialize "' . WidgetFactory::class . '" with DI container to resolve dependencies.';
         }
 
         parent::__construct($message, previous: $previous);
@@ -25,7 +25,7 @@ final class NotInstantiableException extends FactoryNotInstantiableException imp
 
     public function getName(): string
     {
-        return 'Failed to create a widget "'.$this->widgetClassName.'". '.$this->previous->getMessage();
+        return 'Failed to create a widget "' . $this->widgetClassName . '". ' . $this->previous->getMessage();
     }
 
     public function getSolution(): ?string
