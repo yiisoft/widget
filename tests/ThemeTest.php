@@ -66,13 +66,13 @@ final class ThemeTest extends TestCase
             ],
             [
                 'Car "Test"',
-                ['name'          => 'Test'],
+                ['name' => 'Test'],
                 ['__construct()' => ['name' => 'MyTest']],
                 null,
             ],
             [
                 'Car "Test"',
-                ['name'          => 'Test'],
+                ['name' => 'Test'],
                 ['__construct()' => ['name' => 'MyTest']],
                 null,
             ],
@@ -90,7 +90,7 @@ final class ThemeTest extends TestCase
             ],
             [
                 'Car "Test" (white)',
-                ['name'          => 'Test', 'color' => 'white'],
+                ['name' => 'Test', 'color' => 'white'],
                 ['__construct()' => ['color' => 'green']],
                 'bw',
             ],

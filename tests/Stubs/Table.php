@@ -20,8 +20,8 @@ final class Table extends Widget
         return [
             '$color' => match ($theme) {
                 'colorize' => 'Red',
-                'bw'       => 'white',
-                default    => 'transparent',
+                'bw' => 'white',
+                default => 'transparent',
             },
         ];
     }

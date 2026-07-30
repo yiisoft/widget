@@ -6,10 +6,10 @@ return [
     'yiisoft/widget' => [
         'config' => [
             'definitionsGroup' => 'widgets',
-            'themesGroup'      => 'widgets-themes',
-            'validate'         => true,
+            'themesGroup' => 'widgets-themes',
+            'validate' => true,
         ],
-        'defaultTheme'        => null,
+        'defaultTheme' => null,
         'widgetDefaultThemes' => [],
     ],
 ];

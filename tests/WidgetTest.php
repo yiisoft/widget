@@ -157,7 +157,6 @@ final class WidgetTest extends TestCase
         $this->uninitializedWidgetFactory();
 
         $exception = null;
-
         try {
             Garage::widget();
         } catch (Throwable $exception) {
@@ -181,7 +180,6 @@ final class WidgetTest extends TestCase
     public function testNotInstantiableWithInitialization(): void
     {
         $exception = null;
-
         try {
             Garage::widget();
         } catch (Throwable $exception) {
@@ -232,7 +230,7 @@ final class WidgetTest extends TestCase
         return [
             [
                 'Car "X" (red)',
-                ['name'          => 'X'],
+                ['name' => 'X'],
                 ['__construct()' => ['color' => 'red']],
             ],
             [

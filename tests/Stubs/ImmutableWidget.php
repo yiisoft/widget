@@ -19,7 +19,6 @@ final class ImmutableWidget extends Widget
     {
         $new = clone $this;
         $new->id = $value;
-
         return $new;
     }
 }
