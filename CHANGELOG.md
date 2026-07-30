@@ -2,7 +2,7 @@
 
 ## 2.2.3 under development
 
-- no changes in this release.
+- Enh #125: Explicitly import classes, functions, and constants in "use" section (@vjik)
 
 ## 2.2.2 March 18, 2026
 

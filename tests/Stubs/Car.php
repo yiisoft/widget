@@ -10,9 +10,8 @@ final class Car extends Widget
 {
     public function __construct(
         private string $name,
-        public ?string $color = null
-    ) {
-    }
+        public ?string $color = null,
+    ) {}
 
     public function render(): string
     {

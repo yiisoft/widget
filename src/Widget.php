@@ -33,6 +33,18 @@ abstract class Widget implements NoEncodeStringableInterface
     private static array $stack = [];
 
     /**
+     * Allows not to call `->render()` explicitly:
+     *
+     * ```php
+     * <?= MyWidget::widget(); ?>
+     * ```
+     */
+    final public function __toString(): string
+    {
+        return $this->render();
+    }
+
+    /**
      * Used to open a wrapping widget (the one with begin/end).
      *
      * When implementing this method, don't forget to call `parent::begin()`.
@@ -93,7 +105,7 @@ abstract class Widget implements NoEncodeStringableInterface
     final public static function widget(
         array $constructorArguments = [],
         array $config = [],
-        ?string $theme = null
+        ?string $theme = null,
     ): static {
         $config = ArrayDefinitionHelper::merge(
             static::getThemeConfig($theme),
@@ -105,6 +117,15 @@ abstract class Widget implements NoEncodeStringableInterface
 
         return WidgetFactory::createWidget($config, $theme);
     }
+
+    /**
+     * Renders widget content.
+     *
+     * This method must be overridden when implementing concrete widget.
+     *
+     * @return string The result of widget execution to be outputted.
+     */
+    abstract public function render(): string;
 
     /**
      * Returns configuration that will be merged with configuration passed to {@see widget()} method.
@@ -120,25 +141,4 @@ abstract class Widget implements NoEncodeStringableInterface
     {
         return [];
     }
-
-    /**
-     * Allows not to call `->render()` explicitly:
-     *
-     * ```php
-     * <?= MyWidget::widget(); ?>
-     * ```
-     */
-    final public function __toString(): string
-    {
-        return $this->render();
-    }
-
-    /**
-     * Renders widget content.
-     *
-     * This method must be overridden when implementing concrete widget.
-     *
-     * @return string The result of widget execution to be outputted.
-     */
-    abstract public function render(): string;
 }
