@@ -35,7 +35,6 @@
         "yiisoft/html": "^2.0 || ^3.0 || ^4.0"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.9",
         "friendsofphp/php-cs-fixer": "^3.95",
         "phpunit/phpunit": "^9.6.22",
         "rector/rector": "^2.2.14",
@@ -57,11 +56,6 @@
         }
     },
     "extra": {
-        "bamarni-bin": {
-            "bin-links": true,
-            "target-directory": "tools",
-            "forward-command": true
-        },
         "config-plugin-options": {
             "source-directory": "config"
         },
@@ -83,8 +77,7 @@
         "sort-packages": true,
         "allow-plugins": {
             "infection/extension-installer": true,
-            "composer/package-versions-deprecated": true,
-            "bamarni/composer-bin-plugin": true
+            "composer/package-versions-deprecated": true
         }
     }
 }
