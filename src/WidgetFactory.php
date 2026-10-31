@@ -99,9 +99,7 @@ final class WidgetFactory
      */
     public static function createWidget(array $config, ?string $theme = null): Widget
     {
-        if (self::$factory === null) {
-            self::$factory = new Factory();
-        }
+        self::$factory ??= new Factory();
 
         $className = $config[ArrayDefinition::CLASS_NAME] ?? null;
         if (is_string($className)) {
